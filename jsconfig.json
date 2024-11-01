@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        // "src/*": ["./src/*"],
+        // "@src": ["./src"],
+        // "@src/*": ["./src/*"],
+        "@assets": ["./src/assets"],
+        "@assets/*": ["./src/assets/*"],
+        "@components": ["./src/components"],
+        "@components/*": ["./src/components/*"],
+        // "@core": ["./src/@core"],
+        // "@core/*": ["./src/@core/*"],
+        "@configs": ["./src/configs"],
+        "@configs/*": ["./src/configs/*"],
+        "@navigation": ["./src/configs/navigation"],
+        "@navigation/*": ["./src/configs/navigation/*"],
+        "@layouts": ["./src/app/layouts"],
+        "@layouts/*": ["./src/app/layouts/*"],
+        "@router": ["./src/configs/router"],
+        "@router/*": ["./src/configs/router/*"],
+        "@utils": ["./src/utility/Utils"],
+        "@utils/*": ["./src/utility/Utils/*"],
+        "@pages": ["./src/pages"],
+        "@pages/*": ["./src/pages/*"],
+        "@store": ["./src/redux"],
+        "@store/*": ["./src/redux/*"],
+        "@coreComponents": ["./src/components/common"],
+        "@coreComponents/*": ["./src/components/common*"],
+        "@styles": ["./src/assets/scss"],
+        "@styles/*": ["./src/assets/scss/*"],
+        "@hooks": ["./src/core/hooks"],
+        "@hooks/*": ["./src/core/hooks/*"],
+      }
+    }
+  }
