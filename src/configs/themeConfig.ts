@@ -1,6 +1,6 @@
 // Logo Import
-// import logo from "@src/assets/images/logo/logo.svg";
-import logo from "../assets/images/img/chickBucket1.png";
+import logo from "@src/assets/images/logo/logo.svg";
+// import logo from "@src/assets/images/img/chickBucket1.png";
 
 // You can customize the template with the help of this file
 
