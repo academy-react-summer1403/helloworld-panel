@@ -27,8 +27,8 @@ import {
 // import { AbilityContext } from '@src/utility/context/Can'
 
 // ** Custom Components
-import Avatar from "@components/avatar";
-import InputPasswordToggle from "@components/input-password-toggle";
+import Avatar from "@coreComponents/avatar";
+import InputPasswordToggle from "@coreComponents/input-password-toggle";
 
 // ** Utils
 // import { getHomeRouteForLoggedInUser } from '@utils'
@@ -106,7 +106,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     const result = await loginAPI(data.loginEmail, data.password);
     console.log("result", result);
-    if (result.token) {
+    if (result.data.token) {
       navigate("/home");
     }
   };

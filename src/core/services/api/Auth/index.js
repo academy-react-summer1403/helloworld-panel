@@ -7,7 +7,7 @@ const loginAPI = async (phoneOrGmail, password, rememberMe) => {
     const result = await http.post(`/Sign/Login`, {
       phoneOrGmail: phoneOrGmail,
       password: password,
-      rememberMe: rememberMe,
+      rememberMe: true,
     });
 
     console.log("result:", result);
