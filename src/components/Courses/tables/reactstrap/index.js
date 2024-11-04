@@ -17,7 +17,9 @@ import Breadcrumbs from '../../../common/breadcrumbs'
 
 // ** API
 
-// import getAllCourses  from "../../../../core/services/api/Coueses/getAllCoursesAdmin"
+import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
+
+console.log("all result" , getAllCourses)
 
 // ** Source Code
 import {
