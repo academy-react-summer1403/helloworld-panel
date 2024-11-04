@@ -1,9 +1,9 @@
-import Courses from '@components/Courses'
+import Tables from '@components/Courses/tables/reactstrap/index'
 import React from 'react'
 
 const CoursesPage = () => {
   return (
-    <Courses />
+    <Tables />
   )
 }
 
