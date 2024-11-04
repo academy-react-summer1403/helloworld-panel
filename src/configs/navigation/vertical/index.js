@@ -1,4 +1,5 @@
 import { Home } from "react-feather";
+import { Layers } from "react-feather";
 
 export default [
   {
@@ -6,6 +7,12 @@ export default [
     title: "خانه",
     icon: <Home />,
     navLink: "/home",
+  },
+  {
+    id: "course",
+    title: "دوره",
+    icon: <Layers />,
+    navLink: "/course",
   },
   // {
   //   id: "secondPage",
