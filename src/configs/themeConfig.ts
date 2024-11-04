@@ -1,5 +1,5 @@
 // Logo Import
-import logo from "@src/assets/images/logo/logo.svg";
+import logo from "@src/assets/images/logo/HW.png";
 // import logo from "@src/assets/images/img/chickBucket1.png";
 
 // You can customize the template with the help of this file
@@ -7,7 +7,7 @@ import logo from "@src/assets/images/logo/logo.svg";
 //Template config options
 const themeConfig = {
   app: {
-    appName: "ری اکت",
+    appName: "Hello World",
     appLogoImage: logo,
   },
   layout: {

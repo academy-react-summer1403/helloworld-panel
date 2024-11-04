@@ -37,7 +37,7 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">ایرنو</span>
+          <span className="user-name fw-bold">HW</span>
           <span className="user-status">ادمین</span>
         </div>
         <Avatar
