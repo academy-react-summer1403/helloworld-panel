@@ -1,4 +1,4 @@
-import { Home } from "react-feather";
+import { Home, Users } from "react-feather";
 
 export default [
   {
@@ -6,6 +6,12 @@ export default [
     title: "خانه",
     icon: <Home />,
     navLink: "/home",
+  },
+  {
+    id: "user",
+    title: "کاربران",
+    icon: <Users/>,
+    navLink: "/user",
   },
   // {
   //   id: "secondPage",
