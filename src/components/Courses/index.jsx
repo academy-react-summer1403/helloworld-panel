@@ -1,5 +1,5 @@
 import React from "react";
-import Tables from "./tables/reactstrap";
+import Tables from "./view/index";
 import UsersList from "./usersInfo";
 
 function index() {
