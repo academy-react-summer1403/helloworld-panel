@@ -107,6 +107,7 @@ const Login = () => {
     const result = await loginAPI(data.loginEmail, data.password);
     console.log("result", result);
     if (result.data.token) {
+      localStorage.setItem("token",result.data.token)
       navigate("/home");
     }
   };
