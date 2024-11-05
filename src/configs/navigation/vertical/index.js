@@ -20,6 +20,12 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/course",
       },
+      {
+        id: "creatcourse",
+        title: "افزودن دوره جدبد",
+        icon: <Circle size={12} />,
+        navLink: "/cours",
+      },
     ],
   },
   // {
