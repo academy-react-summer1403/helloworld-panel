@@ -1,5 +1,5 @@
 import { Home } from "react-feather";
-import { Layers,Circle } from "react-feather";
+import { Layers,Circle,Users } from "react-feather";
 
 export default [
   {
@@ -7,6 +7,12 @@ export default [
     title: "خانه",
     icon: <Home />,
     navLink: "/home",
+  },
+  {
+    id: "user",
+    title: "کاربران",
+    icon: <Users/>,
+    navLink: "/user",
   },
   {
     id: "thirdPage",
