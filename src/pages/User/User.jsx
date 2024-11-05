@@ -1,10 +1,8 @@
-import Columns from '@components/UserList'
-import React from 'react'
+import Columns from "../../components/UserList";
+import React from "react";
 
 const UserPage = () => {
-  return (
-    <Columns/>
-  )
-}
+  return <Columns />;
+};
 
-export default UserPage
+export default UserPage;
