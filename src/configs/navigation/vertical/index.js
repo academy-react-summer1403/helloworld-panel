@@ -1,5 +1,4 @@
 
-import { Home } from "react-feather";
 import { Layers } from "react-feather";
 
 import { Home, Users } from "react-feather";
