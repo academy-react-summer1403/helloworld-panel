@@ -53,10 +53,7 @@ const Routes = [
   {
 
     path: "/course",
-    element: <Courses />,
-
-    path: "/user",
-    element: <User/>
+    element: <Courses />
 
   },
   {
