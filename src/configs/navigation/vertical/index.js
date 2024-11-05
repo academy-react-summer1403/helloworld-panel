@@ -1,5 +1,9 @@
+
 import { Home } from "react-feather";
 import { Layers } from "react-feather";
+
+import { Home, Users } from "react-feather";
+
 
 export default [
   {
@@ -9,10 +13,17 @@ export default [
     navLink: "/home",
   },
   {
+
     id: "course",
     title: "دوره",
     icon: <Layers />,
     navLink: "/course",
+
+    id: "user",
+    title: "کاربران",
+    icon: <Users/>,
+    navLink: "/user",
+
   },
   // {
   //   id: "secondPage",
