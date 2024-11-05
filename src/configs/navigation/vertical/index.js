@@ -1,6 +1,9 @@
 import { Home } from "react-feather";
 import { Layers,Circle } from "react-feather";
 
+import { Home, Users } from "react-feather";
+
+
 export default [
   {
     id: "home",
