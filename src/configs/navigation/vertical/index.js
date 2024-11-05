@@ -1,5 +1,5 @@
 import { Home } from "react-feather";
-import { Layers } from "react-feather";
+import { Layers,Circle } from "react-feather";
 
 export default [
   {
@@ -9,10 +9,18 @@ export default [
     navLink: "/home",
   },
   {
-    id: "course",
-    title: "دوره",
+    id: "thirdPage",
+    title: "مدیریت دوره",
     icon: <Layers />,
-    navLink: "/course",
+    // navLink: "/courses",
+    children: [
+      {
+        id: "third1Page",
+        title: "لیست دوره ها",
+        icon: <Circle size={12} />,
+        navLink: "/course",
+      },
+    ],
   },
   // {
   //   id: "secondPage",

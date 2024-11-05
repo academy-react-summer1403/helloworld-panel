@@ -28,14 +28,9 @@ const CardSnippet = (props) => {
     <Card className="card-snippet">
       <CardHeader>
         <CardTitle tag="h4">{title}</CardTitle>
-        <div className="views cursor-pointer" onClick={toggle}>
-          {IconCode}
-        </div>
       </CardHeader>
       <Wrapper>{children}</Wrapper>
-      <Collapse isOpen={isOpen}>
-        <CardBody>{code}</CardBody>
-      </Collapse>
+      <Collapse isOpen={isOpen}></Collapse>
     </Card>
   );
 };
