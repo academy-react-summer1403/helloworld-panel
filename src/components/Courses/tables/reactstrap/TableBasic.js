@@ -15,6 +15,8 @@ import avatar3 from "../../../../assets/images/Courses/avatar-s-7.jpg";
 // ** Icons Imports
 import { MoreVertical, Edit, Trash } from "react-feather";
 
+import CourseMap from "./CourseMap";
+
 // ** Reactstrap Imports
 import {
   Table,
@@ -109,69 +111,37 @@ const avatarGroupData4 = [
   },
 ];
 
-const Courses = () => {
+const Courses = ({ allCourses }) => {
   return (
     <Table responsive>
       <thead>
         <tr>
           <th>نام دوره</th>
+          <th>مدرس دوره</th>
           <th>نوع دوره</th>
           <th>سطح دوره</th>
           <th>وضعیت فعال بودن</th>
-          <th>وضعیت موجود بودن</th>
+          <th>وضعیت ثبت نام</th>
           <th>اقدام</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <img
-              className="me-75"
-              src={angular}
-              alt="angular"
-              height="20"
-              width="20"
-            />
-            <span className="align-middle fw-bold">Angular Project</span>
-          </td>
-          <td>
-            <span className="align-middle fw-bold">Angular Project</span>
-          </td>
-          <td>Peter Charles</td>
-          <td>
-            <Badge pill color="light-primary" className="me-1">
-              Active
-            </Badge>{" "}
-          </td>
-          <td>
-            <Badge pill color="light-primary" className="me-1">
-              Active
-            </Badge>
-          </td>
-          <td>
-            <UncontrolledDropdown>
-              <DropdownToggle
-                className="icon-btn hide-arrow"
-                color="transparent"
-                size="sm"
-                caret
-              >
-                <MoreVertical size={15} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
-                  <Edit className="me-50" size={15} />{" "}
-                  <span className="align-middle">Edit</span>
-                </DropdownItem>
-                <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
-                  <Trash className="me-50" size={15} />{" "}
-                  <span className="align-middle">Delete</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </td>
-        </tr>
-
+        <>
+          {allCourses?.map((item, index) => {
+            return (
+              <CourseMap
+                key={index}
+                isActive={item.isActive}
+                fullName={item.fullName}
+                isExpire={item.isExpire}
+                levelName={item.levelName}
+                typeName={item.typeName}
+                tumbImageAddress={item.tumbImageAddress}
+                title={item.title}
+              />
+            );
+          })}
+        </>
         {/* <tr>
           <td>
             <img

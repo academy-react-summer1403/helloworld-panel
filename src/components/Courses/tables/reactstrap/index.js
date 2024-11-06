@@ -26,8 +26,8 @@ const Tables = () => {
 
   const getAllCourseReport = async () => {
     const report = await getAllCourses();
-    console.log("report log:", report);
-    setAllCourses(report);
+    // console.log("report log:", report);
+    setAllCourses(report.data.courseDtos);
   };
 
   useEffect(() => {
@@ -40,14 +40,13 @@ const Tables = () => {
     prism.highlightAll();
   });
 
-  console.log("all result", getAllCourses);
-
   return (
     <Fragment>
       <Row>
         <Col sm="12">
           <Card title="دوره ها" noBody>
-            <TableBasic />
+            
+            <TableBasic allCourses={allCourses}/>
           </Card>
         </Col>
       </Row>

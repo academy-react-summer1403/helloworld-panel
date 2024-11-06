@@ -16,31 +16,29 @@ import Breadcrumbs from "../../../common/breadcrumbs";
 
 // ** API
 
-import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
+// import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
 
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
 
 const Tables = () => {
-  const [allCourses, setAllCourses] = useState([]);
+  // const [allCourses, setAllCourses] = useState([]);
 
-  const getAllCourseReport = async () => {
-    const report = await getAllCourses();
-    console.log("report log:", report);
-    setAllCourses(report);
-  };
+  // const getAllCourseReport = async () => {
+  //   const report = await getAllCourses();
+  //   console.log("report log:", report);
+  //   setAllCourses(report);
+  // };
 
-  useEffect(() => {
-    getAllCourseReport();
-  }, []);
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, []);
 
-  console.log(allCourses)
+  // console.log(allCourses)
 
   useEffect(() => {
     prism.highlightAll();
   });
-
-  console.log("all result", getAllCourses);
 
   return (
     <Fragment>
