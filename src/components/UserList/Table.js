@@ -40,6 +40,8 @@ import {
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
+import getUserList from '../../core/services/api/User'
+
 // ** Table Header
 const CustomHeader = ({  toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   // ** Converts table to CSV
@@ -140,158 +142,117 @@ const CustomHeader = ({  toggleSidebar, handlePerPage, rowsPerPage, handleFilter
 }
 
 const UsersList = () => {
-  // ** Store Vars
-  const dispatch = useDispatch()
+  const [SortingCol, setSortingCol] = useState("desc");
+  const [sortColumn, setSortColumn] = useState("id");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [RowsOfPage, setRowsOfPage] = useState(5);
 
-  // ** States
-  const [sort, setSort] = useState('desc')
-  const [searchTerm, setSearchTerm] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [sortColumn, setSortColumn] = useState('id')
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
-  const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [searchText, setSearchText] = useState();
+  const [PageNumber, setPageNumber] = useState(0);
+  const [perPage, setPerPage] = useState(5);
+  const [total, setTotal] = useState();
+  const [userList, setUserList] = useState([]);
+  const [roleId, setRolesId] = useState([]);
+  const [sortType, setSortType] = useState();
+  const [query, setQuery] = useState();
 
-  // ** Function to toggle sidebar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+  const getList = async () => {
+    const params = {
+      currentPage,
+      PageNumber,
+      RowsOfPage,
+      SortingCol,
+      sortType,
+      query,
+    };
+    const user = await getUserList(params);
+    console.log("user:", user);
 
-  // ** Get data on mount
- 
+    setUserList(user.data.listUser);
+    setTotal(user.data.totalCount);
+    setRolesId(user.data.roles);
+  };
 
-  // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
-  ]
+  useEffect(() => {
+    getList();
+  }, []);
 
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
-  ]
+  const handleFilter = (val) => {
+    textTimeOut(() => {
+      setSearchText(val);
+    }, 800);
+  };
 
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
+  const handlePerPage = (e) => {
+    setRowsOfPage(parseInt(e.target.value));
+  };
 
- 
+  const handlePagination = (page) => {
+    setCurrentPage(page.selected + 1);
+  };
 
- 
-
-  // ** Custom Pagination
   const CustomPagination = () => {
+    const count = Number((total / RowsOfPage).toFixed(0));
 
     return (
       <ReactPaginate
-        previousLabel={''}
-        nextLabel={''}
+        nextLabel=""
+        breakLabel="..."
+        previousLabel=""
         pageCount={count || 1}
-        activeClassName='active'
+        activeClassName="active"
+        breakClassName="page-item"
+        pageClassName={"page-item"}
+        breakLinkClassName="page-link"
+        nextLinkClassName={"page-link"}
+        pageLinkClassName={"page-link"}
+        nextClassName={"page-item next"}
+        previousLinkClassName={"page-link"}
+        previousClassName={"page-item prev"}
+        onPageChange={(page) => handlePagination(page)}
         forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        onPageChange={page => handlePagination(page)}
-        pageClassName={'page-item'}
-        nextLinkClassName={'page-link'}
-        nextClassName={'page-item next'}
-        previousClassName={'page-item prev'}
-        previousLinkClassName={'page-link'}
-        pageLinkClassName={'page-link'}
-        containerClassName={'pagination react-paginate justify-content-end my-2 pe-1'}
+        containerClassName={"pagination react-paginate justify-content-end p-1"}
       />
-    )
-  }
+    );
+  };
 
-  // ** Table data to render
   
-
- 
-
   return (
-    <Fragment>
+    <div className="invoice-list-wrapper">
       <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Filters</CardTitle>
-        </CardHeader>
-        <CardBody>
+        <Fragment>
           <Row>
-            <Col md='4'>
-              <Label for='role-select'>Role</Label>
-              <Select
-                isClearable={false}
-                value={currentRole}
-                options={roleOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-                
-              />
-            </Col>
-            <Col className='my-md-0 my-1' md='4'>
-              <Label for='plan-select'>Plan</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-             
-              />
-            </Col>
-            <Col md='4'>
-              <Label for='status-select'>Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                
-              />
+            <Col xs={12}>
+            
+
+              <div className="invoice-list-dataTable react-dataTable">
+                <DataTable
+                  noHeader
+                  pagination
+                  sortServer
+                  paginationServer
+                  subHeader={true}
+                  columns={columns}
+                  responsive={true}    
+                  sortIcon={<ChevronDown />}
+                  className="react-dataTable"
+                  defaultSortField="invoiceId"
+                  paginationDefaultPage={currentPage}
+                  paginationComponent={CustomPagination}
+                  subHeaderComponent={
+                    <CustomHeader
+                      handleFilter={handleFilter}
+                      handlePerPage={handlePerPage}
+                    />
+                  }
+                />
+              </div>
             </Col>
           </Row>
-        </CardBody>
+        </Fragment>
       </Card>
+    </div>
+  );
+};
 
-      <Card className='overflow-hidden'>
-        <div className='react-dataTable'>
-          <DataTable
-            noHeader
-            subHeader
-            sortServer
-            pagination
-            responsive
-            paginationServer
-            columns={columns}
-            // onSort={handleSort}
-            sortIcon={<ChevronDown />}
-            className='react-dataTable'
-            paginationComponent={CustomPagination}
-            subHeaderComponent={
-              <CustomHeader
-                searchTerm={searchTerm}
-                rowsPerPage={rowsPerPage}
-                toggleSidebar={toggleSidebar}
-              />
-            }
-          />
-        </div>
-      </Card>
-
-      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
-    </Fragment>
-  )
-}
-
-export default UsersList
+export default UsersList;

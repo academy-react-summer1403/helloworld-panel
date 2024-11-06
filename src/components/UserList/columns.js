@@ -1,173 +1,206 @@
-// ** React Imports
-import { Link } from 'react-router-dom'
+import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 // ** Custom Components
-import Avatar from '@components/common/avatar'
-
-// ** Store & Actions
-import { store } from '@store/store'
-import { getUser, deleteUser } from './store'
-
-// ** Icons Imports
-import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import Avatar from "@components/common/avatar";
 
 // ** Reactstrap Imports
-import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import {
+  Badge,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledTooltip,
+  UncontrolledDropdown,
+} from "reactstrap";
 
-// ** Renders Client Columns
-const renderClient = row => {
-  if (row.avatar.length) {
-    return <Avatar className='me-1' img={row.avatar} width='32' height='32' />
+// ** Third Party Components
+import {
+  Database,
+  Edit2,
+  Settings,
+  Slack,
+  User,
+  Eye,
+  Send,
+  Edit,
+  Copy,
+  Save,
+  Info,
+  Trash,
+  PieChart,
+  Download,
+  TrendingUp,
+  CheckCircle,
+  MoreVertical,
+  ArrowDownCircle,
+} from "react-feather";
+
+
+// ** Vars
+const invoiceStatusObj = {
+  Sent: { color: "light-secondary", icon: Send },
+  Paid: { color: "light-success", icon: CheckCircle },
+  Draft: { color: "light-primary", icon: Save },
+  Downloaded: { color: "light-info", icon: ArrowDownCircle },
+  "Past Due": { color: "light-danger", icon: Info },
+  "Partial Payment": { color: "light-warning", icon: PieChart },
+};
+
+const renderUser = (row) => {
+  if (row.pictureAddress) {
+    return (
+      <Avatar
+        className="me-1"
+        img={row.pictureAddress}
+        width="32"
+        height="32"
+      />
+    );
   } else {
     return (
       <Avatar
         initials
-        className='me-1'
-        color={row.avatarColor || 'light-primary'}
-        content={row.fullName || 'John Doe'}
+        className="me-1"
+        color={"light-success"}
+        content={row.fname + " " + row.lname || " "}
       />
-    )
+    );
   }
-}
-
-// ** Renders Role Columns
-const renderRole = row => {
+};
+const renderRole = (row) => {
   const roleObj = {
-    subscriber: {
-      class: 'text-primary',
-      icon: User
+    Administrator: {
+      class: "text-success",
+      icon: Edit2,
     },
-    maintainer: {
-      class: 'text-success',
-      icon: Database
+    Teacher: {
+      class: "text-info",
+      icon: Database,
     },
-    editor: {
-      class: 'text-info',
-      icon: Edit2
+    Student: {
+      class: "text-primary",
+      icon: User,
     },
-    author: {
-      class: 'text-warning',
-      icon: Settings
+    auther: {
+      class: "text-warning",
+      icon: Settings,
     },
     admin: {
-      class: 'text-danger',
-      icon: Slack
-    }
-  }
+      class: "text-danger",
+      icon: Slack,
+    },
+  };
 
-  const Icon = roleObj[row.role] ? roleObj[row.role].icon : Edit2
+  const Icon = roleObj[row.userRoles] ? roleObj[row.userRoles].icon : Edit2;
+
+  const renderRoleName = () => {
+    if (row.userRoles?.includes("Administrator")) {
+      return "مدیر";
+    } else if (row.userRoles?.includes("Teacher")) {
+      return "استاد";
+    } else if (row.userRoles?.includes("Student")) {
+      return "دانشجو";
+    } else {
+      return " ...";
+    }
+  };
 
   return (
-    <span className='text-truncate text-capitalize align-middle'>
-      <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : ''} me-50`} />
-      {row.role}
+    <span className="text-truncate text-capitalize align-middle">
+      <Icon
+        size={18}
+        className={`${
+          roleObj[row.userRoles] ? roleObj[row.userRoles].class : ""
+        } me-50`}
+      />
+      {renderRoleName()}
     </span>
-  )
-}
+  );
+};
 
 const statusObj = {
-  pending: 'light-warning',
-  active: 'light-success',
-  inactive: 'light-secondary'
-}
-
+  True: "light-success",
+  False: "light-warning",
+};
+// ** Table columns
 export const columns = [
   {
-    name: 'User',
+    name: "کاربر",
     sortable: true,
-    minWidth: '300px',
-    sortField: 'fullName',
-    selector: row => row.fullName,
-    cell: row => (
-      <div className='d-flex justify-content-left align-items-center'>
-        {renderClient(row)}
-        <div className='d-flex flex-column'>
+    width: "450px",
+    sortField: "fname",
+    selector: (row) => row.fullName,
+    cell: (row) => (
+      <div className="d-flex justify-content-left align-items-center">
+        {renderUser(row)}
+        <div className="d-flex flex-column">
           <Link
-            to={`/apps/user/view/${row.id}`}
-            className='user_name text-truncate text-body'
-            onClick={() => store.dispatch(getUser(row.id))}
+            to={`/users/${row.id}`}
+            className="user_name text-truncate text-body"
           >
-            <span className='fw-bolder'>{row.fullName}</span>
+            <span className="fw-bolder">
+              {row.fname && row.lname ? row.fname + " " + row.lname : " کاربر"}
+            </span>
           </Link>
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          <small className="text-truncate text-muted mb-0">{row.gmail}</small>
         </div>
       </div>
-    )
+    ),
   },
   {
-    name: 'Role',
+    name: " تلفن همراه",
+    width: "250px",
     sortable: true,
-    minWidth: '172px',
-    sortField: 'role',
-    selector: row => row.role,
-    cell: row => renderRole(row)
+    sortField: "phoneNumber",
+    cell: (row) => <span className="text-capitalize">{row.phoneNumber}</span>,
   },
   {
-    name: 'Plan',
-    minWidth: '138px',
+    name: "نقش",
     sortable: true,
-    sortField: 'currentPlan',
-    selector: row => row.currentPlan,
-    cell: row => <span className='text-capitalize'>{row.currentPlan}</span>
+    width: "155px",
+    sortField: "role",
+    selector: (row) => row.role,
+    cell: (row) => renderRole(row),
   },
   {
-    name: 'Billing',
-    minWidth: '230px',
+    name: "وضعیت",
+    width: "120px",
     sortable: true,
-    sortField: 'billing',
-    selector: row => row.billing,
-    cell: row => <span className='text-capitalize'>{row.billing}</span>
-  },
-  {
-    name: 'Status',
-    minWidth: '138px',
-    sortable: true,
-    sortField: 'status',
-    selector: row => row.status,
-    cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.status}
+    sortField: "active",
+    selector: (row) => row.active,
+    cell: (row) => (
+      <Badge className="text-capitalize" color={statusObj[row.active]} pill>
+        {row.active ? "فعال" : "غیرفعال"}
       </Badge>
-    )
+    ),
   },
+
   {
-    name: 'Actions',
-    minWidth: '100px',
-    cell: row => (
-      <div className='column-action'>
+    name: " سایر",
+    minWidth: "110px",
+    cell: (row) => (
+      <div className="column-action d-flex align-items-center">
         <UncontrolledDropdown>
-          <DropdownToggle tag='div' className='btn btn-sm'>
-            <MoreVertical size={14} className='cursor-pointer' />
+          <DropdownToggle tag="span">
+            <MoreVertical size={17} className="cursor-pointer" />
           </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem
-              tag={Link}
-              className='w-100'
-              to={`/apps/user/view/${row.id}`}
-              onClick={() => store.dispatch(getUser(row.id))}
-            >
-              <FileText size={14} className='me-50' />
-              <span className='align-middle'>Details</span>
+          <DropdownMenu end>
+            <DropdownItem tag={Link}  className="w-100">
+              <Info size={14} className="me-50" />
+              <span className="align-middle">جزئیات</span>
             </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Archive size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
+            <DropdownItem tag={Link}  className="w-100">
+              <Edit size={14} className="me-50" />
+              <span className="align-middle"> ویرایش</span>
             </DropdownItem>
-            <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                store.dispatch(deleteUser(row.id))
-              }}
-            >
-              <Trash2 size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
+            <DropdownItem className="w-100" onClick={(e) => e.preventDefault()}>
+              <Trash size={14} className="me-50" />
+              <span className="align-middle"> حذف</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>
-    )
-  }
-]
+    ),
+  },
+];
