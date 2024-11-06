@@ -216,6 +216,16 @@ const UsersList = () => {
     );
   };
 
+  const dataToRender = () => {
+    if (userList.length > 0) {
+      return userList;
+    } else if (total === 0) {
+      return [];
+    } else {
+      return userList?.slice(0, RowsOfPage);
+    }
+  };
+
   
   return (
     <div className="invoice-list-wrapper">
@@ -233,6 +243,8 @@ const UsersList = () => {
                   paginationServer
                   subHeader={true}
                   columns={columns}
+                  data={dataToRender()}
+
                   responsive={true}    
                   sortIcon={<ChevronDown />}
                   className="react-dataTable"
