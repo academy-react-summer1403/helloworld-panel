@@ -9,6 +9,7 @@ import { User} from "react-feather";
 
 // ** import components
 
+import AllCourseReserve from "../tables/reactstrapReserve";
 import AllCourse from "../tables/reactstrap";
 
 const UserTabs = ({ active, toggleTab }) => {
@@ -33,7 +34,7 @@ const UserTabs = ({ active, toggleTab }) => {
           <AllCourse />
         </TabPane>
         <TabPane tabId="2">
-          <div> testttttttttt</div>{" "}
+          <AllCourseReserve/>
         </TabPane>
       </TabContent>
     </Fragment>
