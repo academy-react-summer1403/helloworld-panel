@@ -22,14 +22,14 @@ import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCours
 import { tableBasic } from "./TableSourceCode";
 
 const Tables = () => {
+  const [searchQuery, setSearchQuery] = useState();
   const [allCourses, setAllCourses] = useState([]);
   const [sortLenght, setSortLenght] = useState(10);
-
-  console.log(sortLenght);
 
   const getAllCourseReport = async () => {
     const params = {
       RowsOfPage: sortLenght,
+      Query: searchQuery,
     };
     const report = await getAllCourses(params);
     setAllCourses(report.data.courseDtos);
@@ -48,6 +48,10 @@ const Tables = () => {
   useEffect(() => {
     prism.highlightAll();
   });
+
+  useEffect(() => {
+    getAllCourseReport();
+  }, [searchQuery]);
 
   return (
     <Fragment>
@@ -106,8 +110,8 @@ const Tables = () => {
                       id="search-invoice"
                       className="ms-50 me-2 w-100"
                       type="text"
-                      // value={value}
-                      // onChange={e => handleFilter(e.target.value)}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="جست و جو در دوره ها"
                     />
                   </div>
