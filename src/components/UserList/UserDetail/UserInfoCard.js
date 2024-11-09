@@ -70,7 +70,8 @@ const languageOptions = [
   { value: "dutch", label: "Dutch" },
 ];
 
-const UserInfoCard = ({ data }) => {
+const UserInfoCard = ({ data}) => {
+  console.log("userinfocard:" , data)
   const MySwal = withReactContent(Swal);
   const handleConfirmCancel = () => {
     return MySwal.fire({
@@ -275,7 +276,7 @@ const UserInfoCard = ({ data }) => {
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">ایمیل</span>
-                  <Input placeholder={data?.gmail}></Input>
+                  <Input placeholder={data.data?.gmail}></Input>
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">وضعیت</span>
