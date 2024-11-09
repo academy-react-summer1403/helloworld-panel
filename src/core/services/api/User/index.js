@@ -14,3 +14,15 @@ const getUserList = async (params) => {
   }
 };
 export default getUserList;
+
+
+export const getUserWithId = async (id) => {
+  try {
+    const result = await http.get(`/User/UserDetails/${id}`);
+
+    return result;
+  } catch (error) {
+    return false;
+  }
+};
+

@@ -1,8 +1,9 @@
-import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { Fragment, useState } from "react";
 
 // ** Custom Components
 import Avatar from "@components/common/avatar";
+import Chart from "react-apexcharts";
 
 // ** Reactstrap Imports
 import {
@@ -13,6 +14,7 @@ import {
   UncontrolledTooltip,
   UncontrolledDropdown,
 } from "reactstrap";
+import { useDispatch } from "react-redux";
 
 // ** Third Party Components
 import {
@@ -35,7 +37,7 @@ import {
   MoreVertical,
   ArrowDownCircle,
 } from "react-feather";
-
+import DeleteUser from "./DeleteUser/deleteuser";
 
 // ** Vars
 const invoiceStatusObj = {
@@ -45,6 +47,50 @@ const invoiceStatusObj = {
   Downloaded: { color: "light-info", icon: ArrowDownCircle },
   "Past Due": { color: "light-danger", icon: Info },
   "Partial Payment": { color: "light-warning", icon: PieChart },
+};
+
+// ** Chart Options
+const options = {
+  type: "radialBar",
+  series: [54.4],
+  height: 30,
+  width: 50,
+  options: {
+    grid: {
+      show: false,
+      padding: {
+        left: -15,
+        right: -15,
+        top: -12,
+        bottom: -15,
+      },
+    },
+    colors: ["#e01010"],
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          size: "35%",
+        },
+        track: {
+          background: "#ebe9f1",
+          strokeWidth: "50%",
+        },
+        dataLabels: {
+          showOn: "always",
+          name: {
+            show: false,
+          },
+          value: {
+            show: false,
+            fontSize: "10px",
+          },
+        },
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+  },
 };
 
 const renderUser = (row) => {
@@ -123,12 +169,14 @@ const statusObj = {
   True: "light-success",
   False: "light-warning",
 };
+
 // ** Table columns
+
 export const columns = [
   {
     name: "کاربر",
     sortable: true,
-    width: "450px",
+    width: "400px",
     sortField: "fname",
     selector: (row) => row.fullName,
     cell: (row) => (
@@ -148,6 +196,23 @@ export const columns = [
       </div>
     ),
   },
+  {
+    name: "  تکمیل پروفایل",
+    width: "150px",
+    sortable: true,
+    sortField: "chart",
+    cell: (row) => (
+      <Chart
+        id="chart"
+        options={options.options}
+        series={[row.profileCompletionPercentage]}
+        type={options.type}
+        height={options.height}
+        width={options.width}
+      />
+    ),
+  },
+
   {
     name: " تلفن همراه",
     width: "250px",
@@ -186,17 +251,19 @@ export const columns = [
             <MoreVertical size={17} className="cursor-pointer" />
           </DropdownToggle>
           <DropdownMenu end>
-            <DropdownItem tag={Link}  className="w-100">
+            <DropdownItem tag={Link} to={`/user/${row.id}`} className="w-100">
               <Info size={14} className="me-50" />
               <span className="align-middle">جزئیات</span>
             </DropdownItem>
-            <DropdownItem tag={Link}  className="w-100">
+            <DropdownItem tag={Link} className="w-100">
               <Edit size={14} className="me-50" />
               <span className="align-middle"> ویرایش</span>
             </DropdownItem>
-            <DropdownItem className="w-100" onClick={(e) => e.preventDefault()}>
+
+            <DropdownItem  className="w-100 d-block">
               <Trash size={14} className="me-50" />
-              <span className="align-middle"> حذف</span>
+
+              <span  className="align-middle ">حذف</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
