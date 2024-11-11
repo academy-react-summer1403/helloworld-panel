@@ -24,6 +24,8 @@ import { Check, Briefcase, X } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import toast from "react-hot-toast";
+import Chart from "react-apexcharts";
+
 
 // ** Custom Components
 import Avatar from "@components/common/avatar";
@@ -33,6 +35,49 @@ import { selectThemeColors } from "@utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
+// ** Chart Options
+const options = {
+  type: "radialBar",
+  series: [54.4],
+  height: 30,
+  width: 50,
+  options: {
+    grid: {
+      show: false,
+      padding: {
+        left:-15,
+        right: -15,
+        top: -12,
+        bottom: -15,
+      },
+    },
+    colors: ["#e01010"],
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          size: "35%",
+        },
+        track: {
+          background: "#ebe9f1",
+          strokeWidth: "50%",
+        },
+        dataLabels: {
+          showOn: "always",
+          name: {
+            show: false,
+          },
+          value: {
+            show: false,
+            fontSize: "10px",
+          },
+        },
+      },
+    },
+    stroke: {
+      lineCap: "round",
+    },
+  },
+};
 
 const roleColors = {
   editor: "light-info",
@@ -72,78 +117,78 @@ const languageOptions = [
 
 const UserInfoCard = ({ data}) => {
   console.log("userinfocard:" , data)
-  const MySwal = withReactContent(Swal);
-  const handleConfirmCancel = () => {
-    return MySwal.fire({
-      title: "آیا از تغییرات خود مطمئن هستید؟",
-      // text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: " Yes",
-      customClass: {
-        confirmButton: "btn btn-primary",
-        cancelButton: "btn btn-danger ms-1",
-      },
-      buttonsStyling: false,
-    }).then(async function (result) {
-      if (result.value) {
-        MySwal.fire({
-          icon: "success",
-          title: "پاک شد",
-          // text: 'Your file has been deleted.',
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
-      } else if (result.dismiss === MySwal.DismissReason.cancel) {
-        MySwal.fire({
-          title: "لغو گردید",
-          // text: 'Your imaginary file is safe :)',
-          icon: "error",
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
-      }
-    });
-  };
+  // const MySwal = withReactContent(Swal);
+  // const handleConfirmCancel = () => {
+  //   return MySwal.fire({
+  //     title: "آیا از تغییرات خود مطمئن هستید؟",
+  //     // text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: " Yes",
+  //     customClass: {
+  //       confirmButton: "btn btn-primary",
+  //       cancelButton: "btn btn-danger ms-1",
+  //     },
+  //     buttonsStyling: false,
+  //   }).then(async function (result) {
+  //     if (result.value) {
+  //       MySwal.fire({
+  //         icon: "success",
+  //         title: "پاک شد",
+  //         // text: 'Your file has been deleted.',
+  //         customClass: {
+  //           confirmButton: "btn btn-success",
+  //         },
+  //       });
+  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
+  //       MySwal.fire({
+  //         title: "لغو گردید",
+  //         // text: 'Your imaginary file is safe :)',
+  //         icon: "error",
+  //         customClass: {
+  //           confirmButton: "btn btn-success",
+  //         },
+  //       });
+  //     }
+  //   });
+  // };
 
-  const handleConfirmText = () => {
-    return MySwal.fire({
-      title: "آیا از ثبت ویرایش مطمئن هستید؟",
-      // text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes",
-      customClass: {
-        confirmButton: "btn btn-primary",
-        cancelButton: "btn btn-outline-danger ms-1",
-      },
-      buttonsStyling: false,
-    }).then(function (result) {
-      if (result.value) {
-        MySwal.fire({
-          icon: "success",
-          title: "با موفقیت ثبت شد.",
-          // text: 'Your file has been deleted.',
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
-      }
-    });
-  };
+  // const handleConfirmText = () => {
+  //   return MySwal.fire({
+  //     title: "آیا از ثبت ویرایش مطمئن هستید؟",
+  //     // text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Yes",
+  //     customClass: {
+  //       confirmButton: "btn btn-primary",
+  //       cancelButton: "btn btn-outline-danger ms-1",
+  //     },
+  //     buttonsStyling: false,
+  //   }).then(function (result) {
+  //     if (result.value) {
+  //       MySwal.fire({
+  //         icon: "success",
+  //         title: "با موفقیت ثبت شد.",
+  //         // text: 'Your file has been deleted.',
+  //         customClass: {
+  //           confirmButton: "btn btn-success",
+  //         },
+  //       });
+  //     }
+  //   });
+  // };
   // ** State
   const [show, setShow] = useState(false);
 
   const renderUserImage = () => {
-    if (data !== null && data?.currentPictureAddress !== "Not-set") {
+    if (data !== null && data?.data?.currentPictureAddress !== "Not-set") {
       return (
         <img
           height="110"
           width="110"
           alt="user-avatar"
-          src={data?.currentPictureAddress}
+          src={data?.data?.currentPictureAddress}
           className="img-fluid rounded mt-3 mb-2"
         />
       );
@@ -195,40 +240,7 @@ const UserInfoCard = ({ data}) => {
     }
   };
 
-  // const handleSuspendedClick = () => {
-  //   return MySwal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert user!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonText: "Yes, Suspend user!",
-  //     customClass: {
-  //       confirmButton: "btn btn-primary",
-  //       cancelButton: "btn btn-outline-danger ms-1",
-  //     },
-  //     buttonsStyling: false,
-  //   }).then(function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: "success",
-  //         title: "Suspended!",
-  //         text: "User has been suspended.",
-  //         customClass: {
-  //           confirmButton: "btn btn-success",
-  //         },
-  //       });
-  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
-  //       MySwal.fire({
-  //         title: "Cancelled",
-  //         text: "Cancelled Suspension :)",
-  //         icon: "error",
-  //         customClass: {
-  //           confirmButton: "btn btn-success",
-  //         },
-  //       });
-  //     }
-  //   });
-  // };
+ 
 
   return (
     <Fragment>
@@ -239,7 +251,7 @@ const UserInfoCard = ({ data}) => {
               {renderUserImage()}
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info">
-                  <h4>{`${data?.fName || "کاربر"} ${data?.lName || ""}`}</h4>
+                  <h4>{`${data?.data?.fName || "کاربر"} ${data?.data?.lName || ""}`}</h4>
                   <div className="d-flex flex-wrap justify-content-center gap-1 mt-1">
                     {/* {data?.roles.map((role) => (
                       <Badge
@@ -257,12 +269,26 @@ const UserInfoCard = ({ data}) => {
           </div>
           <div className="d-flex justify-content-around my-2 pt-75">
             <div className="d-flex align-items-start">
-              <Badge color="light-primary" className="rounded p-75">
+              {/* <Badge color="light-primary" className="rounded p-75">
                 <Briefcase className="font-medium-2" />
-              </Badge>
+              </Badge> */}
               <div className="ms-75">
                 <h4 className="mb-0">چند درصد از پروفایل شما کامل شد؟</h4>
-                <small>{data?.profileCompletionPercentage}%</small>
+                <Label
+                          className="position-absolute top-50 start-10 translate-middle"
+                          for="chart"
+                        >
+                          {data?.data?.profileCompletionPercentage}%
+                        </Label>
+                <Chart
+        id="chart"
+        options={options.options}
+        series={[data?.data?.profileCompletionPercentage]}
+        type={options.type}
+        height={options.height}
+        width={options.width}
+      />                {/* <small>{data?.data?.profileCompletionPercentage}%</small> */}
+
               </div>
             </div>
           </div>
@@ -271,26 +297,35 @@ const UserInfoCard = ({ data}) => {
             {data !== null ? (
               <ul className="list-unstyled">
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">نام کاربر</span>
-                  <Input placeholder={data?.userName}></Input>
+                  <span className="fw-bolder me-25">نام کاربر:</span>
+                  <span >{data?.data?.userName}</span>
                 </li>
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">ایمیل</span>
-                  <Input placeholder={data.data?.gmail}></Input>
+                  <span className="fw-bolder me-25">ایمیل:</span>
+                  <span >{data?.data?.gmail}</span>
                 </li>
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">وضعیت</span>
+                  <span className="fw-bolder me-25">وضعیت:</span>
                   <Badge
                     className="text-capitalize"
-                    color={statusColors[data?.active]}
+                    color={statusColors[data?.data?.active]}
                   >
-                    {data?.active ? "فعال" : "غیر فعال"}
+                    {data?.data?.active ? "فعال" : "غیر فعال"}
                   </Badge>
                 </li>
-                {/* <li className='mb-75'>
-                  <span className='fw-bolder me-25'>نقش</span>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">تایید دو مرحله‌ایی :</span>
+                  <Badge
+                    className="text-capitalize"
+                    color={statusColors[data?.data?.twoStepAuth]}
+                  >
+                    {data?.data?.twoStepAuth ? "فعال" : "غیر فعال"}
+                  </Badge>
+                </li>
+                <li className='mb-75'>
+                  <span className='fw-bolder me-25'>نقش:</span>
                   <div className="d-flex flex-wrap user-details-roles-wrapper">
-                    {data?.roles.map((role) => (
+                    {data?.data?.roles.map((role) => (
                       <Badge
                         key={role.id}
                         color="light-secondary"
@@ -300,10 +335,10 @@ const UserInfoCard = ({ data}) => {
                       </Badge>
                     ))}
                   </div>
-                </li> */}
+                </li>
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">شماره همراه</span>
-                  <Input placeholder={data?.phoneNumber}></Input>
+                  <span className="fw-bolder me-25">شماره همراه:</span>
+                  <span >{data?.data?.phoneNumber}</span>
                 </li>
                 <li className="mb-75">
                   {/* <span className='fw-bolder me-25'>Contact:</span> */}
@@ -320,10 +355,8 @@ const UserInfoCard = ({ data}) => {
               </ul>
             ) : null}
           </div>
-          <div className="d-flex justify-content-center pt-2">
-            <Button color="primary" onClick={handleConfirmCancel}>
-              ثبت ویرایش
-            </Button>
+          {/* <div className="d-flex justify-content-center pt-2">
+           
             <Button
               className="ms-1"
               color="danger"
@@ -332,7 +365,7 @@ const UserInfoCard = ({ data}) => {
             >
               حذف کاربر
             </Button>
-          </div>        
+          </div>         */}
         </CardBody>
       </Card>
       {/* <Modal
