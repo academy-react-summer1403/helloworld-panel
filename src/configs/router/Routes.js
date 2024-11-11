@@ -14,6 +14,7 @@ import PublicRoute from "@coreComponents/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 
+
 const getLayout = {
   blank: <BlankLayout />,
   vertical: <VerticalLayout />,
@@ -31,6 +32,8 @@ const Home = lazy(() => import("../../pages/Home/Home"));
 const Courses = lazy(() => import("../../pages/Courses/Courses"));
 
 const User = lazy(() => import("../../pages/User/User"));
+const UserDetail = lazy(() => import("../../pages/UserDetail/UserDetil"));
+const DeleteUserPage = lazy(() => import("../../pages/DeleteUser/DeleteUser"));
 
 const SecondPage = lazy(() => import("../../pages/SecondPage"));
 const Login = lazy(() => import("../../pages/Auth/Login"));
@@ -53,6 +56,14 @@ const Routes = [
   {
     path: "/user",
     element: <User/>
+  },
+  {
+    path: "/user/:id",
+    element: <UserDetail/>
+  },
+  {
+    path: "/user/delete/:id",
+    element: <DeleteUserPage/>
   },
   {
 
