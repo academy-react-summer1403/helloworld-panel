@@ -131,6 +131,7 @@ const Courses = ({ allCourses }) => {
             return (
               <CourseMap
                 key={index}
+                courseId={item.courseId}
                 isActive={item.isActive}
                 fullName={item.fullName}
                 isExpire={item.isExpire}

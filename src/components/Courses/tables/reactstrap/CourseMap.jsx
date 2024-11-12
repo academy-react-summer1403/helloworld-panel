@@ -10,6 +10,7 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 function CourseMap({
   title,
@@ -18,8 +19,11 @@ function CourseMap({
   tumbImageAddress,
   fullName,
   isActive,
-  isExpire
+  isExpire,
+  courseId
 }) {
+
+  console.log("testtttt" , courseId)
   return (
     <tr>
       <td>
@@ -70,7 +74,7 @@ function CourseMap({
             <MoreVertical size={15} />
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
+            <DropdownItem tag={Link} to={`/course/${courseId}`}>
               <Edit className="me-50" size={15} />{" "}
               <span className="align-middle">جزئیات</span>
             </DropdownItem>
