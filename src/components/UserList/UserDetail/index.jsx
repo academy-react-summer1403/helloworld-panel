@@ -7,12 +7,14 @@ import { Col, Row } from "reactstrap";
 
 // ** User View Components
 import UserInfoCard from "../UserDetail/UserInfoCard";
+
 import { getUserWithId } from "../../../core/services/api/User/index";
 
 // ** Core Imports
 
 // ** Styles
 import "@styles/react/apps/app-users.scss";
+import UserTabs from "../UserDetail/Tabs";
 
 
 const UserDetail = () => {
@@ -38,9 +40,9 @@ const UserDetail = () => {
         <Col xl="4" lg="5" xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
           <UserInfoCard data={data}   />
         </Col>
-        {/* <Col xl="8" lg="7" xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-          <UserProjectsList />
-        </Col> */}
+        <Col xl="8" lg="7" xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
+          <UserTabs/>
+        </Col>
       </Row>
     </div>
   );

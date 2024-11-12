@@ -13,6 +13,7 @@ import {
   DropdownToggle,
   UncontrolledTooltip,
   UncontrolledDropdown,
+  Label
 } from "reactstrap";
 import { useDispatch } from "react-redux";
 
@@ -202,6 +203,13 @@ export const columns = [
     sortable: true,
     sortField: "chart",
     cell: (row) => (
+      <>
+      <Label
+      className="position-absolute top-50 start-10 end-50 translate-middle"
+      for="chart"
+    >
+      {row?.profileCompletionPercentage}%
+    </Label>
       <Chart
         id="chart"
         options={options.options}
@@ -210,6 +218,7 @@ export const columns = [
         height={options.height}
         width={options.width}
       />
+      </>
     ),
   },
 
