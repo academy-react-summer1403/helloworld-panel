@@ -117,68 +117,7 @@ const languageOptions = [
 
 const UserInfoCard = ({ data}) => {
   console.log("userinfocard:" , data)
-  // const MySwal = withReactContent(Swal);
-  // const handleConfirmCancel = () => {
-  //   return MySwal.fire({
-  //     title: "آیا از تغییرات خود مطمئن هستید؟",
-  //     // text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonText: " Yes",
-  //     customClass: {
-  //       confirmButton: "btn btn-primary",
-  //       cancelButton: "btn btn-danger ms-1",
-  //     },
-  //     buttonsStyling: false,
-  //   }).then(async function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: "success",
-  //         title: "پاک شد",
-  //         // text: 'Your file has been deleted.',
-  //         customClass: {
-  //           confirmButton: "btn btn-success",
-  //         },
-  //       });
-  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
-  //       MySwal.fire({
-  //         title: "لغو گردید",
-  //         // text: 'Your imaginary file is safe :)',
-  //         icon: "error",
-  //         customClass: {
-  //           confirmButton: "btn btn-success",
-  //         },
-  //       });
-  //     }
-  //   });
-  // };
-
-  // const handleConfirmText = () => {
-  //   return MySwal.fire({
-  //     title: "آیا از ثبت ویرایش مطمئن هستید؟",
-  //     // text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonText: "Yes",
-  //     customClass: {
-  //       confirmButton: "btn btn-primary",
-  //       cancelButton: "btn btn-outline-danger ms-1",
-  //     },
-  //     buttonsStyling: false,
-  //   }).then(function (result) {
-  //     if (result.value) {
-  //       MySwal.fire({
-  //         icon: "success",
-  //         title: "با موفقیت ثبت شد.",
-  //         // text: 'Your file has been deleted.',
-  //         customClass: {
-  //           confirmButton: "btn btn-success",
-  //         },
-  //       });
-  //     }
-  //   });
-  // };
-  // ** State
+  
   const [show, setShow] = useState(false);
 
   const renderUserImage = () => {
