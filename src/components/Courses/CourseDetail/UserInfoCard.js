@@ -17,6 +17,8 @@ import {
   ModalHeader,
 } from "reactstrap";
 
+import noImage from "../../../assets/images/Courses/noImage.png";
+
 // ** Third Party Components
 import Swal from "sweetalert2";
 import Select from "react-select";
@@ -25,7 +27,6 @@ import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import toast from "react-hot-toast";
 import Chart from "react-apexcharts";
-
 
 // ** Custom Components
 import Avatar from "@components/common/avatar";
@@ -36,6 +37,7 @@ import { selectThemeColors } from "@utils";
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 // ** Chart Options
+
 const options = {
   type: "radialBar",
   series: [54.4],
@@ -45,7 +47,7 @@ const options = {
     grid: {
       show: false,
       padding: {
-        left:-15,
+        left: -15,
         right: -15,
         top: -12,
         bottom: -15,
@@ -115,19 +117,19 @@ const languageOptions = [
   { value: "dutch", label: "Dutch" },
 ];
 
-const UserInfoCard = ({ data}) => {
-  console.log("userinfocard:" , data)
-  
+const UserInfoCard = ({ data }) => {
+  console.log("userinfocard:", data);
+
   const [show, setShow] = useState(false);
 
   const renderUserImage = () => {
-    if (data !== null && data?.data?.currentPictureAddress !== "Not-set") {
+    if (data !== null && data?.data?.imageAddress !== "Not-set") {
       return (
         <img
-          height="110"
-          width="110"
+          height="150"
+          width="150"
           alt="user-avatar"
-          src={data?.data?.currentPictureAddress}
+          src={data?.data?.imageAddress ? imageAddress : noImage}
           className="img-fluid rounded mt-3 mb-2"
         />
       );
@@ -137,7 +139,7 @@ const UserInfoCard = ({ data}) => {
           initials
           color="light-success"
           className="rounded mt-3 mb-2"
-          content={`${data?.fName || "کاربر"} ${data?.lName || ""}`}
+          content={`${data?.teacherName || "teacherName"}`}
           contentStyles={{
             borderRadius: 0,
             fontSize: "calc(48px)",
@@ -153,17 +155,17 @@ const UserInfoCard = ({ data}) => {
     }
   };
 
-  const renderRoleName = (roleName) => {
-    if (roleName === " Teacher  ") {
-      return "استاد";
-    } else if (roleName === "Student") {
-      return "دانشجو";
-    } else if (roleName === "Admin") {
-      return "ادمین";
-    } else if (roleName === "Administrator") {
-      return "مدیر";
-    }
-  };
+  // const renderRoleName = (roleName) => {
+  //   if (roleName === " Teacher  ") {
+  //     return "استاد";
+  //   } else if (roleName === "Student") {
+  //     return "دانشجو";
+  //   } else if (roleName === "Admin") {
+  //     return "ادمین";
+  //   } else if (roleName === "Administrator") {
+  //     return "مدیر";
+  //   }
+  // };
 
   const onSubmit = (data) => {
     if (Object.values(data).every((field) => field.length > 0)) {
@@ -179,8 +181,6 @@ const UserInfoCard = ({ data}) => {
     }
   };
 
- 
-
   return (
     <Fragment>
       <Card>
@@ -189,8 +189,8 @@ const UserInfoCard = ({ data}) => {
             <div className="d-flex align-items-center flex-column">
               {renderUserImage()}
               <div className="d-flex flex-column align-items-center text-center">
-                <div className="user-info">
-                  <h4>{`${data?.data?.fName || "کاربر"} ${data?.data?.lName || ""}`}</h4>
+                <div className="user-info  ">
+                  <h3 className="fw-bolder">{data?.data?.title}</h3>
                   <div className="d-flex flex-wrap justify-content-center gap-1 mt-1">
                     {/* {data?.roles.map((role) => (
                       <Badge
@@ -211,48 +211,31 @@ const UserInfoCard = ({ data}) => {
               {/* <Badge color="light-primary" className="rounded p-75">
                 <Briefcase className="font-medium-2" />
               </Badge> */}
-              <div className="ms-75">
-                <h4 className="mb-0">چند درصد از پروفایل شما کامل شد؟</h4>
-                <Label
-                          className="position-absolute top-50 start-10 translate-middle"
-                          for="chart"
-                        >
-                          {data?.data?.profileCompletionPercentage}%
-                        </Label>
-                <Chart
-        id="chart"
-        options={options.options}
-        series={[data?.data?.profileCompletionPercentage]}
-        type={options.type}
-        height={options.height}
-        width={options.width}
-      />                {/* <small>{data?.data?.profileCompletionPercentage}%</small> */}
-
-              </div>
             </div>
           </div>
-          <h4 className="fw-bolder border-bottom pb-50 mb-1">جزئیات کاربر</h4>
+          <h4 className="fw-bolder border-bottom pb-50 mb-1">جزئیات دوره</h4>
           <div className="info-container">
             {data !== null ? (
               <ul className="list-unstyled">
-                <li className="mb-75">
-                  <span className="fw-bolder me-25">نام کاربر:</span>
-                  <span >{data?.data?.userName}</span>
+                <li className="mb-75 mt-75">
+                  <span className="fw-bolder me-25">نام مدرس:</span>
+                  <span>{data?.data?.teacherName}</span>
                 </li>
-                <li className="mb-75">
-                  <span className="fw-bolder me-25">ایمیل:</span>
-                  <span >{data?.data?.gmail}</span>
+                <li className="mb-75 mt-75">
+                  <span className="fw-bolder me-25">سطح:</span>
+                  <span>{data?.data?.courseLevelName}</span>
                 </li>
+                {/* <li className="mb-75 mt-75">
+                  <span className="fw-bolder me-25">قیمت:</span>
+                  <span>{data?.data?.cost}</span>
+                </li> */}
+
                 <li className="mb-75">
                   <span className="fw-bolder me-25">وضعیت:</span>
-                  <Badge
-                    className="text-capitalize"
-                    color={statusColors[data?.data?.active]}
-                  >
-                    {data?.data?.active ? "فعال" : "غیر فعال"}
-                  </Badge>
+                  <span>{data?.data?.courseStatusName}</span>
                 </li>
-                <li className="mb-75">
+
+                {/* <li className="mb-75">
                   <span className="fw-bolder me-25">تایید دو مرحله‌ایی :</span>
                   <Badge
                     className="text-capitalize"
@@ -260,9 +243,9 @@ const UserInfoCard = ({ data}) => {
                   >
                     {data?.data?.twoStepAuth ? "فعال" : "غیر فعال"}
                   </Badge>
-                </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>نقش:</span>
+                </li> */}
+                {/* <li className="mb-75">
+                  <span className="fw-bolder me-25">نقش:</span>
                   <div className="d-flex flex-wrap user-details-roles-wrapper">
                     {data?.data?.roles.map((role) => (
                       <Badge
@@ -274,11 +257,8 @@ const UserInfoCard = ({ data}) => {
                       </Badge>
                     ))}
                   </div>
-                </li>
-                <li className="mb-75">
-                  <span className="fw-bolder me-25">شماره همراه:</span>
-                  <span >{data?.data?.phoneNumber}</span>
-                </li>
+                </li> */}
+
                 <li className="mb-75">
                   {/* <span className='fw-bolder me-25'>Contact:</span> */}
                   {/* <span>{selectedUser.contact}</span> */}
@@ -286,6 +266,30 @@ const UserInfoCard = ({ data}) => {
                 <li className="mb-75">
                   <span className="fw-bolder me-25">زبان:</span>
                   <span>فارسی</span>
+                </li>
+
+                <li className="mb-75">
+                  <span className="fw-bolder me-25"> توضیحات:</span>
+                  <div className="fw-bolder w-100 me-25"> </div>
+                  <span>{data?.data?.describe}</span>
+                </li>
+
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">تعداد لایک ها:</span>
+                  <span>{data?.data?.likeCount}</span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">تعداد کامنت های ثبت شده:</span>
+                  <span>{data?.data?.commentCount}</span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">قیمت:</span>
+                  <Badge
+                    className="bg-success"
+                    color={statusColors[data?.data?.courseStatusName]}
+                  >
+                    <span>{data?.data?.cost}</span>
+                  </Badge>
                 </li>
                 {/* <li className='mb-75'>
                   <span className='fw-bolder me-25'>Country:</span>

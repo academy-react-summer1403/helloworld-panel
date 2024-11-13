@@ -23,7 +23,6 @@ function CourseMap({
   courseId
 }) {
 
-  console.log("testtttt" , courseId)
   return (
     <tr>
       <td>
