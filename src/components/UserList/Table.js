@@ -41,11 +41,13 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import getUserList from '../../core/services/api/User'
+import AddUser from './AddUser'
 
 // ** Table Header
 const CustomHeader = ({  toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
-  // ** Converts table to CSV
- 
+
+
+ // ** Function to toggle sidebar
 
   // ** Downloads CSV
   function downloadCSV(array) {
@@ -102,37 +104,10 @@ const CustomHeader = ({  toggleSidebar, handlePerPage, rowsPerPage, handleFilter
           </div>
 
           <div className='d-flex align-items-center table-header-actions'>
-            <UncontrolledDropdown className='me-1'>
-              <DropdownToggle color='secondary' caret outline>
-                <Share className='font-small-4 me-50' />
-                <span className='align-middle'>Export</span>
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem className='w-100'>
-                  <Printer className='font-small-4 me-50' />
-                  <span className='align-middle'>Print</span>
-                </DropdownItem>
-                <DropdownItem className='w-100' >
-                  <FileText className='font-small-4 me-50' />
-                  <span className='align-middle'>CSV</span>
-                </DropdownItem>
-                <DropdownItem className='w-100'>
-                  <Grid className='font-small-4 me-50' />
-                  <span className='align-middle'>Excel</span>
-                </DropdownItem>
-                <DropdownItem className='w-100'>
-                  <File className='font-small-4 me-50' />
-                  <span className='align-middle'>PDF</span>
-                </DropdownItem>
-                <DropdownItem className='w-100'>
-                  <Copy className='font-small-4 me-50' />
-                  <span className='align-middle'>Copy</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+          
 
             <Button className='add-new-user' color='primary' onClick={toggleSidebar}>
-              Add New User
+              افزودن کاربر
             </Button>
           </div>
         </Col>
@@ -146,6 +121,7 @@ const UsersList = () => {
   const [sortColumn, setSortColumn] = useState("id");
   const [currentPage, setCurrentPage] = useState(1);
   const [RowsOfPage, setRowsOfPage] = useState(5);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [searchText, setSearchText] = useState();
   const [PageNumber, setPageNumber] = useState(0);
@@ -155,6 +131,9 @@ const UsersList = () => {
   const [roleId, setRolesId] = useState([]);
   const [sortType, setSortType] = useState();
   const [query, setQuery] = useState();
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen); 
+
 
   const getList = async () => {
     const params = {
@@ -193,6 +172,8 @@ const UsersList = () => {
 
   const CustomPagination = () => {
     const count = Number((total / RowsOfPage).toFixed(0));
+
+
 
     return (
       <ReactPaginate
@@ -255,12 +236,21 @@ const UsersList = () => {
                     <CustomHeader
                       handleFilter={handleFilter}
                       handlePerPage={handlePerPage}
+                      toggleSidebar={toggleSidebar}
+
                     />
                   }
                 />
               </div>
             </Col>
           </Row>
+          <AddUser
+          
+          open={sidebarOpen}
+          toggleSidebar={toggleSidebar}
+          setSidebarOpen={setSidebarOpen}
+          
+          />
         </Fragment>
       </Card>
     </div>

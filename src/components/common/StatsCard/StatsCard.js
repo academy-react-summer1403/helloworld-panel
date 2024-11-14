@@ -6,6 +6,7 @@ import StatsHorizontal from "../widgets/stats/StatsHorizontal";
 import { useContext, useState } from "react";
 import { Loader } from "../spinner/Loader";
 import { getReport } from "../../../core/services/api/Dashboard/index";
+import { faNumber } from "../../../utility/FaNumber";
 
 const StatsCard = () => {
   const [data, setdata] = useState([]);
@@ -13,7 +14,7 @@ const StatsCard = () => {
   const getLandingReport = async () => {
     const report = await getReport();
     console.log("report:", report);
-    setdata(data);
+    setdata(report);
   };
 
   useEffect(() => {
@@ -21,10 +22,10 @@ const StatsCard = () => {
   }, []);
 
   return (
-    <>
-     {!data ? (
-        <Loader />
-      ) : (
+    // <>
+    //  {!data ? (
+    //     <Loader />
+    //   ) : (
         <>
           <Row>
             <Col lg="3" sm="6">
@@ -34,7 +35,7 @@ const StatsCard = () => {
                 icon={<Flag size={20} />}
                 renderStats={
                   <h3 className="fw-bolder mb-75">
-                    {data.courseCount}
+                    {data?.data?.courseCount && faNumber(data?.data?.courseCount.toString(), ",")}
                   </h3>
                 }
               />
@@ -46,7 +47,7 @@ const StatsCard = () => {
                 icon={<Folder size={20} />}
                 renderStats={
                   <h3 className="fw-bolder mb-75">
-                    {data.newsCount}
+                    {data?.data?.newsCount  && faNumber(data?.data?.newsCount.toString(), ",")}
                   </h3>
                 }
               />
@@ -58,7 +59,7 @@ const StatsCard = () => {
                 icon={<User size={20} />}
                 renderStats={
                   <h3 className="fw-bolder mb-75">
-                    {data.studentCount}
+                    {data?.data?.studentCount  && faNumber(data?.data?.studentCount.toString(), ",")}
                   </h3>
                 }
               />
@@ -71,15 +72,15 @@ const StatsCard = () => {
                 renderStats={
                   <h3 className="fw-bolder mb-75">
                     
-                    {data.teacherCount}
+                    {data?.data?.teacherCount  && faNumber(data?.data?.teacherCount.toString(), ",")}
                   </h3>
                 }
               />
             </Col>
           </Row>
         </>
-     )}
-    </>
+  //    )}
+  //   </>
   );
 };
 
