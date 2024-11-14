@@ -26,3 +26,21 @@ export const getUserWithId = async (id) => {
   }
 };
 
+export const getComments = async (id) => {
+  try {
+    const result = await http.get(`/Course/CommentManagment?userId=${id}`);
+    return result;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const addUser = async (user) => {
+  try {
+    const result = await http.post("/User/CreateUser", user);
+
+    return result;
+  } catch (error) {
+    return false;
+  }
+};

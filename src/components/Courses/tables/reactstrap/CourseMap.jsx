@@ -19,6 +19,7 @@ function CourseMap({
   fullName,
   isActive,
   isExpire
+
 }) {
   return (
     <tr>
