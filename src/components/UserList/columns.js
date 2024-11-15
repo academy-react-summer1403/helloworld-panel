@@ -13,7 +13,7 @@ import {
   DropdownToggle,
   UncontrolledTooltip,
   UncontrolledDropdown,
-  Label
+  Label,
 } from "reactstrap";
 import { useDispatch } from "react-redux";
 
@@ -70,11 +70,11 @@ const options = {
     plotOptions: {
       radialBar: {
         hollow: {
-          size: "35%",
+          size: "40%",
         },
         track: {
           background: "#ebe9f1",
-          strokeWidth: "50%",
+          strokeWidth: "30%",
         },
         dataLabels: {
           showOn: "always",
@@ -204,20 +204,20 @@ export const columns = [
     sortField: "chart",
     cell: (row) => (
       <>
-      <Label
-      className="position-absolute top-50 start-10 end-50 translate-middle"
-      for="chart"
-    >
-      {row?.profileCompletionPercentage}%
-    </Label>
-      <Chart
-        id="chart"
-        options={options.options}
-        series={[row.profileCompletionPercentage]}
-        type={options.type}
-        height={options.height}
-        width={options.width}
-      />
+        <Label
+          className="position-absolute top-50 start-10 end-50 translate-middle"
+          for="chart"
+        >
+          {row?.profileCompletionPercentage}%
+        </Label>
+        <Chart
+          id="chart"
+          options={options.options}
+          series={[row.profileCompletionPercentage]}
+          type={options.type}
+          height={options.height}
+          width={options.width}
+        />
       </>
     ),
   },
@@ -269,10 +269,10 @@ export const columns = [
               <span className="align-middle"> ویرایش</span>
             </DropdownItem>
 
-            <DropdownItem  className="w-100 d-block">
+            <DropdownItem className="w-100 d-block">
               <Trash size={14} className="me-50" />
 
-              <span  className="align-middle ">حذف</span>
+              <span className="align-middle ">حذف</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
