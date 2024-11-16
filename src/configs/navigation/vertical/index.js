@@ -27,10 +27,10 @@ export default [
         navLink: "/course",
       },
       {
-        id: "creatcourse",
-        title: "افزودن دوره جدبد",
+        id: "coursecreat",
+        title: "افزودن دوره جدید",
         icon: <Circle size={12} />,
-        navLink: "/cours",
+        navLink: "/creatcourse",
       },
     ],
   },
