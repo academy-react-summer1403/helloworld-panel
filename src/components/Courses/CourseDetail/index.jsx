@@ -7,6 +7,7 @@ import { Col, Row } from "reactstrap";
 
 // ** User View Components
 import UserInfoCard from "./UserInfoCard";
+import UserTabs from "./Tabs";
 import { getCourseDeatil } from "../../../core/services/api/Coueses/getCourseDeatil";
 
 // ** Core Imports
@@ -14,11 +15,18 @@ import { getCourseDeatil } from "../../../core/services/api/Coueses/getCourseDea
 // ** Styles
 import "@styles/react/apps/app-users.scss";
 
-
 const UserDetail = () => {
+  const [active, setActive] = useState("1");
   const [data, setdata] = useState();
   const { id } = useParams();
   console.log("id:", id);
+
+  const toggleTab = (tab) => {
+    if (active !== tab) {
+      setActive(tab);
+    }
+  };
+
   const getList = async (id) => {
     try {
       const CoursesId = await getCourseDeatil(id);
@@ -36,11 +44,14 @@ const UserDetail = () => {
     <div className="app-user-view">
       <Row>
         <Col xl="4" lg="5" xs={{ order: 1 }} md={{ order: 0, size: 5 }}>
-          <UserInfoCard data={data}   />
+          <UserInfoCard data={data} />
         </Col>
-        {/* <Col xl="8" lg="7" xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
-          <UserProjectsList />
-        </Col> */}
+        <Col xl="8" lg="7" xs={{ order: 0 }} md={{ order: 1, size: 7 }}>
+          <UserTabs
+            active={active}
+            toggleTab={toggleTab}
+          />
+        </Col>
       </Row>
     </div>
   );
