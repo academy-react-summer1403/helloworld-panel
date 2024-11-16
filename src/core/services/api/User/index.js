@@ -44,3 +44,13 @@ export const addUser = async (user) => {
     return false;
   }
 };
+
+export const deleteUser = async (userId) => {
+  try {
+    const result = await http.put("/User/DeleteUser", userId);
+
+    return result;
+  } catch (error) {
+    return false;
+  }
+};

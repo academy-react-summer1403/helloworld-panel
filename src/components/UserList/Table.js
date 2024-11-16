@@ -1,23 +1,32 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from "react";
 
 // ** Invoice List Sidebar
-import Sidebar from './Sidebar'
+import Sidebar from "./Sidebar";
 
 // ** Table Columns
-import { columns } from './columns'
+import { columns } from "./columns";
 
 // ** Store & Actions
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 
 // ** Third Party Components
-import Select from 'react-select'
-import ReactPaginate from 'react-paginate'
-import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy } from 'react-feather'
+import Select from "react-select";
+import ReactPaginate from "react-paginate";
+import DataTable from "react-data-table-component";
+import {
+  ChevronDown,
+  Share,
+  Printer,
+  FileText,
+  File,
+  Grid,
+  Copy,
+} from "react-feather";
+import prism from "prismjs";
 
 // ** Utils
-import { selectThemeColors } from '@utils'
+import { selectThemeColors } from "@utils";
 
 // ** Reactstrap Imports
 import {
@@ -33,88 +42,146 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  UncontrolledDropdown
-} from 'reactstrap'
+  UncontrolledDropdown,
+} from "reactstrap";
 
 // ** Styles
-import '@styles/react/libs/react-select/_react-select.scss'
-import '@styles/react/libs/tables/react-dataTable-component.scss'
+import "@styles/react/libs/react-select/_react-select.scss";
+import "@styles/react/libs/tables/react-dataTable-component.scss";
 
-import getUserList from '../../core/services/api/User'
-import AddUser from './AddUser'
+import getUserList from "../../core/services/api/User";
+import AddUser from "./AddUser";
 
 // ** Table Header
-const CustomHeader = ({  toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({
+  toggleSidebar,
+  handlePerPage,
+  rowsPerPage,
+  handleFilter,
+  searchTerm,
+}) => {
+  const [searchQuery, setSearchQuery] = useState();
+  const [allCourses, setAllCourses] = useState([]);
+  const [sortLenght, setSortLenght] = useState(10);
 
+  const getAllCourseReport = async () => {
+    const params = {
+      RowsOfPage: sortLenght,
+      Query: searchQuery,
+    };
+    const report = await getUserList(params);
+    setAllCourses(report.data.courseDtos);
+  };
 
- // ** Function to toggle sidebar
+  useEffect(() => {
+    getAllCourseReport();
+  }, []);
 
-  // ** Downloads CSV
+  useEffect(() => {
+    getAllCourseReport();
+  }, [sortLenght]);
+
+  console.log("allCourses:", allCourses);
+
+  useEffect(() => {
+    prism.highlightAll();
+  });
+
+  useEffect(() => {
+    getAllCourseReport();
+  }, [searchQuery]);
+
   function downloadCSV(array) {
-    const link = document.createElement('a')
-    let csv = convertArrayOfObjectsToCSV(array)
-    if (csv === null) return
+    const link = document.createElement("a");
+    let csv = convertArrayOfObjectsToCSV(array);
+    if (csv === null) return;
 
-    const filename = 'export.csv'
+    const filename = "export.csv";
 
     if (!csv.match(/^data:text\/csv/i)) {
-      csv = `data:text/csv;charset=utf-8,${csv}`
+      csv = `data:text/csv;charset=utf-8,${csv}`;
     }
 
-    link.setAttribute('href', encodeURI(csv))
-    link.setAttribute('download', filename)
-    link.click()
+    link.setAttribute("href", encodeURI(csv));
+    link.setAttribute("download", filename);
+    link.click();
   }
   return (
-    <div className='invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75'>
+    <div className="invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75">
       <Row>
-        <Col xl='6' className='d-flex align-items-center p-0'>
-          <div className='d-flex align-items-center w-100'>
-            <label htmlFor='rows-per-page'>Show</label>
+        <Col xl="6" className="d-flex align-items-center p-0">
+          {/* <div className='d-flex align-items-center w-100'>
+            <label htmlFor='rows-per-page'>نمایش</label>
+           
+          </div> */}
+          <div className="d-flex align-items-center w-30">
+            <label htmlFor="rows-per-page">نمایش:</label>
+
             <Input
-              className='mx-50'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              style={{ width: '5rem' }}
+              type="select"
+              id="rows-per-page"
+              // value={rowsPerPage}
+              // onChange={handlePerPage}
+              className="form-control ms-50 pe-3"
             >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
+              <option
+                onClick={() => {
+                  setSortLenght(10);
+                }}
+                value="10"
+              >
+                10
+              </option>
+              <option
+                onClick={() => {
+                  setSortLenght(25);
+                }}
+                value="25"
+              >
+                25
+              </option>
+              <option
+                onClick={() => {
+                  setSortLenght(50);
+                }}
+                value="50"
+              >
+                50
+              </option>
             </Input>
-            <label htmlFor='rows-per-page'>Entries</label>
           </div>
         </Col>
         <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1'
+          xl="6"
+          className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
         >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 me-1'>
-            <label className='mb-0' htmlFor='search-invoice'>
-              Search:
+          <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
+            <label className="mb-0" htmlFor="search-invoice">
+              جست و جو
             </label>
             <Input
-              id='search-invoice'
-              className='ms-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
+              id="search-invoice"
+              className="ms-50 w-100"
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          <div className='d-flex align-items-center table-header-actions'>
-          
-
-            <Button className='add-new-user' color='primary' onClick={toggleSidebar}>
+          <div className="d-flex align-items-center table-header-actions">
+            <Button
+              className="add-new-user"
+              color="primary"
+              onClick={toggleSidebar}
+            >
               افزودن کاربر
             </Button>
           </div>
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
 const UsersList = () => {
   const [SortingCol, setSortingCol] = useState("desc");
@@ -132,8 +199,7 @@ const UsersList = () => {
   const [sortType, setSortType] = useState();
   const [query, setQuery] = useState();
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen); 
-
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const getList = async () => {
     const params = {
@@ -173,8 +239,6 @@ const UsersList = () => {
   const CustomPagination = () => {
     const count = Number((total / RowsOfPage).toFixed(0));
 
-
-
     return (
       <ReactPaginate
         nextLabel=""
@@ -207,15 +271,12 @@ const UsersList = () => {
     }
   };
 
-  
   return (
     <div className="invoice-list-wrapper">
       <Card>
         <Fragment>
           <Row>
             <Col xs={12}>
-            
-
               <div className="invoice-list-dataTable react-dataTable">
                 <DataTable
                   noHeader
@@ -225,8 +286,7 @@ const UsersList = () => {
                   subHeader={true}
                   columns={columns}
                   data={dataToRender()}
-
-                  responsive={true}    
+                  responsive={true}
                   sortIcon={<ChevronDown />}
                   className="react-dataTable"
                   defaultSortField="invoiceId"
@@ -237,7 +297,6 @@ const UsersList = () => {
                       handleFilter={handleFilter}
                       handlePerPage={handlePerPage}
                       toggleSidebar={toggleSidebar}
-
                     />
                   }
                 />
@@ -245,11 +304,9 @@ const UsersList = () => {
             </Col>
           </Row>
           <AddUser
-          
-          open={sidebarOpen}
-          toggleSidebar={toggleSidebar}
-          setSidebarOpen={setSidebarOpen}
-          
+            open={sidebarOpen}
+            toggleSidebar={toggleSidebar}
+            setSidebarOpen={setSidebarOpen}
           />
         </Fragment>
       </Card>
