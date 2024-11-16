@@ -190,6 +190,8 @@ export const columns = [
             <span className="fw-bolder">
               {row.fname && row.lname ? row.fname + " " + row.lname : " کاربر"}
             </span>
+            
+           
           </Link>
           <small className="text-truncate text-muted mb-0">{row.gmail}</small>
         </div>
@@ -265,7 +267,6 @@ export const columns = [
             </DropdownItem>
             <DropdownItem tag={Link} to={`/user/edit/${row.id}`} className="w-100">
               <Edit size={14} className="me-50" />
-              <DeleteUser  />
               <span className="align-middle"> ویرایش</span>
             </DropdownItem>
 
