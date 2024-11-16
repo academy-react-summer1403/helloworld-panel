@@ -140,7 +140,7 @@ const AccountTabs = ({ data }) => {
                 <Label className='form-label' for='firstName'>
                   First Name
                 </Label>
-                <Controller
+                <Controller 
                   name='firstName'
                   control={control}
                   render={({ field }) => (
