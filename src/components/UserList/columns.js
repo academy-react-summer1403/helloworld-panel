@@ -15,7 +15,6 @@ import {
   UncontrolledDropdown,
   Label,
 } from "reactstrap";
-import { useDispatch } from "react-redux";
 
 // ** Third Party Components
 import {
@@ -264,15 +263,16 @@ export const columns = [
               <Info size={14} className="me-50" />
               <span className="align-middle">جزئیات</span>
             </DropdownItem>
-            <DropdownItem tag={Link} className="w-100">
+            <DropdownItem tag={Link} to={`/user/edit/${row.id}`} className="w-100">
               <Edit size={14} className="me-50" />
+              <DeleteUser  />
               <span className="align-middle"> ویرایش</span>
             </DropdownItem>
 
             <DropdownItem className="w-100 d-block">
               <Trash size={14} className="me-50" />
 
-              <span className="align-middle ">حذف</span>
+              <span className="align-middle "> حذف</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
