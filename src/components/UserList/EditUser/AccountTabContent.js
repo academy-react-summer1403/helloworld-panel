@@ -66,10 +66,12 @@ const timeZoneOptions = [
 ]
 
 const AccountTabs = ({ data }) => {
- console.log("data:",data)
+  console.log("AccountTabs:" , data)
+
   const defaultValues = {
-    fName: "",
-    lName: ""
+    lName: '',
+    fName: data?.data?.fName.split(' ')[0]
+   
   }
   const {
     control,
@@ -142,7 +144,7 @@ const AccountTabs = ({ data }) => {
                   name='firstName'
                   control={control}
                   render={({ field }) => (
-                    <Input id='firstName'  type='firstName' name='firstName' placeholder='firstName' defaultValue={data?.data?.fName}/>
+                    <Input id='firstName'  type='firstName' name='firstName' placeholder='firstName' invalid={errors.data?.data?.fName && true} {...field} />
                   )}
                 />
                 {errors && errors.firstName && <FormFeedback>Please enter a valid First Name</FormFeedback>}
@@ -155,18 +157,18 @@ const AccountTabs = ({ data }) => {
                   name='lastName'
                   control={control}
                   render={({ field }) => (
-                    <Input id='lastName' type='lastname' name='lastname' placeholder='lastname' defaultValue={data?.data?.lName} />
+                    <Input id='lastName' type='lastname' name='lastname' placeholder='lastname' invalid={errors.data?.data?.lName && true} {...field}  />
                   )}
                 />
                 {errors.lastName && <FormFeedback>Please enter a valid Last Name</FormFeedback>}
               </Col>
-             {/*  <Col sm='6' className='mb-1'>
+           <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='emailInput'>
                   E-mail
                 </Label>
-                <Input id='emailInput' type='email' name='email' placeholder='Email' defaultValue={data.email} />
+                <Input id='emailInput' type='email' name='email'  defaultValue={data?.gmail} />
               </Col>
-              <Col sm='6' className='mb-1'>
+                {/*  <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='company'>
                   Company
                 </Label>

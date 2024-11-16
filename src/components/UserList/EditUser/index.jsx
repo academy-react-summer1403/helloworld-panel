@@ -15,32 +15,29 @@ import { getUserWithId } from "../../../core/services/api/User/index";
 import "@styles/react/apps/app-users.scss";
 import AccountTabs from "./AccountTabContent";
 
-
 const Edituser = () => {
   const [data, setdata] = useState();
-  console.log("data:", data);
+  // console.log("data:", data);
   const { id } = useParams();
   console.log("id:", id);
-  const getList = async (id) => {
+  const getDetail = async (id) => {
     try {
-      const users = await getUserWithId(id);
-      console.log("users:", users);
-      setdata(users);
+      const user = await getUserWithId(id);
+      console.log("user:",user)
+
+      setdata(user);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
   };
   useEffect(() => {
-    getList(id);
-  }, []);
+    getDetail(id);
+  }, [id]);
 
   return (
     <div className="app-user-view">
       <Row>
-       
-          <AccountTabs data={data}   />
-        
-       
+        <AccountTabs data={data} />
       </Row>
     </div>
   );
