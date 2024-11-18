@@ -2,7 +2,7 @@
 import { Fragment, useState, useEffect } from "react";
 
 // ** Invoice List Sidebar
-import Sidebar from "./Sidebar";
+// import Sidebar from "./Sidebar";
 
 // ** Table Columns
 import { columns } from "./columns";
@@ -49,8 +49,9 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 
-import getUserList from "../../core/services/api/User";
-import AddUser from "./AddUser";
+import getBlogList from "../../core/services/api/Blogs";
+
+// import AddUser from "./AddUser";
 
 // ** Table Header
 const CustomHeader = ({
@@ -172,7 +173,7 @@ const CustomHeader = ({
             <Button
               className="add-new-user"
               color="primary"
-              onClick={toggleSidebar}
+              // onClick={toggleSidebar}
             >
               افزودن کاربر
             </Button>
@@ -198,6 +199,8 @@ const UsersList = () => {
   const [roleId, setRolesId] = useState([]);
   const [sortType, setSortType] = useState();
   const [query, setQuery] = useState();
+  const [newsList, setNewsList] = useState([]);
+
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -207,15 +210,11 @@ const UsersList = () => {
       PageNumber,
       RowsOfPage,
       SortingCol,
-      sortType,
-      query,
     };
-    const user = await getUserList(params);
-    console.log("user:", user);
-
-    setUserList(user.data.listUser);
-    setTotal(user.data.totalCount);
-    setRolesId(user.data.roles);
+    const courses = await getBlogList(params);
+    console.log("courses:",courses)
+    setNewsList(courses.data.news);
+    setTotal(courses.data.totalCount);
   };
 
   useEffect(() => {
@@ -236,39 +235,44 @@ const UsersList = () => {
     setCurrentPage(page.selected + 1);
   };
 
+ 
   const CustomPagination = () => {
     const count = Number((total / RowsOfPage).toFixed(0));
 
     return (
       <ReactPaginate
-        nextLabel=""
-        breakLabel="..."
-        previousLabel=""
-        pageCount={count || 1}
-        activeClassName="active"
-        breakClassName="page-item"
-        pageClassName={"page-item"}
-        breakLinkClassName="page-link"
-        nextLinkClassName={"page-link"}
-        pageLinkClassName={"page-link"}
-        nextClassName={"page-item next"}
-        previousLinkClassName={"page-link"}
-        previousClassName={"page-item prev"}
-        onPageChange={(page) => handlePagination(page)}
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        containerClassName={"pagination react-paginate justify-content-end p-1"}
+      nextLabel=""
+      breakLabel="..."
+      previousLabel=""
+      pageCount={count || 1}
+      activeClassName="active"
+      breakClassName="page-item"
+      pageClassName={"page-item"}
+      breakLinkClassName="page-link"
+      nextLinkClassName={"page-link"}
+      pageLinkClassName={"page-link"}
+      nextClassName={"page-item next"}
+      previousLinkClassName={"page-link"}
+      previousClassName={"page-item prev"}
+      onPageChange={(page) => handlePagination(page)}
+      forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+      containerClassName={"pagination react-paginate justify-content-end p-1"}
       />
     );
   };
 
   const dataToRender = () => {
-    if (userList.length > 0) {
-      return userList;
+    if (newsList.length > 0) {
+      return newsList;
     } else if (total === 0) {
       return [];
     } else {
-      return userList?.slice(0, RowsOfPage);
+      return newsList?.slice(0, RowsOfPage);
     }
+  };
+  const handleSort = (column, sortDirection) => {
+    setSort(sortDirection);
+    setSortColumn(column.sortField);
   };
 
   return (
@@ -285,6 +289,7 @@ const UsersList = () => {
                   paginationServer
                   subHeader={true}
                   columns={columns}
+                  onSort={handleSort}
                   data={dataToRender()}
                   responsive={true}
                   sortIcon={<ChevronDown />}
@@ -303,11 +308,11 @@ const UsersList = () => {
               </div>
             </Col>
           </Row>
-          <AddUser
+          {/* <AddUser
             open={sidebarOpen}
             toggleSidebar={toggleSidebar}
             setSidebarOpen={setSidebarOpen}
-          />
+          /> */}
         </Fragment>
       </Card>
     </div>

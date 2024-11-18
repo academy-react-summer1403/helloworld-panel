@@ -1,4 +1,4 @@
-import { Home } from "react-feather";
+import { BookOpen, Home } from "react-feather";
 import { Layers,Circle,Users } from "react-feather";
 
 export default [
@@ -33,6 +33,12 @@ export default [
         navLink: "/cours",
       },
     ],
+  },
+  {
+    id: "user",
+    title: "اخبار و مقالات",
+    icon: <BookOpen/>,
+    navLink: "/blog",
   },
   // {
   //   id: "secondPage",
