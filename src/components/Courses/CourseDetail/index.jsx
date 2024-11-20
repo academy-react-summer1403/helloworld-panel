@@ -9,6 +9,7 @@ import { Col, Row } from "reactstrap";
 import UserInfoCard from "./UserInfoCard";
 import UserTabs from "./Tabs";
 import { getCourseDeatil } from "../../../core/services/api/Coueses/getCourseDeatil";
+import { getCourseComment } from "../../../core/services/api/Coueses/getCourseDeatil";
 
 // ** Core Imports
 
@@ -18,6 +19,7 @@ import "@styles/react/apps/app-users.scss";
 const UserDetail = () => {
   const [active, setActive] = useState("1");
   const [data, setdata] = useState();
+  const [dataComment, setdataComment] = useState();
   const { id } = useParams();
   console.log("id:", id);
 
@@ -40,6 +42,19 @@ const UserDetail = () => {
     getList(id);
   }, []);
 
+  const getComeent = async (id) => {
+    try {
+      const CoursesId = await getCourseComment(id);
+      console.log("users comment:", CoursesId);
+      setdataComment(CoursesId);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+  useEffect(() => {
+    getComeent(id);
+  }, []);
+
   return (
     <div className="app-user-view">
       <Row>
@@ -50,6 +65,8 @@ const UserDetail = () => {
           <UserTabs
             active={active}
             toggleTab={toggleTab}
+            data={data}
+            dataComment={dataComment}
           />
         </Col>
       </Row>

@@ -28,7 +28,8 @@ function CourseMap({
       <td>
         <img
           className="me-75 rounded-circle"
-          src={tumbImageAddress ? tumbImageAddress : noImage}
+          src={tumbImageAddress && tumbImageAddress.includes("classapi.sepehracademy.ir") ? tumbImageAddress : noImage}
+          
           alt="angular"
           height="26"
           width="26"

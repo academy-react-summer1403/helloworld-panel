@@ -118,7 +118,7 @@ const languageOptions = [
 ];
 
 const UserInfoCard = ({ data }) => {
-  console.log("userinfocard:", data);
+  // console.log("userinfocard:", data);
 
   const [show, setShow] = useState(false);
 

@@ -9,3 +9,13 @@ export const getCourseDeatil = async (id) => {
     return [];
   }
 };
+
+export const getCourseComment = async (id) => {
+  try {
+    const result = await http.get(`/Course/GetCourseCommnets/${id}`);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
