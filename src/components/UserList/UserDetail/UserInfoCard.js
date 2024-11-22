@@ -1,8 +1,9 @@
 // ** React Imports
 import { useState, Fragment } from "react";
-
+import { faNumber } from "../../../utility/FaNumber";
 // ** Reactstrap Imports
 import {
+  Progress,
   Row,
   Col,
   Card,
@@ -26,15 +27,88 @@ import withReactContent from "sweetalert2-react-content";
 import toast from "react-hot-toast";
 import Chart from "react-apexcharts";
 
-
 // ** Custom Components
 import Avatar from "@components/common/avatar";
+import xdLabel from "@src/assets/images/icons/brands/xd-label.png";
+import vueLabel from "@src/assets/images/icons/brands/vue-label.png";
+import htmlLabel from "@src/assets/images/icons/brands/html-label.png";
+import reactLabel from "@src/assets/images/icons/brands/react-label.png";
+import sketchLabel from "@src/assets/images/icons/brands/sketch-label.png";
 
 // ** Utils
 import { selectThemeColors } from "@utils";
+import { convertDateToPersian } from "../../../utility/date-helper.utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
+import UserAddRole from "./UserAddRole";
+
+const projectsArr = [
+  {
+    progress: 60,
+    hours: "210:30h",
+    progressColor: "info",
+    totalTasks: "233/240",
+    subtitle: "React Project",
+    title: "BGC eCommerce App",
+    img: reactLabel,
+  },
+  {
+    hours: "89h",
+    progress: 15,
+    totalTasks: "9/50",
+    progressColor: "danger",
+    subtitle: "UI/UX Project",
+    title: "Falcon Logo Design",
+    img: xdLabel,
+  },
+  {
+    progress: 90,
+    hours: "129:45h",
+    totalTasks: "100/190",
+    progressColor: "success",
+    subtitle: "Vuejs Project",
+    title: "Dashboard Design",
+    img: vueLabel,
+  },
+  {
+    hours: "45h",
+    progress: 49,
+    totalTasks: "12/86",
+    progressColor: "warning",
+    subtitle: "iPhone Project",
+    title: "Foodista mobile app",
+    img: sketchLabel,
+  },
+
+  {
+    progress: 73,
+    hours: "67:10h",
+    totalTasks: "234/378",
+    progressColor: "info",
+    subtitle: "React Project",
+    title: "Dojo React Project",
+    img: reactLabel,
+  },
+  {
+    progress: 81,
+    hours: "108:39h",
+    totalTasks: "264/537",
+    title: "HTML Project",
+    progressColor: "success",
+    subtitle: "Crypto Website",
+    img: htmlLabel,
+  },
+  {
+    progress: 78,
+    hours: "88:19h",
+    totalTasks: "214/627",
+    progressColor: "success",
+    subtitle: "Vuejs Project",
+    title: "Vue Admin template",
+    img: vueLabel,
+  },
+];
 // ** Chart Options
 const options = {
   type: "radialBar",
@@ -45,7 +119,7 @@ const options = {
     grid: {
       show: false,
       padding: {
-        left:-15,
+        left: -15,
         right: -15,
         top: -12,
         bottom: -15,
@@ -115,8 +189,8 @@ const languageOptions = [
   { value: "dutch", label: "Dutch" },
 ];
 
-const UserInfoCard = ({ data}) => {
-  console.log("userinfocard:" , data)
+const UserInfoCard = ({ data, setdata }) => {
+  console.log("userinfocard:", data);
   // const MySwal = withReactContent(Swal);
   // const handleConfirmCancel = () => {
   //   return MySwal.fire({
@@ -179,6 +253,19 @@ const UserInfoCard = ({ data}) => {
   //   });
   // };
   // ** State
+  const [modal, setModal] = useState(null);
+
+  const toggleModal = (id) => {
+    if (modal !== id) {
+      setModal(id);
+    } else {
+      setModal(null);
+    }
+  };
+  const handleAddRoleClick = () => {
+    toggleModal(data?.data?.id);
+  };
+
   const [show, setShow] = useState(false);
 
   const renderUserImage = () => {
@@ -240,8 +327,6 @@ const UserInfoCard = ({ data}) => {
     }
   };
 
- 
-
   return (
     <Fragment>
       <Card>
@@ -251,8 +336,27 @@ const UserInfoCard = ({ data}) => {
               {renderUserImage()}
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info">
-                  <h4>{`${data?.data?.fName || "کاربر"} ${data?.data?.lName || ""}`}</h4>
-                  <div className="d-flex flex-wrap justify-content-center gap-1 mt-1">
+                  <h4>{`${data?.data?.fName || "کاربر"} ${
+                    data?.data?.lName || ""
+                  }`}</h4>
+                  <div class="d-flex flex-wrap justify-content-center gap-1 mt-1 ">
+                    <Button
+                      type="submit"
+                      className="me-1"
+                      color="primary"
+                      onClick={handleAddRoleClick}
+                    >
+                      دسترسی
+                    </Button>
+                    <UserAddRole
+                      modal={modal}
+                      id={data?.data?.id}
+                      userName={data?.data?.fname + " " + data?.data?.lname}
+                      toggleModal={toggleModal}
+                      userRoles={data?.data?.roleName}
+                      setdata={setdata}
+                    />
+
                     {/* {data?.roles.map((role) => (
                       <Badge
                         key={role.id}
@@ -273,22 +377,28 @@ const UserInfoCard = ({ data}) => {
                 <Briefcase className="font-medium-2" />
               </Badge> */}
               <div className="ms-75">
-                <h4 className="mb-0">چند درصد از پروفایل شما کامل شد؟</h4>
-                <Label
+                <h4 className="mb-2">چند درصد از پروفایل شما کامل شد؟</h4>
+                {/* <Label
                           className="position-absolute top-50 start-10 translate-middle"
                           for="chart"
                         >
                           {data?.data?.profileCompletionPercentage}%
-                        </Label>
-                <Chart
+                        </Label> */}
+                <small className="d-flex justify-content-center  ">{`${data?.data?.profileCompletionPercentage && faNumber(data?.data?.profileCompletionPercentage.toString(), ",")}%` }</small>
+                <Progress
+                  value={data?.data?.profileCompletionPercentage}
+                  style={{ height: "6px" }}
+                  className={` w-100 progress-bar-${data?.data?.progressColor}`}
+                />
+                {/* <Chart
         id="chart"
         options={options.options}
         series={[data?.data?.profileCompletionPercentage]}
         type={options.type}
         height={options.height}
         width={options.width}
-      />                {/* <small>{data?.data?.profileCompletionPercentage}%</small> */}
-
+      />                */}
+                {/* <small>{data?.data?.profileCompletionPercentage}%</small> */}
               </div>
             </div>
           </div>
@@ -298,11 +408,18 @@ const UserInfoCard = ({ data}) => {
               <ul className="list-unstyled">
                 <li className="mb-75">
                   <span className="fw-bolder me-25">نام کاربر:</span>
-                  <span >{data?.data?.userName}</span>
+                  <span>{data?.data?.userName}</span>
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">ایمیل:</span>
-                  <span >{data?.data?.gmail}</span>
+                  <span>{data?.data?.gmail}</span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">تاریخ تولد:</span>
+                  <span>
+                    {data?.data?.birthDay &&
+                      convertDateToPersian(data?.data?.birthDay)}
+                  </span>
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">وضعیت:</span>
@@ -322,8 +439,8 @@ const UserInfoCard = ({ data}) => {
                     {data?.data?.twoStepAuth ? "فعال" : "غیر فعال"}
                   </Badge>
                 </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'>نقش:</span>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">نقش:</span>
                   <div className="d-flex flex-wrap user-details-roles-wrapper">
                     {data?.data?.roles.map((role) => (
                       <Badge
@@ -338,7 +455,7 @@ const UserInfoCard = ({ data}) => {
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">شماره همراه:</span>
-                  <span >{data?.data?.phoneNumber}</span>
+                  <span>{data?.data?.phoneNumber && faNumber(data?.data?.phoneNumber.toString())}</span>
                 </li>
                 <li className="mb-75">
                   {/* <span className='fw-bolder me-25'>Contact:</span> */}

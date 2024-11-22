@@ -1,12 +1,16 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment , useState, useEffect} from 'react'
+import { useParams } from "react-router-dom";
 
 // ** Reactstrap Imports
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 
 // ** Icons Imports
 import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
-
+import Connections from './Connections'
+import { getUserWithId } from '../../../core/services/api/User'
+import UserCourse from './UserCourse';
+import UserReserveCourse from './UserReserveCourse';
 // ** User Components
 // import InvoiceList from './InvoiceList'
 // import SecurityTab from './SecurityTab'
@@ -17,6 +21,27 @@ import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
 // import UserProjectsList from './UserProjectsList'
 
 const UserTabs = ({ active, toggleTab }) => {
+
+  const [data, setdata] = useState();
+  // console.log("data:", data);
+  const { id } = useParams();
+  console.log("id:", id);
+  const getDetail = async (id) => {
+    try {
+      const user = await getUserWithId(id);
+      console.log("userrrr:",user)
+
+      setdata(user);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+  useEffect(() => {
+    getDetail(id);
+  }, [id]);
+
+
+
   return (
     <Fragment>
       <Nav pills className='mb-2'>
@@ -48,22 +73,20 @@ const UserTabs = ({ active, toggleTab }) => {
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
-          {/* <UserProjectsList />
-          <UserTimeline />
-          <InvoiceList /> */}
+          <UserCourse data={data}/>
         </TabPane>
         <TabPane tabId='2'>
-          {/* <SecurityTab /> */}
+          <UserReserveCourse data={data}/>
         </TabPane>
         <TabPane tabId='3'>
           {/* <BillingPlanTab /> */}
         </TabPane>
         <TabPane tabId='4'>
-          {/* <Notifications /> */}
+        <Connections   data={data}/>
+
         </TabPane>
-        {/* <TabPane tabId='5'>
-          <Connections />
-        </TabPane> */}
+        
+
       </TabContent>
     </Fragment>
   )

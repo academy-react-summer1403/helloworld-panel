@@ -33,7 +33,9 @@ const Courses = lazy(() => import("../../pages/Courses/Courses"));
 
 const User = lazy(() => import("../../pages/User/User"));
 const UserDetail = lazy(() => import("../../pages/UserDetail/UserDetil"));
-const EditUser = lazy(() => import("../../pages/EditUser/EditUser"));
+// const EditUser = lazy(() => import("../../pages/EditUser/EditUser"));
+const EditUser = lazy(() => import("../../components/UserList/EditUser/index"));
+
 
 const CourseDeatil = lazy(() => import("../../pages/CourseDeatil/CourseDeatil"));
 const DeleteUserPage = lazy(() => import("../../pages/DeleteUser/DeleteUser"));

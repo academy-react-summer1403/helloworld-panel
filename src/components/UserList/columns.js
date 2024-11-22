@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 // ** Custom Components
 import Avatar from "@components/common/avatar";
 import Chart from "react-apexcharts";
-
+import { faNumber } from "../../utility/FaNumber";
 // ** Reactstrap Imports
 import {
   Badge,
@@ -209,7 +209,7 @@ export const columns = [
           className="position-absolute top-50 start-10 end-50 translate-middle"
           for="chart"
         >
-          {row?.profileCompletionPercentage}%
+          {row?.profileCompletionPercentage && faNumber(row.profileCompletionPercentage.toString())}%
         </Label>
         <Chart
           id="chart"
@@ -228,7 +228,7 @@ export const columns = [
     width: "250px",
     sortable: true,
     sortField: "phoneNumber",
-    cell: (row) => <span className="text-capitalize">{row.phoneNumber}</span>,
+    cell: (row) => <span className="text-capitalize">{row.phoneNumber && faNumber(row.phoneNumber.toString())}</span>,
   },
   {
     name: "نقش",
@@ -250,6 +250,9 @@ export const columns = [
       </Badge>
     ),
   },
+
+
+  
 
   {
     name: " سایر",
