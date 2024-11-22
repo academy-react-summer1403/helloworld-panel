@@ -4,7 +4,7 @@ import http from "../../interceptor/interceptor"
 const getBlogList = async (params) => {
     try {
       const result = await http.get(
-        "/News/AdminNewsFilterList?PageNumber=1&RowsOfPage=10&SortingCol=InsertDate&SortType=DESC&Query=&IsActive=true",
+        "/News?PageNumber=1&SortingCol=InsertDate&SortType=DESC",
         { params: params }
       );
   

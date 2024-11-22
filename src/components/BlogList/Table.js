@@ -60,10 +60,11 @@ const CustomHeader = ({
   rowsPerPage,
   handleFilter,
   searchTerm,
+  setSortLenght,
+  setSearchQuery,
+  searchQuery,
 }) => {
-  const [searchQuery, setSearchQuery] = useState();
   const [allCourses, setAllCourses] = useState([]);
-  const [sortLenght, setSortLenght] = useState(10);
 
   // const getAllCourseReport = async () => {
   //   const params = {
@@ -200,6 +201,9 @@ const UsersList = () => {
   const [sortType, setSortType] = useState();
   const [query, setQuery] = useState();
   const [newsList, setNewsList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState();
+
+  const [sortLenght, setSortLenght] = useState(10);
 
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -210,6 +214,10 @@ const UsersList = () => {
       PageNumber,
       RowsOfPage,
       SortingCol,
+      RowsOfPage: sortLenght,
+
+      query: searchQuery || undefined,
+
     };
     const courses = await getBlogList(params);
     console.log("courses:",courses)
@@ -219,8 +227,15 @@ const UsersList = () => {
 
   useEffect(() => {
     getList();
-  }, []);
+  }, []); 
 
+  useEffect(() => {
+    getList();
+  }, [sortLenght]);
+
+  useEffect(() => {
+    getList();
+  }, [searchQuery]);
   const handleFilter = (val) => {
     textTimeOut(() => {
       setSearchText(val);
@@ -231,35 +246,35 @@ const UsersList = () => {
     setRowsOfPage(parseInt(e.target.value));
   };
 
-  const handlePagination = (page) => {
-    setCurrentPage(page.selected + 1);
-  };
+  // const handlePagination = (page) => {
+  //   setCurrentPage(page.selected + 1);
+  // };
 
  
-  const CustomPagination = () => {
-    const count = Number((total / RowsOfPage).toFixed(0));
+  // const CustomPagination = () => {
+  //   const count = Number((total / RowsOfPage).toFixed(0));
 
-    return (
-      <ReactPaginate
-      nextLabel=""
-      breakLabel="..."
-      previousLabel=""
-      pageCount={count || 1}
-      activeClassName="active"
-      breakClassName="page-item"
-      pageClassName={"page-item"}
-      breakLinkClassName="page-link"
-      nextLinkClassName={"page-link"}
-      pageLinkClassName={"page-link"}
-      nextClassName={"page-item next"}
-      previousLinkClassName={"page-link"}
-      previousClassName={"page-item prev"}
-      onPageChange={(page) => handlePagination(page)}
-      forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-      containerClassName={"pagination react-paginate justify-content-end p-1"}
-      />
-    );
-  };
+  //   return (
+  //     <ReactPaginate
+  //     nextLabel=""
+  //     breakLabel="..."
+  //     previousLabel=""
+  //     pageCount={count || 1}
+  //     activeClassName="active"
+  //     breakClassName="page-item"
+  //     pageClassName={"page-item"}
+  //     breakLinkClassName="page-link"
+  //     nextLinkClassName={"page-link"}
+  //     pageLinkClassName={"page-link"}
+  //     nextClassName={"page-item next"}
+  //     previousLinkClassName={"page-link"}
+  //     previousClassName={"page-item prev"}
+  //     onPageChange={(page) => handlePagination(page)}
+  //     forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+  //     containerClassName={"pagination react-paginate justify-content-end p-1"}
+  //     />
+  //   );
+  // };
 
   const dataToRender = () => {
     if (newsList.length > 0) {
@@ -284,9 +299,9 @@ const UsersList = () => {
               <div className="invoice-list-dataTable react-dataTable">
                 <DataTable
                   noHeader
-                  pagination
+                  // pagination
                   sortServer
-                  paginationServer
+                  // paginationServer
                   subHeader={true}
                   columns={columns}
                   onSort={handleSort}
@@ -295,10 +310,13 @@ const UsersList = () => {
                   sortIcon={<ChevronDown />}
                   className="react-dataTable"
                   defaultSortField="invoiceId"
-                  paginationDefaultPage={currentPage}
-                  paginationComponent={CustomPagination}
+                  // paginationDefaultPage={currentPage}
+                  // paginationComponent={CustomPagination}
                   subHeaderComponent={
                     <CustomHeader
+                    setSearchQuery={setSearchQuery}
+                    searchQuery={searchQuery}
+                    setSortLenght={setSortLenght}
                       handleFilter={handleFilter}
                       handlePerPage={handlePerPage}
                       toggleSidebar={toggleSidebar}

@@ -1,5 +1,6 @@
 // ** React Imports
 import { Fragment, useState } from 'react'
+import { Field } from "formik";
 
 // ** Third Party Components
 import Select from 'react-select'
@@ -9,9 +10,10 @@ import 'cleave.js/dist/addons/cleave-phone.us'
 
 // ** Reactstrap Imports
 import { Row, Col, Form, Card, Input, Label, Button, CardBody, CardTitle, CardHeader, FormFeedback } from 'reactstrap'
-
+import noImage from "../../../assets/images/Courses/avatar.png"
 // ** Utils
 import { selectThemeColors } from '@utils'
+import { convertDateToPersian } from '../../../utility/date-helper.utils';
 
 // ** Demo Components
 
@@ -66,11 +68,11 @@ const timeZoneOptions = [
 ]
 
 const AccountTabs = ({ data }) => {
-  console.log("AccountTabs:" , data)
+  // console.log("AccountTabs:" , data)
 
   const defaultValues = {
     lName: '',
-    fName: data?.data?.fName.split(' ')[0]
+    fName: '',
    
   }
   const {
@@ -81,16 +83,16 @@ const AccountTabs = ({ data }) => {
   } = useForm({ defaultValues })
 
   // ** States
-  // const [avatar, setAvatar] = useState(data.avatar ? data.avatar : '')
+  const [avatar, setAvatar] = useState(data?.data?.currentPictureAddress ? data?.data?.currentPictureAddress : noImage)
 
-  // const onChange = e => {
-  //   const reader = new FileReader(),
-  //     files = e.target.files
-  //   reader.onload = function () {
-  //     setAvatar(reader.result)
-  //   }
-  //   reader.readAsDataURL(files[0])
-  // }
+  const onChange = e => {
+    const reader = new FileReader(),
+      files = e.target.files
+    reader.onload = function () {
+      setAvatar(reader.result)
+    }
+    reader.readAsDataURL(files[0])
+  }
 
   const onSubmit = data => {
     if (Object.values(data).every(field => field.length > 0)) {
@@ -106,31 +108,31 @@ const AccountTabs = ({ data }) => {
     }
   }
 
-  // const handleImgReset = () => {
-  //   setAvatar('@src/assets/images/avatars/avatar-blank.png')
-  // }
+  const handleImgReset = () => {
+    setAvatar('../../../assets/images/Courses/avatar.png')
+  }
 
   return (
     <Fragment>
       <Card>
         <CardHeader className='border-bottom'>
-          <CardTitle tag='h4'>Profile Details</CardTitle>
-        </CardHeader>
+          <CardTitle tag='h4'>ویرایش پروفایل کاربر </CardTitle>
+        </CardHeader>   
         <CardBody className='py-2 my-25'>
           <div className='d-flex'>
             <div className='me-25'>
-              {/* <img className='rounded me-50' src={avatar} alt='Generic placeholder image' height='100' width='100' /> */}
+              <img className='rounded me-50' src={avatar} alt='Generic placeholder image' height='100' width='100' />
             </div>
             <div className='d-flex align-items-end mt-75 ms-1'>
               <div>
-                {/* <Button tag={Label} className='mb-75 me-75' size='sm' color='primary'>
-                  Upload
+                <Button tag={Label} className='mb-75 me-75' size='sm' color='primary'>
+                بارگذاری
                   <Input type='file' onChange={onChange} hidden accept='image/*' />
-                </Button> */}
-                {/* <Button className='mb-75' color='secondary' size='sm' outline onClick={handleImgReset}>
-                  Reset
-                </Button> */}
-                <p className='mb-0'>Allowed JPG, GIF or PNG. Max size of 800kB</p>
+                </Button>
+                <Button className='mb-75' color='secondary' size='sm' outline onClick={handleImgReset}>
+                  لغو
+                </Button> 
+                 <p className='mb-0'>عکس را در قالب JPG یا PNG بارگذاری کنید.</p> 
               </div>
             </div>
           </div>
@@ -138,55 +140,92 @@ const AccountTabs = ({ data }) => {
             <Row>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='firstName'>
-                  First Name
+                  نام
                 </Label>
                 <Controller 
                   name='firstName'
                   control={control}
                   render={({ field }) => (
-                    <Input id='firstName'  type='firstName' name='firstName' placeholder='firstName' invalid={errors.data?.data?.fName && true} {...field} />
+                    <Input id='firstName'  type='firstName' name='firstName' placeholder='firstName'   defaultValue={data?.data?.fName} />
                   )}
                 />
                 {errors && errors.firstName && <FormFeedback>Please enter a valid First Name</FormFeedback>}
               </Col>
               <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='lastName'>
-                  Last Name
+                  نام خانوادگی 
                 </Label>
                 <Controller
                   name='lastName'
                   control={control}
                   render={({ field }) => (
-                    <Input id='lastName' type='lastname' name='lastname' placeholder='lastname' invalid={errors.data?.data?.lName && true} {...field}  />
+                    <Input id='lastName' type='lastname' name='lastname' placeholder='lastname' defaultValue={data?.data?.lName}  />
                   )}
                 />
                 {errors.lastName && <FormFeedback>Please enter a valid Last Name</FormFeedback>}
               </Col>
            <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='emailInput'>
-                  E-mail
+                  ایمیل
                 </Label>
-                <Input id='emailInput' type='email' name='email'  defaultValue={data?.gmail} />
+                <Input id='emailInput' type='email' name='email'  defaultValue={data?.data?.gmail} />
               </Col>
-                {/*  <Col sm='6' className='mb-1'>
+                  <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='company'>
-                  Company
+                  نام کاربری
                 </Label>
-                <Input defaultValue={data.company} id='company' name='company' placeholder='Company Name' />
+                <Input defaultValue={data?.data?.userName} id='company' name='company' placeholder='Company Name' />
               </Col>
               <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='phNumber'>
-                  Phone Number
-                </Label>
-                <Cleave
-                  id='phNumber'
-                  name='phNumber'
-                  className='form-control'
-                  placeholder='1 234 567 8900'
-                  options={{ phone: true, phoneRegionCode: 'US' }}
-                />
+                <Label className="form-label" for="status">
+                  وضعیت:
+                </Label> 
+                {/* <Field
+                  className="form-control react-select"
+                  name="status"
+                  as="select"
+                >
+                  <option value={true}>فعال</option>
+                  <option value={false}>غیرفعال</option>
+                </Field> */}
               </Col>
               <Col sm='6' className='mb-1'>
+                <Label className='form-label' for='company'>
+                   کد ملی
+                </Label>
+                <Input defaultValue={data?.data?.nationalCode} id='company' name='company' placeholder='Company Name' />
+              </Col>
+              <Col sm='6' className='mb-1'>
+                <Label className='form-label' for='company'>
+                    شماره همراه
+                </Label>
+                <Input defaultValue={data?.data?.phoneNumber} id='company' name='company' placeholder='Company Name' />
+              </Col>
+              <Col sm='6' className='mb-1'>
+                <Label className='form-label' for='company'>
+                    لینک تلگرام
+                </Label>
+                <Input defaultValue={data?.data?.telegramLink} id='company' name='company' placeholder='Company Name' />
+              </Col>
+              <Col sm='6' className='mb-1'>
+                <Label className='form-label' for='company'>
+                     آدرس منزل
+                </Label>
+                <Input defaultValue={data?.data?.homeAdderess} id='company' name='company' placeholder='Company Name' />
+              </Col>
+              <Col sm='6' className='mb-1'>
+                <Label className='form-label' for='company'>
+                      درباره کاربر
+                </Label>
+                <Input defaultValue={data?.data?.userAbout} id='company' name='company' placeholder='Company Name' />
+              </Col>
+              <Col sm='6' className='mb-1'>
+                <Label className='form-label' for='company'>
+                       تاریخ تولد
+                </Label>
+                <Input defaultValue={data?.data?.birthDay && convertDateToPersian(data?.data?.birthDay)} id='company' name='company' placeholder='Company Name' />
+              </Col>
+              {/* <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='address'>
                   Address
                 </Label>
@@ -259,15 +298,15 @@ const AccountTabs = ({ data }) => {
                   theme={selectThemeColors}
                   defaultValue={currencyOptions[0]}
                 />
-              </Col>
+              </Col> */}
               <Col className='mt-2' sm='12'>
                 <Button type='submit' className='me-1' color='primary'>
-                  Save changes
+                  ذخیره
                 </Button>
                 <Button color='secondary' outline>
-                  Discard
+                  لغو
                 </Button>
-              </Col> */}
+              </Col>
             </Row>
           </Form>
         </CardBody>
