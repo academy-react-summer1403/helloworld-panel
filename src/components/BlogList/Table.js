@@ -208,6 +208,18 @@ const UsersList = () => {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
+  const [isActive, setIsActive] = useState({
+    value: null,
+    label: "انتخاب کنید...",
+  });
+  const active = isActive.value;
+
+const isActiveOptions = [
+    { value: null, label: "انتخاب کنید..." },
+    { value: true, label: "فعال" },
+    { value: false, label: "غیرفعال" },
+  ];
+
   const getList = async () => {
     const params = {
       currentPage,
@@ -292,6 +304,39 @@ const UsersList = () => {
 
   return (
     <div className="invoice-list-wrapper">
+      <Fragment>
+      <Card>
+        <CardHeader>
+          <CardTitle tag="h4">فیلتر</CardTitle>
+        </CardHeader>
+        <CardBody>
+          <Row>
+           
+            <Col md="4">
+              <Label for="role-select">وضعیت</Label>
+              <Select
+                isClearable={false}
+                value={isActive}
+                options={isActiveOptions}
+                className="react-select"
+                classNamePrefix="select"
+                theme={selectThemeColors}
+                onChange={(data) => {
+                  setIsActive(data);
+
+                  // handleFilterUserList;
+                }}
+              />
+            </Col>
+          
+           
+          </Row>
+        </CardBody>
+      </Card>
+
+
+
+      </Fragment>
       <Card>
         <Fragment>
           <Row>
