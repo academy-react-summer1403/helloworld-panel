@@ -19,33 +19,33 @@ const Columns = () => {
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='primary'
-            statTitle='Total Users'
+            statTitle='کاربران '
             icon={<User size={20} />}
-            renderStats={<h3 className='fw-bolder mb-75'>21,459</h3>}
+            renderStats={<h3 className='fw-bolder mb-75'>364</h3>}
           />
         </Col>
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='danger'
-            statTitle='Paid Users'
+            statTitle='اساتید'
             icon={<UserPlus size={20} />}
-            renderStats={<h3 className='fw-bolder mb-75'>4,567</h3>}
+            renderStats={<h3 className='fw-bolder mb-75'>22</h3>}
           />
         </Col>
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='success'
-            statTitle='Active Users'
+            statTitle='دانشجویان'
             icon={<UserCheck size={20} />}
-            renderStats={<h3 className='fw-bolder mb-75'>19,860</h3>}
+            renderStats={<h3 className='fw-bolder mb-75'>89</h3>}
           />
         </Col>
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='warning'
-            statTitle='Pending Users'
+            statTitle='ادمین'
             icon={<UserX size={20} />}
-            renderStats={<h3 className='fw-bolder mb-75'>237</h3>}
+            renderStats={<h3 className='fw-bolder mb-75'>54</h3>}
           />
         </Col>
       </Row>

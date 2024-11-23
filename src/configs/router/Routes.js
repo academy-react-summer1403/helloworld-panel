@@ -33,7 +33,9 @@ const Courses = lazy(() => import("../../pages/Courses/Courses"));
 
 const User = lazy(() => import("../../pages/User/User"));
 const UserDetail = lazy(() => import("../../pages/UserDetail/UserDetil"));
-const EditUser = lazy(() => import("../../pages/EditUser/EditUser"));
+// const EditUser = lazy(() => import("../../pages/EditUser/EditUser"));
+const EditUser = lazy(() => import("../../components/UserList/EditUser/index"));
+
 
 const CourseDeatil = lazy(() => import("../../pages/CourseDeatil/CourseDeatil"));
 const DeleteUserPage = lazy(() => import("../../pages/DeleteUser/DeleteUser"));
@@ -46,6 +48,10 @@ const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Blogs = lazy(() => import("../../pages/Blogs/Blogs"));
+const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
+const Calendar = lazy(() => import("../../pages/Calendar/Calendar"));
+
+
 
 
 // ** Merge Routes
@@ -96,6 +102,16 @@ const Routes = [
   {
     path: "/blog",
     element: <Blogs/>
+  },
+  {
+
+    path: "/podcast",
+    element: <Podcast/>
+
+  },
+  {
+    path: "/calendar",
+    element: <Calendar/>
   },
   {
     path: "/second-page",

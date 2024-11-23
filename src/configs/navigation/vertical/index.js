@@ -1,4 +1,4 @@
-import { BookOpen, Home } from "react-feather";
+import { BookOpen, Home,Mic,Calendar } from "react-feather";
 import { Layers,Circle,Users } from "react-feather";
 
 export default [
@@ -39,6 +39,18 @@ export default [
     title: "اخبار و مقالات",
     icon: <BookOpen/>,
     navLink: "/blog",
+  },
+  {
+    id: "podcast",
+    title: " پادکست",
+    icon: <Mic/>,
+    navLink: "/podcast",
+  },
+  {
+    id: "calendar",
+    title: " تقویم آموزشی",
+    icon: <Calendar/>,
+    navLink: "/calendar",
   },
   // {
   //   id: "secondPage",

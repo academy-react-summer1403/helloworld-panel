@@ -3,7 +3,7 @@ import http from "../../interceptor/interceptor";
 const getUserList = async (params) => {
   try {
     const result = await http.get(
-      "/User/UserMannage?PageNumber=0&RowsOfPage=0&SortingCol=DESC&SortType=InsertDate&Query=&IsActiveUser=true&IsDeletedUser=true&roleId=1",
+      "/User/UserMannage?PageNumber=1&SortingCol=DESC",
       { params: params }
     );
 
@@ -45,11 +45,43 @@ export const addUser = async (user) => {
   }
 };
 
+export const updateUser = async (user) => {
+  try {
+    const result = await http.put("/User/UpdateUser", user);
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export const deleteUser = async (userId) => {
   try {
     const result = await http.put("/User/DeleteUser", userId);
 
     return result;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const addUserAccess = async (enable, roleId, userId) => {
+  try {
+    const response = await http.post(
+      `/User/AddUserAccess`,
+      {
+        roleId,
+        userId,
+      },
+      {
+        params: {
+          Enable: enable,
+        },
+      }
+    );
+
+    return response;
   } catch (error) {
     return false;
   }
