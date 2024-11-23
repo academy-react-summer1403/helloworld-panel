@@ -45,6 +45,17 @@ export const addUser = async (user) => {
   }
 };
 
+export const updateUser = async (user) => {
+  try {
+    const result = await http.put("/User/UpdateUser", user);
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export const deleteUser = async (userId) => {
   try {
     const result = await http.put("/User/DeleteUser", userId);

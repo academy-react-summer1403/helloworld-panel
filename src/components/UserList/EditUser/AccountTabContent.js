@@ -14,6 +14,7 @@ import noImage from "../../../assets/images/Courses/avatar.png"
 // ** Utils
 import { selectThemeColors } from '@utils'
 import { convertDateToPersian } from '../../../utility/date-helper.utils';
+import { updateUser } from '../../../core/services/api/User';
 
 // ** Demo Components
 
@@ -70,6 +71,12 @@ const timeZoneOptions = [
 const AccountTabs = ({ data }) => {
   // console.log("AccountTabs:" , data)
 
+  const checkIsValid = (data) => {
+    return Object.values(data).every((field) =>
+      typeof field === "object" ? field !== null : field.length > 0
+    );
+  };
+
   const defaultValues = {
     lName: '',
     fName: '',
@@ -81,6 +88,43 @@ const AccountTabs = ({ data }) => {
     handleSubmit,
     formState: { errors }
   } = useForm({ defaultValues })
+
+  const updateUser = async (user) => {
+    try {
+      const newUser = await updateUser(user);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    console.log("onSubmitedit:" , onSubmit)
+    updateUser(data);
+    if (checkIsValid(data)) {
+      toast(
+        <div className="d-flex">
+          <div className="d-flex flex-column">
+            <h6>کاربر با موفقیت ایجاد شد!</h6>
+          </div>
+        </div>
+      );
+    } else {
+      for (const key in data) {
+        if (data[key] === null) {
+          setError("country", {
+            type: "manual",
+          });
+        }
+        if (data[key] !== null && data[key].length === 0) {
+          setError(key, {
+            type: "manual",
+          });
+        }
+      }
+    }
+  };
+  
+
 
   // ** States
   const [avatar, setAvatar] = useState(data?.data?.currentPictureAddress ? data?.data?.currentPictureAddress : noImage)
@@ -94,19 +138,19 @@ const AccountTabs = ({ data }) => {
     reader.readAsDataURL(files[0])
   }
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      return null
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
-    }
-  }
+  // const onSubmit = data => {
+  //   if (Object.values(data).every(field => field.length > 0)) {
+  //     return null
+  //   } else {
+  //     for (const key in data) {
+  //       if (data[key].length === 0) {
+  //         setError(key, {
+  //           type: 'manual'
+  //         })
+  //       }
+  //     }
+  //   }
+  // }
 
   const handleImgReset = () => {
     setAvatar('../../../assets/images/Courses/avatar.png')
@@ -300,7 +344,7 @@ const AccountTabs = ({ data }) => {
                 />
               </Col> */}
               <Col className='mt-2' sm='12'>
-                <Button type='submit' className='me-1' color='primary'>
+                <Button type='submit' className='me-1' color='primary' onSubmit={handleSubmit(onSubmit)}>
                   ذخیره
                 </Button>
                 <Button color='secondary' outline>
