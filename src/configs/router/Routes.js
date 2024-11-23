@@ -48,6 +48,8 @@ const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Blogs = lazy(() => import("../../pages/Blogs/Blogs"));
+const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
+
 
 
 // ** Merge Routes
@@ -98,6 +100,12 @@ const Routes = [
   {
     path: "/blog",
     element: <Blogs/>
+  },
+  {
+
+    path: "/podcast",
+    element: <Podcast/>
+
   },
   {
     path: "/second-page",
