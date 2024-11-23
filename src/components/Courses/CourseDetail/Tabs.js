@@ -8,6 +8,7 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { CreditCard, FileText, Lock, User, Users } from "react-feather";
 
 import Test from "./test";
+import Cmt from "./reactstrap";
 
 // ** User Components
 // import CoursesGroups from "../courseGroups/TableGr";
@@ -15,12 +16,8 @@ import Test from "./test";
 // import UsersCourses from "../userCorses/Table";
 // import Payments from "../payment/payments";
 
-const UserTabs = ({
-  active,
-  toggleTab,
-  dataComment
-}) => {
-  console.log("object id",dataComment?.data)
+const UserTabs = ({ active, toggleTab, dataComment }) => {
+  console.log("object id", dataComment?.data);
 
   return (
     <Fragment>
@@ -51,9 +48,7 @@ const UserTabs = ({
         </NavItem>
       </Nav>
       <TabContent activeTab={active}>
-        <TabPane tabId="1">
-          {/* <div>{data?.data?.title}</div> */}
-        </TabPane>
+        <TabPane tabId="1">{/* <div>{data?.data?.title}</div> */}</TabPane>
 
         <TabPane tabId="2">
           {/* <CoursesGroups
@@ -64,7 +59,7 @@ const UserTabs = ({
         </TabPane>
 
         <TabPane tabId="3">
-        <>
+          {/* <>
           {dataComment?.data.map((item, index) => {
             return (
               <Test
@@ -73,7 +68,8 @@ const UserTabs = ({
               />
             );
           })}
-        </>
+        </> */}
+          <Cmt dataComment={dataComment} />
         </TabPane>
         <TabPane tabId="4">
           {/* <Payments allPayments={allPayments} /> */}
