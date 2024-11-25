@@ -26,18 +26,18 @@ const getCourseList = async (sDate, eDate) => {
 
 // Helper function to get random week and day of the month
 const getRandomWeekDay = (month) => {
-    const weeks = [1, 2, 3, 4]; // Weeks of the month
-    const randomWeek = weeks[Math.floor(Math.random() * weeks.length)];
-  
-    const startDate = moment().month(month).startOf("month").date(1);
-    const startOfWeek = startDate.add((randomWeek - 1) * 7, "days");
-  
-    // Get a random day of the selected week
-    const randomDay = startOfWeek
-      .add(Math.floor(Math.random() * 7), "days")
-      .format("YYYY-MM-DD");
-    return randomDay;
-  };
+  const weeks = [1, 2, 3, 4]; // Weeks of the month
+  const randomWeek = weeks[Math.floor(Math.random() * weeks.length)];
+
+  const startDate = moment().month(month).startOf("month").date(1);
+  const startOfWeek = startDate.add((randomWeek - 1) * 7, "days");
+
+  // Get a random day of the selected week
+  const randomDay = startOfWeek
+    .add(Math.floor(Math.random() * 7), "days")
+    .format("YYYY-MM-DD");
+  return randomDay;
+};
 
 export const getCustomCourseList = async () => {
   try {
@@ -52,6 +52,7 @@ export const getCustomCourseList = async () => {
           end: randomDay,
           allDay: true,
           month: month,
+          id: course.courseId,
         };
       });
     };
