@@ -1,60 +1,89 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment } from "react";
 
 // ** Icons Imports
-import { ArrowLeft } from 'react-feather'
+import { ArrowLeft } from "react-feather";
 
 // ** Reactstrap Imports
-import { Label, Row, Col, Form, Input, Button } from 'reactstrap'
+import { Label, Row, Col, Input, Button } from "reactstrap";
+
+import { Field, Form, Formik, ErrorMessage } from "formik";
+
+import { getCreatCourse } from "../../../../core/services/api/Coueses/getCreatFill";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const SocialLinks = ({ stepper, type }) => {
+  const [stepFillTek, setStepFillTek] = useState();
+
+  const getAllFill = async () => {
+    const report = await getCreatCourse();
+    setStepFillTek(report.data.technologyDtos);
+  };
+
+  useEffect(() => {
+    getAllFill();
+  }, []);
+
   return (
     <Fragment>
-      <div className='content-header'>
-        <h5 className='mb-0'>Social Links</h5>
-        <small>Enter Your Social Links.</small>
+      <div className="content-header">
+        <h5 className="mb-0"> تکنولوژی</h5>
+        <small className="text-muted">لطفا اطلاعات را با دقت وارد کنید</small>
       </div>
-      <Form onSubmit={e => e.preventDefault()}>
-        <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`twitter-${type}`}>
-              Twitter
-            </Label>
-            <Input type='text' id={`twitter-${type}`} name='twitter' placeholder='https://twitter.com/abc' />
-          </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`facebook-${type}`}>
-              Facebook
-            </Label>
-            <Input type='text' id={`facebook-${type}`} name='facebook' placeholder='https://facebook.com/abc' />
-          </Col>
-        </Row>
-        <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`google-${type}`}>
-              Google+
-            </Label>
-            <Input type='text' id={`google-${type}`} name='google' placeholder='https://plus.google.com/abc' />
-          </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`linkedin-${type}`}>
-              Linkedin
-            </Label>
-            <Input type='text' id={`linkedin-${type}`} name='linkedin' placeholder='https://linkedin.com/abc' />
-          </Col>
-        </Row>
-        <div className='d-flex justify-content-between'>
-          <Button color='primary' className='btn-prev' onClick={() => stepper.previous()}>
-            <ArrowLeft size={14} className='align-middle me-sm-25 me-0'></ArrowLeft>
-            <span className='align-middle d-sm-inline-block d-none'>قبل</span>
-          </Button>
-          <Button color='success' className='btn-submit' onClick={() => alert('submitted')}>
-            ثبت دوره
-          </Button>
-        </div>
-      </Form>
+      <Formik>
+        <Form onSubmit={(e) => e.preventDefault()}>
+          <Row>
+            <Col md="12" className="mb-1">
+              <div className="form-group pb-2">
+                <label htmlFor="Title">تکنولوژی دوره</label>
+                <hr />
+                <Field
+                  id="Title"
+                  as="select"
+                  name="CourseTypeId"
+                  className="form-control"
+                >
+                  {stepFillTek?.map((item, index) => {
+                    return (
+                      <option key={index} value={item.id}>
+                        {item.techName}
+                      </option>
+                    );
+                  })}
+                </Field>
+                <ErrorMessage
+                  name="CourseTypeId"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+            </Col>
+          </Row>
+          <div className="d-flex justify-content-between">
+            <Button
+              color="primary"
+              className="btn-prev"
+              onClick={() => stepper.previous()}
+            >
+              <ArrowLeft
+                size={14}
+                className="align-middle me-sm-25 me-0"
+              ></ArrowLeft>
+              <span className="align-middle d-sm-inline-block d-none">قبل</span>
+            </Button>
+            <Button
+              color="success"
+              className="btn-submit"
+              onClick={() => alert("submitted")}
+            >
+              ثبت دوره
+            </Button>
+          </div>
+        </Form>
+      </Formik>
     </Fragment>
-  )
-}
+  );
+};
 
-export default SocialLinks
+export default SocialLinks;

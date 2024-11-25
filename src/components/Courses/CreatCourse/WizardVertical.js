@@ -25,16 +25,16 @@ const WizardVertical = () => {
       content: <AccountDetails stepper={stepper} type='wizard-vertical' />
     },
     {
-      id: 'personal-info',
+      id: 'step-address',
       title: 'مرحله دوم',
       subtitle: 'اطلاعات را وارد کنید',
-      content: <PersonalInfo stepper={stepper} type='wizard-vertical' />
+      content: <Address stepper={stepper} type='wizard-vertical' />
     },
     {
-      id: 'step-address',
+      id: 'personal-info',
       title: 'مرحله سوم',
       subtitle: 'اطلاعات را وارد کنید',
-      content: <Address stepper={stepper} type='wizard-vertical' />
+      content: <PersonalInfo stepper={stepper} type='wizard-vertical' />
     },
     {
       id: 'social-links',
