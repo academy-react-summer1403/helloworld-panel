@@ -23,6 +23,8 @@ function CourseMap({
   courseId
 }) {
 
+  
+
   return (
     <tr>
       <td>
@@ -76,7 +78,7 @@ function CourseMap({
           <DropdownMenu>
             <DropdownItem tag={Link} to={`/course/${courseId}`}>
               <Edit className="me-50" size={15} />{" "}
-              <span className="align-middle">جزئیات</span>
+              <span >جزئیات</span>
             </DropdownItem>
             <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
               <Trash className="me-50" size={15} />{" "}

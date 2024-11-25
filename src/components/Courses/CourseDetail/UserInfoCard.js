@@ -118,23 +118,26 @@ const languageOptions = [
 ];
 
 const UserInfoCard = ({ data }) => {
-  // console.log("userinfocard:", data);
+  console.log("dataaaaaaaaaaaaaaa", data);
 
   const [show, setShow] = useState(false);
 
   const renderUserImage = () => {
-    if (data !== null && data?.data?.imageAddress !== "Not-set") {
+    if (!!data && data?.data?.imageAddress.includes("classapi.sepehracademy.ir")) {
       return (
+        // <div>aloo</div>
         <img
           height="150"
           width="150"
           alt="user-avatar"
-          src={data?.data?.imageAddress ? imageAddress : noImage}
+          src={data?.data?.imageAddress ? data?.data?.imageAddress : noImage}
           className="img-fluid rounded mt-3 mb-2"
+          style={{width:"100px",height:"100px"}}
         />
       );
     } else {
       return (
+      // <div>aloo222</div>
         <Avatar
           initials
           color="light-success"

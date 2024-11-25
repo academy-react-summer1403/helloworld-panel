@@ -32,7 +32,7 @@ const UserDetail = () => {
   const getList = async (id) => {
     try {
       const CoursesId = await getCourseDeatil(id);
-      console.log("users:", CoursesId);
+      console.log("userssssssssssssssssssssssss:", CoursesId);
       setdata(CoursesId);
     } catch (error) {
       throw new Error("ERROR: ", error);
