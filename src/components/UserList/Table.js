@@ -51,6 +51,7 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 
 import getUserList from "../../core/services/api/User";
 import AddUser from "./AddUser";
+import { Value } from "sass";
 
 // ** Table Header
 const CustomHeader = ({
@@ -124,10 +125,12 @@ const CustomHeader = ({
           className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
         >
           <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-            <label className="mb-0" htmlFor="search-invoice">
+            {/* <label className="mb-0" htmlFor="search-invoice">
               جست و جو
-            </label>
+            </label> */}
             <Input
+            placeholder="جست و جوی کاربر"          
+
               id="search-invoice"
               className="ms-50 w-100"
               type="text"
@@ -163,11 +166,15 @@ const UsersList = () => {
   const [perPage, setPerPage] = useState(5);
   const [total, setTotal] = useState();
   const [userList, setUserList] = useState([]);
-  const [roleId, setRolesId] = useState([]);
   const [sortType, setSortType] = useState();
   const [query, setQuery] = useState();
   const [sortLenght, setSortLenght] = useState(10);
   const [searchQuery, setSearchQuery] = useState();
+  const [roleId, setRoleId] = useState(1);
+  const [activeRole, setActiveRole] = useState();
+  console.log("roleId tst:", roleId)
+
+
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -181,11 +188,6 @@ const UsersList = () => {
     value: null,
     label: "انتخاب کنید...",
   });
-
-
-  const userRole = currentRole.value;
-
-  const active = isActive.value;
 
   const roleOptions = [
     { value: null, label: "انتخاب کنید..." },
@@ -202,13 +204,13 @@ const isActiveOptions = [
   const getList = async () => {
     const params = {
       
-      userRole,
-      active,
+      roleId: roleId,
       currentPage,
       PageNumber,
       RowsOfPage: sortLenght,
       SortingCol,
       sortType,
+      IsActiveUser: activeRole,
       query: searchQuery || undefined,
     };
     const user = await getUserList(params);
@@ -216,9 +218,9 @@ const isActiveOptions = [
 
     setUserList(user.data.listUser);
     setTotal(user.data.totalCount);
-    setRolesId(user.data.roles);
-  };
+    // setRoleId(user.data.roles);
 
+  };
   useEffect(() => {
     getList();
   }, []);
@@ -232,12 +234,20 @@ const isActiveOptions = [
   }, [searchQuery]);
 
   useEffect(() => {
-    getList(userRole);
-  }, [userRole]);
+    getList();
+  }, [roleId]);
 
   useEffect(() => {
-    getList(active);
-  }, [active]);
+    getList();
+  }, [activeRole]);
+
+  // useEffect(() => {
+  //   getList();
+  // }, [roleId]);
+
+  // useEffect(() => {
+  //   getList(active);
+  // }, [active]);
 
   const handleFilter = (val) => {
     textTimeOut(() => {
@@ -310,7 +320,7 @@ const isActiveOptions = [
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setCurrentRole(data);
-
+                  setRoleId(data.value)
                   // handleFilterUserList;
                 }}
               />
@@ -326,6 +336,8 @@ const isActiveOptions = [
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setIsActive(data);
+                  setActiveRole(data.value)
+                  // setActiveRole()
 
                   // handleFilterUserList;
                 }}

@@ -14,6 +14,10 @@ import toast from 'react-hot-toast'
 import { Menu } from 'react-feather'
 import { Card, CardBody } from 'reactstrap'
 
+import {fetchEvents} from "./store"
+
+import "./calendarStyle.css"
+
 const Calendar = props => {
   // ** Refs
   const calendarRef = useRef(null)
@@ -42,7 +46,7 @@ const Calendar = props => {
 
   // ** calendarOptions(Props)
   const calendarOptions = {
-    // events: store.events.length ? store.events : [],
+    events: store.events.length ? store.events : [],
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -81,12 +85,14 @@ const Calendar = props => {
 
     eventClassNames({ event: calendarEvent }) {
       // eslint-disable-next-line no-underscore-dangle
-      const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
+      // const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
 
-      return [
-        // Background Color
-        `bg-light-${colorName}`
-      ]
+      // return [
+      //   `bg-light-${colorName}`
+      // ]
+      
+        return ['custom-event-style']; // Add a custom class for your events
+      
     },
 
     eventClick({ event: clickedEvent }) {
@@ -142,6 +148,9 @@ const Calendar = props => {
     // Get direction from app state (store)
     direction: isRtl ? 'rtl' : 'ltr'
   }
+  useEffect(() => {
+    dispatch(fetchEvents());
+  }, [dispatch]);
 
   return (
     <Card className='shadow-none border-0 mb-0 rounded-0'>
