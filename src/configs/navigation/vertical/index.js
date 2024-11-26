@@ -56,18 +56,18 @@ export default [
       
     ],
   },
-  {
-    id: "podcast",
-    title: " پادکست",
-    icon: <Mic/>,
-    navLink: "/podcast",
-  },
-  {
-    id: "calendar",
-    title: " تقویم آموزشی",
-    icon: <Calendar/>,
-    navLink: "/calendar",
-  },
+  // {
+  //   id: "podcast",
+  //   title: " پادکست",
+  //   icon: <Mic/>,
+  //   navLink: "/podcast",
+  // },
+  // {
+  //   id: "calendar",
+  //   title: " تقویم آموزشی",
+  //   icon: <Calendar/>,
+  //   navLink: "/calendar",
+  // },
   // {
   //   id: "secondPage",
   //   title: "صفحه نمونه",

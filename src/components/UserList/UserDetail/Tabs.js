@@ -11,6 +11,7 @@ import Connections from './Connections'
 import { getUserWithId } from '../../../core/services/api/User'
 import UserCourse from './UserCourse';
 import UserReserveCourse from './UserReserveCourse';
+import { getComments } from '../../../core/services/api/User';
 // ** User Components
 // import InvoiceList from './InvoiceList'
 // import SecurityTab from './SecurityTab'
@@ -20,7 +21,7 @@ import UserReserveCourse from './UserReserveCourse';
 // import Notifications from './Notifications'
 // import UserProjectsList from './UserProjectsList'
 
-const UserTabs = ({ active, toggleTab }) => {
+const UserTabs = ({ active, toggleTab , data }) => {
 
   const [data, setdata] = useState();
   // console.log("data:", data);
@@ -41,6 +42,23 @@ const UserTabs = ({ active, toggleTab }) => {
   }, [id]);
 
 
+  const getCmnts = async () => {
+    try {
+      const result = await getComments(data.id);
+      console.log("data.id:", id);
+
+      setUserCmnt(result.comments);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if(active==="3"){
+      getCmnts()
+    }
+  }, [active]);
+  
 
   return (
     <Fragment>
