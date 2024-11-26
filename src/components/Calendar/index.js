@@ -32,7 +32,7 @@ const calendarsColor = {
 const CalendarComponent = () => {
   // ** Variables
   const dispatch = useDispatch()
-  // const store = useSelector(state => state.calendar)
+  const store = useSelector(state => state.calendar)
 
   // ** states
   const [calendarApi, setCalendarApi] = useState(null)
@@ -97,7 +97,7 @@ const CalendarComponent = () => {
           <Col className='position-relative'>
             <Calendar
               isRtl={isRtl}
-              // store={store}
+              store={store}
               dispatch={dispatch}
               blankEvent={blankEvent}
               calendarApi={calendarApi}

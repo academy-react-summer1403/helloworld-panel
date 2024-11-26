@@ -38,6 +38,7 @@ import {
   ArrowDownCircle,
 } from "react-feather";
 import DeleteUser from "./DeleteUser/deleteuser";
+import DeleteModal from "./UserDetail/DeleteModal";
 
 // ** Vars
 const invoiceStatusObj = {
@@ -190,8 +191,6 @@ export const columns = [
             <span className="fw-bolder">
               {row.fname && row.lname ? row.fname + " " + row.lname : " کاربر"}
             </span>
-            
-           
           </Link>
           <small className="text-truncate text-muted mb-0">{row.gmail}</small>
         </div>
@@ -209,7 +208,9 @@ export const columns = [
           className="position-absolute top-50 start-10 end-50 translate-middle"
           for="chart"
         >
-          {row?.profileCompletionPercentage && faNumber(row.profileCompletionPercentage.toString())}%
+          {row?.profileCompletionPercentage &&
+            faNumber(row.profileCompletionPercentage.toString())}
+          %
         </Label>
         <Chart
           id="chart"
@@ -228,7 +229,11 @@ export const columns = [
     width: "250px",
     sortable: true,
     sortField: "phoneNumber",
-    cell: (row) => <span className="text-capitalize">{row.phoneNumber && faNumber(row.phoneNumber.toString())}</span>,
+    cell: (row) => (
+      <span className="text-capitalize">
+        {row.phoneNumber && faNumber(row.phoneNumber.toString())}
+      </span>
+    ),
   },
   {
     name: "نقش",
@@ -246,13 +251,10 @@ export const columns = [
     selector: (row) => row.active,
     cell: (row) => (
       <Badge className="text-capitalize" color={statusObj[row.active]} pill>
-        {row.active ? "فعال" : "غیرفعال"}
+        {row?.active === "True" ? "فعال" : "غیرفعال"}
       </Badge>
     ),
   },
-
-
-  
 
   {
     name: " سایر",
@@ -268,16 +270,21 @@ export const columns = [
               <Info size={14} className="me-50" />
               <span className="align-middle">جزئیات</span>
             </DropdownItem>
-            <DropdownItem tag={Link} to={`/user/edit/${row.id}`} className="w-100">
+            <DropdownItem
+              tag={Link}
+              to={`/user/edit/${row.id}`}
+              className="w-100"
+            >
               <Edit size={14} className="me-50" />
               <span className="align-middle"> ویرایش</span>
             </DropdownItem>
 
-            <DropdownItem className="w-100 d-block">
+            {/* <DropdownItem className="w-100 d-block">
               <Trash size={14} className="me-50" />
 
               <span className="align-middle "> حذف</span>
-            </DropdownItem>
+              <DeleteModal id={row.id} />
+            </DropdownItem> */}
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>
