@@ -21,7 +21,7 @@ import { getComments } from '../../../core/services/api/User';
 // import Notifications from './Notifications'
 // import UserProjectsList from './UserProjectsList'
 
-const UserTabs = ({ active, toggleTab , data }) => {
+const UserTabs = ({ active, toggleTab  }) => {
 
   const [data, setdata] = useState();
   // console.log("data:", data);
