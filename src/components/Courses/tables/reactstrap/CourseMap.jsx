@@ -20,6 +20,7 @@ function CourseMap({
   fullName,
   isActive,
   isExpire,
+  isdelete,
   courseId
 }) {
 
@@ -56,13 +57,13 @@ function CourseMap({
           </Badge>        )}
       </td>
       <td>
-        {isExpire ? (
+        {isdelete ? (
           <Badge pill color="light-danger" className="me-1 m-0.5">
             منقضی شده
           </Badge>
         ) : (
             <Badge pill color="light-success" className="me-1 m-0.5">
-             مجاز
+             موجود
           </Badge>        )}
       </td>
       <td>

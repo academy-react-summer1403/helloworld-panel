@@ -122,41 +122,41 @@ const UserInfoCard = ({ data }) => {
 
   const [show, setShow] = useState(false);
 
-  const renderUserImage = () => {
-    if (!!data && data?.data?.imageAddress.includes("classapi.sepehracademy.ir")) {
-      return (
-        // <div>aloo</div>
-        <img
-          height="150"
-          width="150"
-          alt="user-avatar"
-          src={data?.data?.imageAddress ? data?.data?.imageAddress : noImage}
-          className="img-fluid rounded mt-3 mb-2"
-          style={{width:"100px",height:"100px"}}
-        />
-      );
-    } else {
-      return (
-      // <div>aloo222</div>
-        <Avatar
-          initials
-          color="light-success"
-          className="rounded mt-3 mb-2"
-          content={`${data?.teacherName || "teacherName"}`}
-          contentStyles={{
-            borderRadius: 0,
-            fontSize: "calc(48px)",
-            width: "100%",
-            height: "100%",
-          }}
-          style={{
-            height: "110px",
-            width: "110px",
-          }}
-        />
-      );
-    }
-  };
+  // const renderUserImage = () => {
+  //   if (!!data && data?.data?.imageAddress.includes("classapi.sepehracademy.ir")) {
+  //     return (
+  //       // <div>aloo</div>
+  //       <img
+  //         height="150"
+  //         width="150"
+  //         alt="user-avatar"
+  //         src={data?.data?.imageAddress ? data?.data?.imageAddress : noImage}
+  //         className="img-fluid rounded mt-3 mb-2"
+  //         style={{width:"100px",height:"100px"}}
+  //       />
+  //     );
+  //   } else {
+  //     return (
+  //     // <div>aloo222</div>
+  //       <Avatar
+  //         initials
+  //         color="light-success"
+  //         className="rounded mt-3 mb-2"
+  //         content={`${data?.teacherName || "teacherName"}`}
+  //         contentStyles={{
+  //           borderRadius: 0,
+  //           fontSize: "calc(48px)",
+  //           width: "100%",
+  //           height: "100%",
+  //         }}
+  //         style={{
+  //           height: "110px",
+  //           width: "110px",
+  //         }}
+  //       />
+  //     );
+  //   }
+  // };
 
   // const renderRoleName = (roleName) => {
   //   if (roleName === " Teacher  ") {
@@ -190,7 +190,16 @@ const UserInfoCard = ({ data }) => {
         <CardBody>
           <div className="user-avatar-section">
             <div className="d-flex align-items-center flex-column">
-              {renderUserImage()}
+              <img
+                height="150"
+                width="150"
+                alt="user-avatar"
+                src={
+                  data?.data?.imageAddress ? data?.data?.imageAddress : noImage
+                }
+                className="img-fluid rounded mt-3 mb-2"
+                style={{ width: "100px", height: "100px" }}
+              />{" "}
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info  ">
                   <h3 className="fw-bolder">{data?.data?.title}</h3>
@@ -282,7 +291,9 @@ const UserInfoCard = ({ data }) => {
                   <span>{data?.data?.likeCount}</span>
                 </li>
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">تعداد کامنت های ثبت شده:</span>
+                  <span className="fw-bolder me-25">
+                    تعداد کامنت های ثبت شده:
+                  </span>
                   <span>{data?.data?.commentCount}</span>
                 </li>
                 <li className="mb-75">

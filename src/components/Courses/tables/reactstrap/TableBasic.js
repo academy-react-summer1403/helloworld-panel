@@ -135,6 +135,7 @@ const Courses = ({ allCourses }) => {
                 isActive={item.isActive}
                 fullName={item.fullName}
                 isExpire={item.isExpire}
+                isdelete={item.isdelete}
                 levelName={item.levelName}
                 typeName={item.typeName}
                 tumbImageAddress={item.tumbImageAddress}

@@ -2,7 +2,7 @@ import React from "react";
 
 import angular from "../../../../assets/images/Courses/angular.svg";
 import noImage from "../../../../assets/images/Courses/noImage.png";
-import { MoreVertical, Edit, Trash } from "react-feather";
+import { MoreVertical, Edit, Trash, Delete } from "react-feather";
 import {
   Badge,
   UncontrolledDropdown,
@@ -13,10 +13,48 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-function CourseMap({ title, describe, accept, author }) {
+import { acceptComment } from "../../../../core/services/api/Coueses/getCourseDeatil";
+import { rejectComment } from "../../../../core/services/api/Coueses/getCourseDeatil";
+import { deletComment } from "../../../../core/services/api/Coueses/getCourseDeatil";
+import { useEffect } from "react";
+
+function CourseMap({ title, describe, accept, author, id }) {
+  const accptCmnt = async (CommentCourseId) => {
+    try {
+      const responses = await acceptComment(CommentCourseId);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+
+  const rejCmnt = async (CommentCourseId) => {
+    try {
+      const responses = await rejectComment(CommentCourseId);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+
+  const delCmnt = async (CommentCourseId) => {
+    try {
+      const responses = await deletComment(CommentCourseId);
+    } catch (error) {
+      // toast.error(error.message);
+      throw new Error("ERROR: ", error);
+    }
+  };
+
+  useEffect(() => {
+    accptCmnt();
+  }, []);
+
+  useEffect(() => {
+    rejCmnt();
+  }, []);
+
   return (
-    <tr>
-      <td>
+    <tr className="text-center">
+      <td className=" px-0">
         {/* <img
           className="me-75 rounded-circle"
           src={pictureAddress && pictureAddress.includes("classapi.sepehracademy.ir") ? pictureAddress : noImage}
@@ -27,11 +65,14 @@ function CourseMap({ title, describe, accept, author }) {
         /> */}
         <span className="align-middle fw-bold">{author}</span>
       </td>
-      <td>
+      <td className=" px-0">
         <span className="align-middle fw-bold">{title}</span>
       </td>
-      <td>{describe}</td>
-      <td>
+      <td className="w-50 border">
+        <span className="align-middle fw-bold">{describe}</span>
+      </td>
+
+      <td className=" px-0">
         {!accept ? (
           <Badge pill color="light-danger" className="me-1 m-0.5">
             در انتظار تایید
@@ -42,7 +83,7 @@ function CourseMap({ title, describe, accept, author }) {
           </Badge>
         )}
       </td>
-      <td>
+      <td className=" px-0">
         <UncontrolledDropdown>
           <DropdownToggle
             className="icon-btn hide-arrow"
@@ -52,14 +93,24 @@ function CourseMap({ title, describe, accept, author }) {
           >
             <MoreVertical size={15} />
           </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
-              <Edit className="me-50" size={15} />{" "}
-              <span className="align-middle">تایید</span>
-            </DropdownItem>
-            <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
-              <Trash className="me-50" size={15} />{" "}
-              <span className="align-middle">حذف</span>
+
+          <DropdownMenu className="d-flex flex-column p-0">
+            {accept ? (
+              <DropdownItem onClick={() => rejCmnt(id)}>
+                <Delete className="me-50" size={15} />{" "}
+                <span className="align-middle"> عدم تایید</span>
+              </DropdownItem>
+            ) : (
+              <DropdownItem onClick={() => accptCmnt(id)}>
+                <Edit className="me-50" size={15} />{" "}
+                <span className="align-middle">تایید</span>
+              </DropdownItem>
+            )}
+            <DropdownItem divider className="p-0 m-0" />
+
+            <DropdownItem onClick={() => delCmnt(id)}>
+              <Delete className="me-50" size={15} />{" "}
+              <span className="align-middle"> حذف </span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

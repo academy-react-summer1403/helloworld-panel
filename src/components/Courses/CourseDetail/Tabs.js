@@ -7,8 +7,10 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 // ** Icons Imports
 import { CreditCard, FileText, Lock, User, Users } from "react-feather";
 
-import Test from "./test";
+import Group from "./Group";
 import Cmt from "./reactstrap";
+import UserCourse from "./UserCourse";
+import Payment from "./Payment";
 
 // ** User Components
 // import CoursesGroups from "../courseGroups/TableGr";
@@ -48,14 +50,12 @@ const UserTabs = ({ active, toggleTab, dataComment }) => {
         </NavItem>
       </Nav>
       <TabContent activeTab={active}>
-        <TabPane tabId="1">{/* <div>{data?.data?.title}</div> */}</TabPane>
+        <TabPane tabId="1">
+          <UserCourse dataComment={dataComment} />
+        </TabPane>
 
         <TabPane tabId="2">
-          {/* <CoursesGroups
-            courseGr={courseGr}
-            setModalGr={setModalGr}
-            delGroup={delGroup}
-          /> */}
+          <Group />
         </TabPane>
 
         <TabPane tabId="3">
@@ -72,7 +72,7 @@ const UserTabs = ({ active, toggleTab, dataComment }) => {
           <Cmt dataComment={dataComment} />
         </TabPane>
         <TabPane tabId="4">
-          {/* <Payments allPayments={allPayments} /> */}
+          <Payment />
         </TabPane>
       </TabContent>
     </Fragment>

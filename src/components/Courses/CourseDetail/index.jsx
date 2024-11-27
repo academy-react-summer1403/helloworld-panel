@@ -8,7 +8,7 @@ import { Col, Row } from "reactstrap";
 // ** User View Components
 import UserInfoCard from "./UserInfoCard";
 import UserTabs from "./Tabs";
-import { getCourseDeatil } from "../../../core/services/api/Coueses/getCourseDeatil";
+import { getCourseById } from "../../../core/services/api/Coueses/getCourseDeatil";
 import { getCourseComment } from "../../../core/services/api/Coueses/getCourseDeatil";
 
 // ** Core Imports
@@ -21,7 +21,6 @@ const UserDetail = () => {
   const [data, setdata] = useState();
   const [dataComment, setdataComment] = useState();
   const { id } = useParams();
-  console.log("id:", id);
 
   const toggleTab = (tab) => {
     if (active !== tab) {
@@ -31,8 +30,8 @@ const UserDetail = () => {
 
   const getList = async (id) => {
     try {
-      const CoursesId = await getCourseDeatil(id);
-      console.log("userssssssssssssssssssssssss:", CoursesId);
+      const CoursesId = await getCourseById(id);
+      // console.log("userssssssssssssssssssssssss:", CoursesId);
       setdata(CoursesId);
     } catch (error) {
       throw new Error("ERROR: ", error);
