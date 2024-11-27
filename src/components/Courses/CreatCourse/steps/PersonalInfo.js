@@ -1,101 +1,149 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment } from "react";
 
 // ** Third Party Components
-import Select from 'react-select'
-import { ArrowLeft, ArrowRight } from 'react-feather'
+import Select from "react-select";
+import { ArrowLeft, ArrowRight } from "react-feather";
+
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 // ** Utils
-import { selectThemeColors } from '@utils'
-
-// ** Reactstrap Imports
-import { Label, Row, Col, Form, Input, Button } from 'reactstrap'
+import { selectThemeColors } from "@utils";
 
 // ** Styles
-import '@styles/react/libs/react-select/_react-select.scss'
+import "@styles/react/libs/react-select/_react-select.scss";
+import { Col, Row } from "reactstrap";
 
 const PersonalInfo = ({ stepper, type }) => {
-  const countryOptions = [
-    { value: 'UK', label: 'UK' },
-    { value: 'USA', label: 'USA' },
-    { value: 'Spain', label: 'Spain' },
-    { value: 'France', label: 'France' },
-    { value: 'Italy', label: 'Italy' },
-    { value: 'Australia', label: 'Australia' }
-  ]
-
-  const languageOptions = [
-    { value: 'English', label: 'English' },
-    { value: 'French', label: 'French' },
-    { value: 'Spanish', label: 'Spanish' },
-    { value: 'Italian', label: 'Italian' },
-    { value: 'Japanese', label: 'Japanese' }
-  ]
+  const validationSchema = Yup.object().shape({
+    Cost: Yup.number()
+      .typeError("هزینه دوره باید یک عدد باشد")
+      .required("هزینه دوره الزامی است"),
+    UniqeUrlString: Yup.string().required("کد یکتا الزامی است"),
+    StartTime: Yup.date().required("زمان شروع دوره الزامی است"),
+    EndTime: Yup.date()
+      .required("زمان پایان دوره الزامی است")
+      .min(
+        Yup.ref("StartTime"),
+        "زمان پایان دوره باید بعد از زمان شروع دوره باشد"
+      ),
+  });
 
   return (
     <Fragment>
-      <div className='content-header'>
-        <h5 className='mb-0'>Personal Info</h5>
-        <small>Enter Your Personal Info.</small>
+      <div className="content-header">
+        <h5 className="mb-0">اطلاعات دوره</h5>
+        <small className="text-muted">لطفا اطلاعات را با دقت وارد کنید</small>
       </div>
-      <Form onSubmit={e => e.preventDefault()}>
-        <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`first-name-${type}`}>
-              First Name
-            </Label>
-            <Input type='text' name='first-name' id={`first-name-${type}`} placeholder='John' />
-          </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`last-name-${type}`}>
-              Last Name
-            </Label>
-            <Input type='text' name='last-name' id={`last-name-${type}`} placeholder='Doe' />
-          </Col>
-        </Row>
-        <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`country-${type}`}>
-              Country
-            </Label>
-            <Select
-              theme={selectThemeColors}
-              isClearable={false}
-              id={`country-${type}`}
-              className='react-select'
-              classNamePrefix='select'
-              options={countryOptions}
-              defaultValue={countryOptions[0]}
-            />
-          </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label' for={`language-${type}`}>
-              Language
-            </Label>
-            <Select
-              isMulti
-              isClearable={false}
-              theme={selectThemeColors}
-              id={`language-${type}`}
-              options={languageOptions}
-              className='react-select'
-              classNamePrefix='select'
-            />
-          </Col>
-        </Row>
-        <div className='d-flex justify-content-between'>
-          <Button color='primary' className='btn-prev' onClick={() => stepper.previous()}>
-            <ArrowLeft size={14} className='align-middle me-sm-25 me-0'></ArrowLeft>
-            <span className='align-middle d-sm-inline-block d-none'>قبل</span>
-          </Button>
-          <Button color='primary' className='btn-next' onClick={() => stepper.next()}>
-            <span className='align-middle d-sm-inline-block d-none'>بعد</span>
-            <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
-          </Button>
-        </div>
-      </Form>
-    </Fragment>
-  )
-}
+      <Formik
+        initialValues={{
+          Cost: "",
+          UniqeUrlString: "",
+          StartTime: "",
+          EndTime: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(value) => {
+          // setThirdLv(value);
+          stepper.next();
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form className="d-flex flex-column ">
+            <Row>
+              <Col md="6" className="mb-1">
+                <div className="form-group gap-1 mb-1">
+                  <label htmlFor="Cost">هزینه دوره</label>
+                  <hr />
+                  <Field
+                    type="number"
+                    name="Cost"
+                    id="Cost"
+                    placeholder="هزینه دوره"
+                    className={`form-control ${
+                      errors.Cost && touched.Cost ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="Cost"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
 
-export default PersonalInfo
+                <div className="form-group">
+                  <label htmlFor="UniqeUrlString">کد یکتا</label>
+                  <hr />
+                  <Field
+                    name="UniqeUrlString"
+                    id="UniqeUrlString"
+                    placeholder="کد یکتا"
+                    className={`form-control ${
+                      errors.UniqeUrlString && touched.UniqeUrlString
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="UniqeUrlString"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+              </Col>
+
+              <Col md="6" className="mb-1">
+              <div className="form-group gap-1 mb-1">
+              <label htmlFor="StartTime">زمان شروع دوره</label>
+                  <hr />
+
+                  <Field
+                    type="date"
+                    name="StartTime"
+                    id="StartTime"
+                    placeholder="زمان شروع دوره"
+                    className={`form-control ${
+                      errors.StartTime && touched.StartTime ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="StartTime"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="EndTime">زمان پایان دوره</label>
+                  <hr />
+
+                  <Field
+                    type="date"
+                    name="EndTime"
+                    id="EndTime"
+                    placeholder="زمان پایان دوره"
+                    className={`form-control ${
+                      errors.EndTime && touched.EndTime ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="EndTime"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+              </Col>
+
+              <button type="submit" className="btn btn-info mt-1">
+                ثبت
+              </button>
+            </Row>
+          </Form>
+        )}
+      </Formik>
+    </Fragment>
+  );
+};
+
+export default PersonalInfo;

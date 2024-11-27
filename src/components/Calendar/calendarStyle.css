@@ -1,0 +1,8 @@
+.custom-event-style {
+    background-color: white !important; /* White background for the event box */
+    color: #7367f0 !important; /* Blue text */
+    border: none !important; /* Optional: add a blue border */
+    padding: 5px; /* Optional: control the padding */
+    border-radius: 4px; /* Optional: rounded corners */
+    font-weight: bold; /* Optional: make the text bold */
+  }

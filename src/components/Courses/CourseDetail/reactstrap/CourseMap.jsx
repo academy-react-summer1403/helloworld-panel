@@ -9,61 +9,38 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
+  // pictureAddress
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-function CourseMap({
-  title,
-  typeName,
-  levelName,
-  tumbImageAddress,
-  fullName,
-  isActive,
-  isExpire,
-  courseId
-}) {
-
-  
-
+function CourseMap({ title, describe, accept, author }) {
   return (
     <tr>
       <td>
-        <img
+        {/* <img
           className="me-75 rounded-circle"
-          src={tumbImageAddress && tumbImageAddress.includes("classapi.sepehracademy.ir") ? tumbImageAddress : noImage}
+          src={pictureAddress && pictureAddress.includes("classapi.sepehracademy.ir") ? pictureAddress : noImage}
           
           alt="angular"
           height="26"
           width="26"
-        />
+        /> */}
+        <span className="align-middle fw-bold">{author}</span>
+      </td>
+      <td>
         <span className="align-middle fw-bold">{title}</span>
       </td>
+      <td>{describe}</td>
       <td>
-        <span className="align-middle fw-bold">{fullName}</span>
-      </td>
-      <td>
-        <span className="align-middle fw-bold">{typeName}</span>
-      </td>
-      <td>{levelName}</td>
-      <td>
-        {isActive ? (
-          <Badge pill color="light-success" className="me-1 m-0.5">
-            فعال
-          </Badge>
-        ) : (
-            <Badge pill color="light-danger" className="me-1 m-0.5">
-            غیر فعال
-          </Badge>        )}
-      </td>
-      <td>
-        {isExpire ? (
+        {!accept ? (
           <Badge pill color="light-danger" className="me-1 m-0.5">
-            منقضی شده
+            در انتظار تایید
           </Badge>
         ) : (
-            <Badge pill color="light-success" className="me-1 m-0.5">
-             مجاز
-          </Badge>        )}
+          <Badge pill color="light-success" className="me-1 m-0.5">
+            تایید شده
+          </Badge>
+        )}
       </td>
       <td>
         <UncontrolledDropdown>
@@ -76,9 +53,9 @@ function CourseMap({
             <MoreVertical size={15} />
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem tag={Link} to={`/course/${courseId}`}>
+            <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
               <Edit className="me-50" size={15} />{" "}
-              <span >جزئیات</span>
+              <span className="align-middle">تایید</span>
             </DropdownItem>
             <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
               <Trash className="me-50" size={15} />{" "}
