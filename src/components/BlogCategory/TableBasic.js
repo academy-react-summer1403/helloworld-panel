@@ -1,15 +1,21 @@
 // ** Custom Components
+// import AvatarGroup from "../../../common/avatar-group";
 
 // console.log("ress",getAllCoursesAdmin)
 
 // ** Images
+// import react from "../../../../assets/images/Courses/react.svg";
+// import vuejs from "../../../../assets/images/Courses/vuejs.svg";
+// import angular from "../../../../assets/images/Courses/angular.svg";
+// import bootstrap from "../../../../assets/images/Courses/bootstrap.svg";
+import avatar1 from "../../assets/images/Courses/avatar-s-5.jpg";
+import avatar2 from "../../assets/images/Courses/avatar-s-6.jpg";
+import avatar3 from "../../assets/images/Courses/avatar-s-7.jpg";
 
-import avatar1 from "../../../assets/images/Courses/avatar-s-5.jpg";
-import avatar2 from "../../../assets/images/Courses/avatar-s-6.jpg";
-import avatar3 from "../../../assets/images/Courses/avatar-s-7.jpg";
-import noImage from "../../../assets/images/Courses/noImage.png"
 // ** Icons Imports
 import { MoreVertical, Edit, Trash } from "react-feather";
+
+import CourseMap from "./CourseMap";
 
 // ** Reactstrap Imports
 import {
@@ -20,8 +26,6 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import CourseMap from "./CourseMap";
-import { convertDateToPersian } from "../../../utility/date-helper.utils";
 
 const avatarGroupData1 = [
   {
@@ -107,70 +111,33 @@ const avatarGroupData4 = [
   },
 ];
 
-const UserComments = ({ dataComment }) => {
+const Courses = ({ data }) => {
   return (
     <Table responsive>
       <thead>
         <tr>
-          <th>نام دوره</th>
-          <th> عنوان </th>
-          <th>  متن کامنت</th>
-          <th>   وضعیت</th>
-          <th>   اقدام</th>
-
+          <th>نام دسته‌بندی</th>
+          <th> تیتر گوگل</th>
+          <th> توضیحات گوگل</th>
+          <th>  تاریخ ایجاد</th>
+          <th>اقدام</th>
         </tr>
       </thead>
       <tbody>
         <>
-          {dataComment?.data?.comments &&
-            dataComment?.data?.comments.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    {/* <img
-                      className="me-75 rounded-circle"
-                      src={item?.tumbImageAddress ? item?.tumbImageAddress : noImage}
-                      alt="angular"
-                      height="26"
-                      width="26"
-                    /> */}
-                    <span className="align-middle fw-bold">{item?.courseTitle}</span>
-                  </td>
-                  <td>
-                    <span className="align-middle fw-bold">{item?.commentTitle}</span>
-                  </td>
-                  <td>
-                    <span className="align-middle fw-bold">
-                      {item?.describe}
-                    </span>
-                  </td>
-                  <td className=" p-0" 
-                      onClick={item.accept === true ? () => rejCmnt(item.id? item.id:item.commentId): () => accptCmnt(item.id? item.id:item.commentId)}
-                      >
-                        <Badge pill color={item.accept  ?"light-primary" : "light-danger"} className="me-1">
-                          {item.accept === true ? "تایید شده" : " تایید نشده"}
-                        </Badge>
-                      </td>
-                </tr>
-
-                //   <CourseMap
-                //     key={index}
-                //     tumbImageAddress={item.tumbImageAddress}
-                //     title={item.title}
-                //     describe={item.describe}
-                //     courseId={item.courseId}
-                //     fName={item.fName}
-                //     lName={item.lName}
-                //     id={item.id}
-
-                //     isActive={item.isActive}
-                //     isExpire={item.isExpire}
-                //     levelName={item.levelName}
-                //     typeName={item.typeName}
-
-                //   />
-              );
-            })}
+          { data?.data && data?.data.map((item, index) => {
+            return (
+              <CourseMap
+                key={index}
+                categoryName={item.categoryName}
+                googleTitle={item.googleTitle}
+                googleDescribe={item.googleDescribe}
+                image={item.image}
+                insertDate={item.insertDate}
+               
+              />
+            );
+          })}
         </>
         {/* <tr>
           <td>
@@ -263,4 +230,4 @@ const UserComments = ({ dataComment }) => {
   );
 };
 
-export default UserComments;
+export default Courses;

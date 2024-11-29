@@ -212,7 +212,7 @@ const AccountTabs = ({ data }) => {
           <CardTitle tag="h4">ویرایش پروفایل کاربر </CardTitle>
         </CardHeader>
         <CardBody className="py-2 my-25">
-          {/* <div className='d-flex'>
+          <div className='d-flex'>
             <div className='me-25'>
               <img className='rounded me-50' src={avatar} alt='Generic placeholder image' height='100' width='100' />
             </div>
@@ -228,7 +228,7 @@ const AccountTabs = ({ data }) => {
                  <p className='mb-0'>عکس را در قالب JPG یا PNG بارگذاری کنید.</p> 
               </div>
             </div>
-          </div> */}
+          </div>
           <Form className="mt-2 pt-50" onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col sm="6" className="mb-1">
