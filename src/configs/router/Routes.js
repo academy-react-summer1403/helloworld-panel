@@ -48,6 +48,7 @@ const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Blogs = lazy(() => import("../../pages/Blogs/Blogs"));
+const BlogDetailPage = lazy(() => import("../../pages/BlogDetail/BlogDetail"));
 const BlogCategory = lazy(() => import("../../pages/BlogCategory/BlogCategory"));
 
 // const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
@@ -104,6 +105,10 @@ const Routes = [
   {
     path: "/blog",
     element: <Blogs/>
+  },
+  {
+    path: "/blog/:id",
+    element: <BlogDetailPage/>
   },
   {
     path: "/blogcategory",

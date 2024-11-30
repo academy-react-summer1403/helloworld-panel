@@ -50,6 +50,7 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 
 import getBlogList from "../../core/services/api/Blogs";
+import AddBlog from "./AddBlog";
 
 // import AddUser from "./AddUser";
 
@@ -175,9 +176,9 @@ const CustomHeader = ({
             <Button
               className="add-new-user"
               color="primary"
-              // onClick={toggleSidebar}
+              onClick={toggleSidebar}
             >
-              افزودن کاربر
+              افزودن مقاله
             </Button>
           </div>
         </Col>
@@ -377,11 +378,11 @@ const isActiveOptions = [
               </div>
             </Col>
           </Row>
-          {/* <AddUser
+          <AddBlog
             open={sidebarOpen}
             toggleSidebar={toggleSidebar}
             setSidebarOpen={setSidebarOpen}
-          /> */}
+          />
         </Fragment>
       </Card>
     </div>
