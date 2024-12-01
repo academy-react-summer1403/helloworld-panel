@@ -41,9 +41,9 @@ function CourseMap({
         <span className="align-middle fw-bold">{googleDescribe}</span>
       </td>
       <td>
-        <span className="align-middle fw-bold">{insertDate && convertDateToPersian(insertDate) }</span>
+        <span className="align-middle fw-bold">{googleTitle}</span>
       </td>
-      <td>{googleTitle}</td>
+      <td>{insertDate && convertDateToPersian(insertDate) }</td>
      
     
       <td>

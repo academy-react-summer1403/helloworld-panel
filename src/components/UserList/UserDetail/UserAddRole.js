@@ -13,7 +13,6 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
- 
 } from "reactstrap";
 
 import { addUserAccess } from "../../../core/services/api/User";
@@ -37,7 +36,6 @@ const CustomLabel = ({ htmlFor }) => {
 };
 
 const UserAddRole = ({
-  
   showModal,
   setShowModal,
   id,
@@ -64,28 +62,22 @@ const UserAddRole = ({
     }
   }, [userRoles]);
   //
-  const handleChangeAccess = async (
-    arg
-    // isRoleChecked,
-    // roleId,
-    // setIsRoleChecked
-  ) => {
-    console.log("clickkkkkkkkkkkkkkkkkkkk")
-    console.log("arg",arg)
-    // try {
-    //   const changeRole = await addUserAccess(!isRoleChecked, roleId, id);
-    //   console.log("changeRole:", id)
+  const handleChangeAccess = async (isRoleChecked, roleId, setIsRoleChecked) => {
+    console.log("handleChangeAccess", isRoleChecked, roleId, id);
+    try {
+      const changeRole = await addUserAccess(true, roleId, id);
+      console.log("changeRole:", id)
 
-    //   if (changeRole?.success) {
-    //     toast.success("دسترسی با موفقیت تغییر کرد !");
-    //     setIsRoleChecked((prev) => !prev);
-    //     setdata();
-    //   } else {
-    //     toast.error("مشکلی در تغییر دسترسی به وجود آمد !");
-    //   }
-    // } catch (error) {
-    //   toast.error("مشکلی در تغییر دسترسی به وجود آمد !");
-    // }
+      if (changeRole?.success) {
+        toast.success("دسترسی با موفقیت تغییر کرد !");
+        setIsRoleChecked((prev) => !prev);
+        setdata();
+      } else {
+        toast.error("مشکلی در تغییر دسترسی به وجود آمد !");
+      }
+    } catch (error) {
+      toast.error("مشکلی در تغییر دسترسی به وجود آمد !");
+    }
   };
 
   return (
@@ -97,7 +89,7 @@ const UserAddRole = ({
       className="modal-dialog-centered modal-xs z-5"
       key={id}
     >
-      <ModalHeader >
+      <ModalHeader>
         در این بخش میتونید دسترسی های لازم را به {userName} بدهید.
       </ModalHeader>
       <ModalBody className="z-5">
@@ -121,7 +113,7 @@ const UserAddRole = ({
                     checked={isAdmin}
                     id="admin"
                     name="admin"
-                    onChange={() => handleChangeAccess(isAdmin, 1, setIsAdmin)}
+                    onChange={() => handleChangeAccess()}
                   />
                   <CustomLabel htmlFor="admin" />
                 </div>
@@ -179,9 +171,7 @@ const UserAddRole = ({
                     checked={isStudent}
                     id="student"
                     name="student"
-                    onChange={(e) =>
-                      handleChangeAccess()
-                    }
+                    onChange={(e) => handleChangeAccess()}
                   />
                   <CustomLabel htmlFor="student" />
                 </div>

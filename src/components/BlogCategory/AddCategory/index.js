@@ -51,7 +51,7 @@ const AddCategory = ({ open, toggleSidebar }) => {
   // ** Function to handle form submit
   const onSubmit = async (data) => {
     console.log("onsubmit tst:")
-    creatCat(data);
+    await creatCat(data);
     if (checkIsValid(data)) {
       toggleSidebar();
       toast(

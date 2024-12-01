@@ -49,7 +49,7 @@ const AddBlog = ({ open, toggleSidebar }) => {
   // ** Function to handle form submit
   const onSubmit = async (data) => {
     console.log("onsubmit tst:")
-    creatUser(data);
+    await  creatUser(data);
     if (checkIsValid(data)) {
       toggleSidebar();
       toast(

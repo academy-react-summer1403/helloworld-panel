@@ -48,8 +48,8 @@ const AddUser = ({ open, toggleSidebar }) => {
 
   // ** Function to handle form submit
   const onSubmit = async (data) => {
-    console.log("onsubmit tst:")
-    creatUser(data);
+    console.log("onsubmit tst:");
+    await creatUser(data);
     if (checkIsValid(data)) {
       toggleSidebar();
       toast(
