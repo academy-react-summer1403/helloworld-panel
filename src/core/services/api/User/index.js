@@ -35,6 +35,32 @@ export const getComments = async (id) => {
   }
 };
 
+export const acceptComment = async (id) => {
+  try {
+    const result = await http.post(
+      `/Course/AcceptCourseComment?CommentCourseId=${id}`
+    );
+    //console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const rejectComment = async (form) => {
+  try {
+    const result = await http.post(
+      `/Course/RejectCourseComment?CommentCourseId=${form}`
+    );
+    //console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export const addUser = async (user) => {
   try {
     const result = await http.post("/User/CreateUser", user);
@@ -68,7 +94,7 @@ export const deleteUser = async (userId) => {
 
 export const addUserAccess = async (enable, roleId, userId) => {
   try {
-    const response = await http.post(
+    const result = await http.post(
       `/User/AddUserAccess`,
       {
         roleId,
@@ -81,8 +107,11 @@ export const addUserAccess = async (enable, roleId, userId) => {
       }
     );
 
-    return response;
+    return result;
   } catch (error) {
     return false;
   }
 };
+
+
+

@@ -12,6 +12,17 @@ export const getReport = async (data) => {
     }
   };
 
+  export const getDashReport = async (data) => {
+    try {
+      const result = await http.get("/Report/DashboardReport", data);
+  
+      return result;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+
   export const getUserCourseReserve = async () => {
     try {
       const res = await http.get("/CourseReserve");

@@ -38,19 +38,23 @@ export default [
     id: "user",
     title: "اخبار و مقالات",
     icon: <BookOpen/>,
-    navLink: "/blog",
-  },
-  {
-    id: "podcast",
-    title: " پادکست",
-    icon: <Mic/>,
-    navLink: "/podcast",
-  },
-  {
-    id: "calendar",
-    title: " تقویم آموزشی",
-    icon: <Calendar/>,
-    navLink: "/calendar",
+    // navLink: "/blog",
+
+    children: [
+      {
+        id: "user",
+        title: "  لیست اخبار و مقالات",
+        icon: <Circle size={12}/>,
+        navLink: "/blog",
+      },
+      {
+        id: "third1Page",
+        title: "  دسته‌بندی مقالات",
+        icon: <Circle size={12} />,
+        navLink: "/blogcategory",
+      }
+      
+    ],
   },
   {
     id: "allcomment",
@@ -58,6 +62,18 @@ export default [
     icon: <Command/>,
     navLink: "/comment",
   },
+  // {
+  //   id: "podcast",
+  //   title: " پادکست",
+  //   icon: <Mic/>,
+  //   navLink: "/podcast",
+  // },
+  // {
+  //   id: "calendar",
+  //   title: " تقویم آموزشی",
+  //   icon: <Calendar/>,
+  //   navLink: "/calendar",
+  // },
   // {
   //   id: "secondPage",
   //   title: "صفحه نمونه",

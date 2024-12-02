@@ -36,10 +36,10 @@ const CustomLabel = ({ htmlFor }) => {
 };
 
 const UserAddRole = ({
-  
-  modal,
+  showModal,
+  setShowModal,
   id,
-  toggleModal,
+  // toggleModal,
   userRoles,
   userName,
   setdata,
@@ -62,13 +62,10 @@ const UserAddRole = ({
     }
   }, [userRoles]);
   //
-  const handleChangeAccess = async (
-    isRoleChecked,
-    roleId,
-    setIsRoleChecked
-  ) => {
+  const handleChangeAccess = async (isRoleChecked, roleId, setIsRoleChecked) => {
+    console.log("handleChangeAccess", isRoleChecked, roleId, id);
     try {
-      const changeRole = await addUserAccess(!isRoleChecked, roleId, id);
+      const changeRole = await addUserAccess(true, roleId, id);
       console.log("changeRole:", id)
 
       if (changeRole?.success) {
@@ -85,13 +82,14 @@ const UserAddRole = ({
 
   return (
     <Modal
-      isOpen={modal === id}
+      isOpen={showModal}
       userName={userName}
-      toggle={() => toggleModal(id)}
+      toggle={() => setShowModal(!showModal)}
+      // onClosed={()=>setShowModal(false)}
       className="modal-dialog-centered modal-xs z-5"
       key={id}
     >
-      <ModalHeader toggle={() => toggleModal(id)}>
+      <ModalHeader>
         در این بخش میتونید دسترسی های لازم را به {userName} بدهید.
       </ModalHeader>
       <ModalBody className="z-5">
@@ -115,7 +113,7 @@ const UserAddRole = ({
                     checked={isAdmin}
                     id="admin"
                     name="admin"
-                    onChange={() => handleChangeAccess(isAdmin, 1, setIsAdmin)}
+                    onChange={() => handleChangeAccess()}
                   />
                   <CustomLabel htmlFor="admin" />
                 </div>
@@ -173,9 +171,7 @@ const UserAddRole = ({
                     checked={isStudent}
                     id="student"
                     name="student"
-                    onChange={() =>
-                      handleChangeAccess(isStudent, 5, setIsStudent)
-                    }
+                    onChange={(e) => handleChangeAccess()}
                   />
                   <CustomLabel htmlFor="student" />
                 </div>

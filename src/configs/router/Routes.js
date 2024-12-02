@@ -49,8 +49,11 @@ const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const Blogs = lazy(() => import("../../pages/Blogs/Blogs"));
-const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
-const Calendar = lazy(() => import("../../pages/Calendar/Calendar"));
+const BlogDetailPage = lazy(() => import("../../pages/BlogDetail/BlogDetail"));
+const BlogCategory = lazy(() => import("../../pages/BlogCategory/BlogCategory"));
+
+// const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
+// const Calendar = lazy(() => import("../../pages/Calendar/Calendar"));
 
 
 
@@ -109,15 +112,23 @@ const Routes = [
     element: <Blogs/>
   },
   {
-
-    path: "/podcast",
-    element: <Podcast/>
-
+    path: "/blog/:id",
+    element: <BlogDetailPage/>
   },
   {
-    path: "/calendar",
-    element: <Calendar/>
+    path: "/blogcategory",
+    element: <BlogCategory/>
   },
+  // {
+
+  //   path: "/podcast",
+  //   element: <Podcast/>
+
+  // },
+  // {
+  //   path: "/calendar",
+  //   element: <Calendar/>
+  // },
   {
     path: "/second-page",
     element: <SecondPage />,

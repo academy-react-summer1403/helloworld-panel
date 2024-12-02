@@ -1,6 +1,9 @@
 // ** React Imports
 import { useState, Fragment } from "react";
 import { faNumber } from "../../../utility/FaNumber";
+
+
+
 // ** Reactstrap Imports
 import {
   Progress,
@@ -253,18 +256,18 @@ const UserInfoCard = ({ data, setdata }) => {
   //   });
   // };
   // ** State
-  const [modal, setModal] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const toggleModal = (id) => {
-    if (modal !== id) {
-      setModal(id);
-    } else {
-      setModal(null);
-    }
-  };
-  const handleAddRoleClick = () => {
-    toggleModal(data?.data?.id);
-  };
+  // const toggleModal = (id) => {
+  //   if (modal !== id) {
+  //     setModal(id);
+  //   } else {
+  //     setModal(null);
+  //   }
+  // };
+  // const handleAddRoleClick = () => {
+  //   toggleModal(data?.data?.id);
+  // };
 
   const [show, setShow] = useState(false);
 
@@ -327,6 +330,42 @@ const UserInfoCard = ({ data, setdata }) => {
     }
   };
 
+  const MySwal = withReactContent(Swal);
+  const handleConfirmCancel = () => {
+    return MySwal.fire({
+      title: "آیا از تغییرات خود مطمئن هستید؟",
+      // text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: " Yes",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then(async function (result) {
+      if (result.value) {
+        MySwal.fire({
+          icon: "success",
+          title: "پاک شد",
+          // text: 'Your file has been deleted.',
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        MySwal.fire({
+          title: "لغو گردید",
+          // text: 'Your imaginary file is safe :)',
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }
+    });
+  };
+
   return (
     <Fragment>
       <Card>
@@ -344,18 +383,22 @@ const UserInfoCard = ({ data, setdata }) => {
                       type="submit"
                       className="me-1"
                       color="primary"
-                      onClick={handleAddRoleClick}
+                      onClick={() => setShowModal(true)}
                     >
                       دسترسی
                     </Button>
-                    <UserAddRole
-                      modal={modal}
-                      id={data?.data?.id}
-                      userName={data?.data?.fname + " " + data?.data?.lname}
-                      toggleModal={toggleModal}
-                      userRoles={data?.data?.roleName}
-                      setdata={setdata}
-                    />
+                    {showModal && (
+                      <UserAddRole
+                        // modal={modal}
+                        setShowModal={setShowModal}
+                        showModal={showModal}
+                        id={data?.data?.id}
+                        userName={data?.data?.fname + " " + data?.data?.lname}
+                        // toggleModal={toggleModal}
+                        userRoles={data?.data?.roleName}
+                        setdata={setdata}
+                      />
+                    )}
 
                     {/* {data?.roles.map((role) => (
                       <Badge
@@ -384,7 +427,13 @@ const UserInfoCard = ({ data, setdata }) => {
                         >
                           {data?.data?.profileCompletionPercentage}%
                         </Label> */}
-                <small className="d-flex justify-content-center  ">{`${data?.data?.profileCompletionPercentage && faNumber(data?.data?.profileCompletionPercentage.toString(), ",")}%` }</small>
+                <small className="d-flex justify-content-center  ">{`${
+                  data?.data?.profileCompletionPercentage &&
+                  faNumber(
+                    data?.data?.profileCompletionPercentage.toString(),
+                    ","
+                  )
+                }%`}</small>
                 <Progress
                   value={data?.data?.profileCompletionPercentage}
                   style={{ height: "6px" }}
@@ -455,7 +504,10 @@ const UserInfoCard = ({ data, setdata }) => {
                 </li>
                 <li className="mb-75">
                   <span className="fw-bolder me-25">شماره همراه:</span>
-                  <span>{data?.data?.phoneNumber && faNumber(data?.data?.phoneNumber.toString())}</span>
+                  <span>
+                    {data?.data?.phoneNumber &&
+                      faNumber(data?.data?.phoneNumber.toString())}
+                  </span>
                 </li>
                 <li className="mb-75">
                   {/* <span className='fw-bolder me-25'>Contact:</span> */}
@@ -472,17 +524,17 @@ const UserInfoCard = ({ data, setdata }) => {
               </ul>
             ) : null}
           </div>
-          {/* <div className="d-flex justify-content-center pt-2">
+          <div className="d-flex justify-content-center pt-2">
            
             <Button
               className="ms-1"
               color="danger"
               outline
-              onClick={handleConfirmText}
+              onClick={handleConfirmCancel}
             >
               حذف کاربر
             </Button>
-          </div>         */}
+          </div>        
         </CardBody>
       </Card>
       {/* <Modal

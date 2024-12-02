@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 
 // ** Reactstrap Imports
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
+import toast from "react-hot-toast";
+
 
 // ** Icons Imports
 import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
@@ -11,6 +13,10 @@ import Connections from './Connections'
 import { getUserWithId } from '../../../core/services/api/User'
 import UserCourse from './UserCourse';
 import UserReserveCourse from './UserReserveCourse';
+import { getComments } from '../../../core/services/api/User';
+import UserComments from './UserComments';
+import { acceptComment } from '../../../core/services/api/User';
+import { rejectComment } from '../../../core/services/api/User';
 // ** User Components
 // import InvoiceList from './InvoiceList'
 // import SecurityTab from './SecurityTab'
@@ -20,7 +26,7 @@ import UserReserveCourse from './UserReserveCourse';
 // import Notifications from './Notifications'
 // import UserProjectsList from './UserProjectsList'
 
-const UserTabs = ({ active, toggleTab }) => {
+const UserTabs = ({ active, toggleTab  }) => {
 
   const [data, setdata] = useState();
   // console.log("data:", data);
@@ -41,6 +47,49 @@ const UserTabs = ({ active, toggleTab }) => {
   }, [id]);
 
 
+  const [dataComment, setdataComment] = useState();
+
+  
+
+  const getComeent = async (id) => {
+    try {
+      const userComent = await getComments(id);
+      console.log("comenttttttt:", userComent);
+      setdataComment(userComent);
+    } catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+  useEffect(() => {
+    getComeent(id);
+  }, []);
+
+  const [refetchUserCom, setRefetchUserCom] = useState(1);
+
+
+  const accptCmnt = async (id) => {
+    try {
+      const response = await acceptComment(id);
+      console.log("objecttttt",response);
+      // response.success ? setRefetchUserCom(refetchUserCom + 1) : "";
+      // response.success ? toast.success(response.message) : "";
+      
+    }catch (error) {
+      throw new Error("ERROR: ", error);
+    }
+  };
+
+  // const rejCmnt = async (id) => {
+  //   try {
+  //     const response = await rejectComment(id);
+  //     response.success ? setRefetchUserCom(refetchUserCom + 1) : "";
+  //     response.success ? toast.success(response.message) : "";
+
+  //   } catch (error) {
+  //     throw new Error("ERROR: ", error);
+  //   }
+  // };
+  
 
   return (
     <Fragment>
@@ -79,7 +128,7 @@ const UserTabs = ({ active, toggleTab }) => {
           <UserReserveCourse data={data}/>
         </TabPane>
         <TabPane tabId='3'>
-          {/* <BillingPlanTab /> */}
+         <UserComments dataComment={dataComment}/>
         </TabPane>
         <TabPane tabId='4'>
         <Connections   data={data}/>

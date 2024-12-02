@@ -50,6 +50,7 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 
 import getBlogList from "../../core/services/api/Blogs";
+import AddBlog from "./AddBlog";
 
 // import AddUser from "./AddUser";
 
@@ -158,10 +159,11 @@ const CustomHeader = ({
           className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
         >
           <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-            <label className="mb-0" htmlFor="search-invoice">
+            {/* <label className="mb-0" htmlFor="search-invoice">
               جست و جو
-            </label>
+            </label> */}
             <Input
+            placeholder="جست و جوی مقاله"
               id="search-invoice"
               className="ms-50 w-100"
               type="text"
@@ -174,9 +176,9 @@ const CustomHeader = ({
             <Button
               className="add-new-user"
               color="primary"
-              // onClick={toggleSidebar}
+              onClick={toggleSidebar}
             >
-              افزودن کاربر
+              افزودن مقاله
             </Button>
           </div>
         </Col>
@@ -204,6 +206,7 @@ const UsersList = () => {
   const [searchQuery, setSearchQuery] = useState();
 
   const [sortLenght, setSortLenght] = useState(10);
+  const [activeRole, setActiveRole] = useState();
 
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -212,7 +215,6 @@ const UsersList = () => {
     value: null,
     label: "انتخاب کنید...",
   });
-  const active = isActive.value;
 
 const isActiveOptions = [
     { value: null, label: "انتخاب کنید..." },
@@ -227,7 +229,7 @@ const isActiveOptions = [
       RowsOfPage,
       SortingCol,
       RowsOfPage: sortLenght,
-
+      isActive: activeRole,
       query: searchQuery || undefined,
 
     };
@@ -244,6 +246,10 @@ const isActiveOptions = [
   useEffect(() => {
     getList();
   }, [sortLenght]);
+
+  useEffect(() => {
+    getList();
+  }, [activeRole]);
 
   useEffect(() => {
     getList();
@@ -323,6 +329,7 @@ const isActiveOptions = [
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setIsActive(data);
+                  setActiveRole(data.value)
 
                   // handleFilterUserList;
                 }}
@@ -371,11 +378,11 @@ const isActiveOptions = [
               </div>
             </Col>
           </Row>
-          {/* <AddUser
+          <AddBlog
             open={sidebarOpen}
             toggleSidebar={toggleSidebar}
             setSidebarOpen={setSidebarOpen}
-          /> */}
+          />
         </Fragment>
       </Card>
     </div>

@@ -1,72 +1,120 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from "react";
 import { Field } from "formik";
 
 // ** Third Party Components
-import Select from 'react-select'
-import Cleave from 'cleave.js/react'
-import { useForm, Controller } from 'react-hook-form'
-import 'cleave.js/dist/addons/cleave-phone.us'
+import Select from "react-select";
+import Cleave from "cleave.js/react";
+import { useForm, Controller } from "react-hook-form";
+import "cleave.js/dist/addons/cleave-phone.us";
 
 // ** Reactstrap Imports
-import { Row, Col, Form, Card, Input, Label, Button, CardBody, CardTitle, CardHeader, FormFeedback } from 'reactstrap'
-import noImage from "../../../assets/images/Courses/avatar.png"
+import {
+  Row,
+  Col,
+  Form,
+  Card,
+  Input,
+  Label,
+  Button,
+  CardBody,
+  CardTitle,
+  CardHeader,
+  FormFeedback,
+} from "reactstrap";
+import noImage from "../../../assets/images/Courses/avatar.png";
 // ** Utils
-import { selectThemeColors } from '@utils'
-import { convertDateToPersian } from '../../../utility/date-helper.utils';
-import { updateUser } from '../../../core/services/api/User';
+import { selectThemeColors } from "@utils";
+import { convertDateToPersian } from "../../../utility/date-helper.utils";
+import { updateUser } from "../../../core/services/api/User";
 
 // ** Demo Components
 
 const countryOptions = [
-  { value: 'uk', label: 'UK' },
-  { value: 'usa', label: 'USA' },
-  { value: 'france', label: 'France' },
-  { value: 'russia', label: 'Russia' },
-  { value: 'canada', label: 'Canada' }
-]
+  { value: "uk", label: "UK" },
+  { value: "usa", label: "USA" },
+  { value: "france", label: "France" },
+  { value: "russia", label: "Russia" },
+  { value: "canada", label: "Canada" },
+];
 
 const languageOptions = [
-  { value: 'english', label: 'English' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'french', label: 'French' },
-  { value: 'german', label: 'German' },
-  { value: 'dutch', label: 'Dutch' }
-]
+  { value: "english", label: "English" },
+  { value: "spanish", label: "Spanish" },
+  { value: "french", label: "French" },
+  { value: "german", label: "German" },
+  { value: "dutch", label: "Dutch" },
+];
 
 const currencyOptions = [
-  { value: 'usd', label: 'USD' },
-  { value: 'euro', label: 'Euro' },
-  { value: 'pound', label: 'Pound' },
-  { value: 'bitcoin', label: 'Bitcoin' }
-]
+  { value: "usd", label: "USD" },
+  { value: "euro", label: "Euro" },
+  { value: "pound", label: "Pound" },
+  { value: "bitcoin", label: "Bitcoin" },
+];
 
 const timeZoneOptions = [
-  { value: '(GMT-12:00) International Date Line West', label: '(GMT-12:00) International Date Line West' },
-  { value: '(GMT-11:00) Midway Island, Samoa', label: '(GMT-11:00) Midway Island, Samoa' },
-  { value: '(GMT-10:00) Hawaii', label: '(GMT-10:00) Hawaii' },
-  { value: '(GMT-09:00) Alaska', label: '(GMT-09:00) Alaska' },
-  { value: '(GMT-08:00) Pacific Time (US & Canada)', label: '(GMT-08:00) Pacific Time (US & Canada)' },
-  { value: '(GMT-08:00) Tijuana, Baja California', label: '(GMT-08:00) Tijuana, Baja California' },
-  { value: '(GMT-07:00) Arizona', label: '(GMT-07:00) Arizona' },
-  { value: '(GMT-07:00) Chihuahua, La Paz, Mazatlan', label: '(GMT-07:00) Chihuahua, La Paz, Mazatlan' },
-  { value: '(GMT-07:00) Mountain Time (US & Canada)', label: '(GMT-07:00) Mountain Time (US & Canada)' },
-  { value: '(GMT-06:00) Central America', label: '(GMT-06:00) Central America' },
-  { value: '(GMT-06:00) Central Time (US & Canada)', label: '(GMT-06:00) Central Time (US & Canada)' },
   {
-    value: '(GMT-06:00) Guadalajara, Mexico City, Monterrey',
-    label: '(GMT-06:00) Guadalajara, Mexico City, Monterrey'
+    value: "(GMT-12:00) International Date Line West",
+    label: "(GMT-12:00) International Date Line West",
   },
-  { value: '(GMT-06:00) Saskatchewan', label: '(GMT-06:00) Saskatchewan' },
-  { value: '(GMT-05:00) Bogota, Lima, Quito, Rio Branco', label: '(GMT-05:00) Bogota, Lima, Quito, Rio Branco' },
-  { value: '(GMT-05:00) Eastern Time (US & Canada)', label: '(GMT-05:00) Eastern Time (US & Canada)' },
-  { value: '(GMT-05:00) Indiana (East)', label: '(GMT-05:00) Indiana (East)' },
-  { value: '(GMT-04:00) Atlantic Time (Canada)', label: '(GMT-04:00) Atlantic Time (Canada)' },
-  { value: '(GMT-04:00) Caracas, La Paz', label: '(GMT-04:00) Caracas, La Paz' },
-  { value: '(GMT-04:00) Manaus', label: '(GMT-04:00) Manaus' },
-  { value: '(GMT-04:00) Santiago', label: '(GMT-04:00) Santiago' },
-  { value: '(GMT-03:30) Newfoundland', label: '(GMT-03:30) Newfoundland' }
-]
+  {
+    value: "(GMT-11:00) Midway Island, Samoa",
+    label: "(GMT-11:00) Midway Island, Samoa",
+  },
+  { value: "(GMT-10:00) Hawaii", label: "(GMT-10:00) Hawaii" },
+  { value: "(GMT-09:00) Alaska", label: "(GMT-09:00) Alaska" },
+  {
+    value: "(GMT-08:00) Pacific Time (US & Canada)",
+    label: "(GMT-08:00) Pacific Time (US & Canada)",
+  },
+  {
+    value: "(GMT-08:00) Tijuana, Baja California",
+    label: "(GMT-08:00) Tijuana, Baja California",
+  },
+  { value: "(GMT-07:00) Arizona", label: "(GMT-07:00) Arizona" },
+  {
+    value: "(GMT-07:00) Chihuahua, La Paz, Mazatlan",
+    label: "(GMT-07:00) Chihuahua, La Paz, Mazatlan",
+  },
+  {
+    value: "(GMT-07:00) Mountain Time (US & Canada)",
+    label: "(GMT-07:00) Mountain Time (US & Canada)",
+  },
+  {
+    value: "(GMT-06:00) Central America",
+    label: "(GMT-06:00) Central America",
+  },
+  {
+    value: "(GMT-06:00) Central Time (US & Canada)",
+    label: "(GMT-06:00) Central Time (US & Canada)",
+  },
+  {
+    value: "(GMT-06:00) Guadalajara, Mexico City, Monterrey",
+    label: "(GMT-06:00) Guadalajara, Mexico City, Monterrey",
+  },
+  { value: "(GMT-06:00) Saskatchewan", label: "(GMT-06:00) Saskatchewan" },
+  {
+    value: "(GMT-05:00) Bogota, Lima, Quito, Rio Branco",
+    label: "(GMT-05:00) Bogota, Lima, Quito, Rio Branco",
+  },
+  {
+    value: "(GMT-05:00) Eastern Time (US & Canada)",
+    label: "(GMT-05:00) Eastern Time (US & Canada)",
+  },
+  { value: "(GMT-05:00) Indiana (East)", label: "(GMT-05:00) Indiana (East)" },
+  {
+    value: "(GMT-04:00) Atlantic Time (Canada)",
+    label: "(GMT-04:00) Atlantic Time (Canada)",
+  },
+  {
+    value: "(GMT-04:00) Caracas, La Paz",
+    label: "(GMT-04:00) Caracas, La Paz",
+  },
+  { value: "(GMT-04:00) Manaus", label: "(GMT-04:00) Manaus" },
+  { value: "(GMT-04:00) Santiago", label: "(GMT-04:00) Santiago" },
+  { value: "(GMT-03:30) Newfoundland", label: "(GMT-03:30) Newfoundland" },
+];
 
 const AccountTabs = ({ data }) => {
   // console.log("AccountTabs:" , data)
@@ -78,18 +126,17 @@ const AccountTabs = ({ data }) => {
   };
 
   const defaultValues = {
-    lName: '',
-    fName: '',
-   
-  }
+    lName: "",
+    fName: "",
+  };
   const {
     control,
     setError,
     handleSubmit,
-    formState: { errors }
-  } = useForm({ defaultValues })
+    formState: { errors },
+  } = useForm({ defaultValues });
 
-  const updateUser = async (user) => {
+  const updateUserr = async (user) => {
     try {
       const newUser = await updateUser(user);
     } catch (error) {
@@ -98,8 +145,8 @@ const AccountTabs = ({ data }) => {
   };
 
   const onSubmit = async (data) => {
-    console.log("onSubmitedit:" , onSubmit)
-    updateUser(data);
+    console.log("onSubmitedit:");
+    updateUserr(data);
     if (checkIsValid(data)) {
       toast(
         <div className="d-flex">
@@ -123,20 +170,22 @@ const AccountTabs = ({ data }) => {
       }
     }
   };
-  
-
 
   // ** States
-  const [avatar, setAvatar] = useState(data?.data?.currentPictureAddress ? data?.data?.currentPictureAddress : noImage)
+  const [avatar, setAvatar] = useState(
+    data?.data?.currentPictureAddress
+      ? data?.data?.currentPictureAddress
+      : noImage
+  );
 
-  const onChange = e => {
+  const onChange = (e) => {
     const reader = new FileReader(),
-      files = e.target.files
+      files = e.target.files;
     reader.onload = function () {
-      setAvatar(reader.result)
-    }
-    reader.readAsDataURL(files[0])
-  }
+      setAvatar(reader.result);
+    };
+    reader.readAsDataURL(files[0]);
+  };
 
   // const onSubmit = data => {
   //   if (Object.values(data).every(field => field.length > 0)) {
@@ -153,16 +202,16 @@ const AccountTabs = ({ data }) => {
   // }
 
   const handleImgReset = () => {
-    setAvatar('../../../assets/images/Courses/avatar.png')
-  }
+    setAvatar("../../../assets/images/Courses/avatar.png");
+  };
 
   return (
     <Fragment>
       <Card>
-        <CardHeader className='border-bottom'>
-          <CardTitle tag='h4'>ویرایش پروفایل کاربر </CardTitle>
-        </CardHeader>   
-        <CardBody className='py-2 my-25'>
+        <CardHeader className="border-bottom">
+          <CardTitle tag="h4">ویرایش پروفایل کاربر </CardTitle>
+        </CardHeader>
+        <CardBody className="py-2 my-25">
           <div className='d-flex'>
             <div className='me-25'>
               <img className='rounded me-50' src={avatar} alt='Generic placeholder image' height='100' width='100' />
@@ -180,95 +229,157 @@ const AccountTabs = ({ data }) => {
               </div>
             </div>
           </div>
-          <Form className='mt-2 pt-50' >
+          <Form className="mt-2 pt-50" onSubmit={handleSubmit(onSubmit)}>
             <Row>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='firstName'>
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="firstName">
                   نام
                 </Label>
-                <Controller 
-                  name='firstName'
+                <Controller
+                  name="firstName"
                   control={control}
                   render={({ field }) => (
-                    <Input id='firstName'  type='firstName' name='firstName' placeholder='firstName'   defaultValue={data?.data?.fName} />
+                    <Input
+                      id="firstName"
+                      type="firstName"
+                      name="firstName"
+                      placeholder="firstName"
+                      defaultValue={data?.data?.fName}
+                    />
                   )}
                 />
-                {errors && errors.firstName && <FormFeedback>Please enter a valid First Name</FormFeedback>}
+                {errors && errors.firstName && (
+                  <FormFeedback>Please enter a valid First Name</FormFeedback>
+                )}
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='lastName'>
-                  نام خانوادگی 
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="lastName">
+                  نام خانوادگی
                 </Label>
                 <Controller
-                  name='lastName'
+                  name="lastName"
                   control={control}
                   render={({ field }) => (
-                    <Input id='lastName' type='lastname' name='lastname' placeholder='lastname' defaultValue={data?.data?.lName}  />
+                    <Input
+                      id="lastName"
+                      type="lastname"
+                      name="lastname"
+                      placeholder="lastname"
+                      defaultValue={data?.data?.lName}
+                    />
                   )}
                 />
-                {errors.lastName && <FormFeedback>Please enter a valid Last Name</FormFeedback>}
+                {errors.lastName && (
+                  <FormFeedback>Please enter a valid Last Name</FormFeedback>
+                )}
               </Col>
-           <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='emailInput'>
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="emailInput">
                   ایمیل
                 </Label>
-                <Input id='emailInput' type='email' name='email'  defaultValue={data?.data?.gmail} />
+                <Input
+                  id="emailInput"
+                  type="email"
+                  name="email"
+                  defaultValue={data?.data?.gmail}
+                />
               </Col>
-                  <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
                   نام کاربری
                 </Label>
-                <Input defaultValue={data?.data?.userName} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={data?.data?.userName}
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
-              <Col sm='6' className='mb-1'>
+              <Col sm="6" className="mb-1">
                 <Label className="form-label" for="status">
                   وضعیت:
-                </Label> 
-                {/* <Field
+                </Label>
+                <Field
                   className="form-control react-select"
                   name="status"
                   as="select"
                 >
                   <option value={true}>فعال</option>
                   <option value={false}>غیرفعال</option>
-                </Field> */}
+                </Field>
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
-                   کد ملی
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
+                  کد ملی
                 </Label>
-                <Input defaultValue={data?.data?.nationalCode} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={data?.data?.nationalCode}
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
-                    شماره همراه
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
+                  شماره همراه
                 </Label>
-                <Input defaultValue={data?.data?.phoneNumber} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={data?.data?.phoneNumber}
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
-                    لینک تلگرام
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
+                  لینک تلگرام
                 </Label>
-                <Input defaultValue={data?.data?.telegramLink} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={data?.data?.telegramLink}
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
-                     آدرس منزل
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
+                  آدرس منزل
                 </Label>
-                <Input defaultValue={data?.data?.homeAdderess} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={data?.data?.homeAdderess}
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
-                      درباره کاربر
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
+                  درباره کاربر
                 </Label>
-                <Input defaultValue={data?.data?.userAbout} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={data?.data?.userAbout}
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='company'>
-                       تاریخ تولد
+              <Col sm="6" className="mb-1">
+                <Label className="form-label" for="company">
+                  تاریخ تولد
                 </Label>
-                <Input defaultValue={data?.data?.birthDay && convertDateToPersian(data?.data?.birthDay)} id='company' name='company' placeholder='Company Name' />
+                <Input
+                  defaultValue={
+                    data?.data?.birthDay &&
+                    convertDateToPersian(data?.data?.birthDay)
+                  }
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                />
               </Col>
+
+
+
               {/* <Col sm='6' className='mb-1'>
                 <Label className='form-label' for='address'>
                   Address
@@ -343,11 +454,16 @@ const AccountTabs = ({ data }) => {
                   defaultValue={currencyOptions[0]}
                 />
               </Col> */}
-              <Col className='mt-2' sm='12'>
-                <Button type='submit' className='me-1' color='primary' onSubmit={handleSubmit(onSubmit)}>
+              <Col className="mt-2" sm="12">
+                <Button
+                  type="submit"
+                  className="me-1"
+                  color="primary"
+                  // onSubmit={handleSubmit(onSubmit)}
+                >
                   ذخیره
                 </Button>
-                <Button color='secondary' outline>
+                <Button color="secondary" outline>
                   لغو
                 </Button>
               </Col>
@@ -357,7 +473,7 @@ const AccountTabs = ({ data }) => {
       </Card>
       {/* <DeleteAccount /> */}
     </Fragment>
-  )
-}
+  );
+};
 
-export default AccountTabs
+export default AccountTabs;

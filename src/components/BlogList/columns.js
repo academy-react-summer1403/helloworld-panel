@@ -162,7 +162,7 @@ export const columns = [
             <MoreVertical size={17} className="cursor-pointer" />
           </DropdownToggle>
           <DropdownMenu end>
-            <DropdownItem tag={Link}  className="w-100">
+            <DropdownItem tag={Link} to={`/blog/${row.id}`}  className="w-100">
               <Info size={14} className="me-50" />
               <span className="align-middle">جزئیات</span>
             </DropdownItem>
