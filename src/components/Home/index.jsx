@@ -28,6 +28,7 @@ import "chart.js/auto";
 
 // ** Styles
 import "@styles/react/libs/flatpickr/flatpickr.scss";
+import CardTransactions from "./DashboardReport";
 
 const Home = () => {
   const [userManageData, setManageUserData] = useState("");
@@ -96,13 +97,19 @@ const Home = () => {
           <StatsCard />
         </Col>
       </Row>
-
-      <ChartjsRadarChart
-        tooltipShadow={tooltipShadow}
-        successColorShade={successColorShade}
-        warningLightColor={warningLightColor}
-        primary={colors.primary.main}
-      />
+      <Row>
+        <Col>
+          <ChartjsRadarChart
+            tooltipShadow={tooltipShadow}
+            successColorShade={successColorShade}
+            warningLightColor={warningLightColor}
+            primary={colors.primary.main}
+          />
+        </Col>
+        <Col className="xl='4' md='6' xs='12'">
+          <CardTransactions />
+        </Col>
+      </Row>
     </div>
   );
 };
