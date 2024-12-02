@@ -13,3 +13,14 @@ export const getAllCourses = async (params) => {
     return [];
   }
 };
+
+export const delCourse = async (data) => {
+  try {
+    const result = await http.delete("/Course/DeleteCourse", {data});
+    // console.log("form",form);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};

@@ -1,5 +1,5 @@
 import { BookOpen, Home,Mic,Calendar } from "react-feather";
-import { Layers,Circle,Users } from "react-feather";
+import { Layers,Circle,Users,Command } from "react-feather";
 
 export default [
   {
@@ -51,6 +51,12 @@ export default [
     title: " تقویم آموزشی",
     icon: <Calendar/>,
     navLink: "/calendar",
+  },
+  {
+    id: "allcomment",
+    title: "مدیریت کامت ها",
+    icon: <Command/>,
+    navLink: "/comment",
   },
   // {
   //   id: "secondPage",
