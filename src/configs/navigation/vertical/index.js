@@ -1,4 +1,4 @@
-import { BookOpen, Home,Mic,Calendar } from "react-feather";
+import { BookOpen, Home,Mic,Calendar,Activity,Aperture,Command,Shuffle } from "react-feather";
 import { Layers,Circle,Users } from "react-feather";
 
 export default [
@@ -55,6 +55,30 @@ export default [
       }
       
     ],
+  },
+  {
+    id: "assistancework",
+    title: " تسک‌ها",
+    icon: <Activity/>,
+    navLink: "/assistancework",
+  },
+  {
+    id: "building",
+    title: " ساختمان‌ها",
+    icon: <Aperture/>,
+    navLink: "/building",
+  },
+  {
+    id: "classroom",
+    title: " کلاس‌ها",
+    icon: <Command/>,
+    navLink: "/classroom",
+  },
+  {
+    id: "department",
+    title: " بخش‌های پژوهشگاه",
+    icon: <Shuffle/>,
+    navLink: "/department",
   },
   // {
   //   id: "podcast",

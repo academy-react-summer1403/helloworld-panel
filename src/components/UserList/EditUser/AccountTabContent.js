@@ -1,6 +1,6 @@
 // ** React Imports
 import { Fragment, useState } from "react";
-import { Field } from "formik";
+import { Field , Formik } from "formik";
 
 // ** Third Party Components
 import Select from "react-select";
@@ -16,7 +16,7 @@ import {
   Card,
   Input,
   Label,
-  Button,
+  Button, 
   CardBody,
   CardTitle,
   CardHeader,
@@ -146,7 +146,7 @@ const AccountTabs = ({ data }) => {
 
   const onSubmit = async (data) => {
     console.log("onSubmitedit:");
-    updateUserr(data);
+    await updateUserr(data);
     if (checkIsValid(data)) {
       toast(
         <div className="d-flex">
@@ -229,6 +229,7 @@ const AccountTabs = ({ data }) => {
               </div>
             </div>
           </div>
+          <Formik>
           <Form className="mt-2 pt-50" onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col sm="6" className="mb-1">
@@ -469,6 +470,7 @@ const AccountTabs = ({ data }) => {
               </Col>
             </Row>
           </Form>
+          </Formik>
         </CardBody>
       </Card>
       {/* <DeleteAccount /> */}

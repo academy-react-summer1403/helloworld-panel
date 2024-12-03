@@ -50,6 +50,12 @@ const Sample = lazy(() => import("../../pages/Sample"));
 const Blogs = lazy(() => import("../../pages/Blogs/Blogs"));
 const BlogDetailPage = lazy(() => import("../../pages/BlogDetail/BlogDetail"));
 const BlogCategory = lazy(() => import("../../pages/BlogCategory/BlogCategory"));
+const AssistanceWorkPage = lazy(() => import("../../pages/AssistanceWork/AssistanceWork"));
+const BuildingPage = lazy(() => import("../../pages/Building/Building"));
+const ClassRoomPage = lazy(() => import("../../pages/ClassRoom/ClassRoom"));
+const DepartmentPage = lazy(() => import("../../pages/Department/Department"));
+
+
 
 // const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
 // const Calendar = lazy(() => import("../../pages/Calendar/Calendar"));
@@ -113,6 +119,22 @@ const Routes = [
   {
     path: "/blogcategory",
     element: <BlogCategory/>
+  },
+  {
+    path: "/assistancework",
+    element: <AssistanceWorkPage/>
+  },
+  {
+    path: "/Building",
+    element: <BuildingPage/>
+  },
+  {
+    path: "/classroom",
+    element: <ClassRoomPage/>
+  },
+  {
+    path: "/department",
+    element: <DepartmentPage/>
   },
   // {
 
