@@ -13,7 +13,14 @@ import { getCreatCourse } from "../../../../core/services/api/Coueses/getCreatFi
 import { useState } from "react";
 import { useEffect } from "react";
 
-const SocialLinks = ({ stepper, type, formData, setFormData }) => {
+const SocialLinks = ({
+  stepper,
+  type,
+  formData,
+  setFormData,
+  handleCreatCourse,
+  obj
+}) => {
   const [stepFillTek, setStepFillTek] = useState();
 
   const getAllFill = async () => {
@@ -91,6 +98,7 @@ const SocialLinks = ({ stepper, type, formData, setFormData }) => {
                 onClick={() => {
                   handleSubmit();
                   alert("submitted");
+                  handleCreatCourse(obj);
                 }}
               >
                 ثبت دوره
