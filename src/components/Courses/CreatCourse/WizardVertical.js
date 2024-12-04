@@ -17,30 +17,39 @@ const WizardVertical = () => {
   // ** State
   const [stepper, setStepper] = useState(null)
 
+  const [formData, setFormData] = useState({
+    accountDetails: {},
+    address: {},
+    personalInfo: {},
+    socialLinks: {},
+  });
+
+  console.log("formData",formData)
+
   const steps = [
     {
       id: 'account-details',
       title: 'مرحله اول',
       subtitle: 'اطلاعات را وارد کنید',
-      content: <AccountDetails stepper={stepper} type='wizard-vertical' />
+      content: <AccountDetails setFormData={setFormData} formData={formData} stepper={stepper} type='wizard-vertical' />
     },
     {
       id: 'step-address',
       title: 'مرحله دوم',
       subtitle: 'اطلاعات را وارد کنید',
-      content: <Address stepper={stepper} type='wizard-vertical' />
+      content: <Address stepper={stepper} setFormData={setFormData} formData={formData} type='wizard-vertical' />
     },
     {
       id: 'personal-info',
       title: 'مرحله سوم',
       subtitle: 'اطلاعات را وارد کنید',
-      content: <PersonalInfo stepper={stepper} type='wizard-vertical' />
+      content: <PersonalInfo stepper={stepper} setFormData={setFormData} formData={formData} type='wizard-vertical' />
     },
     {
       id: 'social-links',
       title: 'مرحله چهارم',
       subtitle: 'اطلاعات را وارد کنید',
-      content: <SocialLinks stepper={stepper} type='wizard-vertical' />
+      content: <SocialLinks stepper={stepper} setFormData={setFormData} formData={formData} type='wizard-vertical' />
     }
   ]
 
