@@ -12,26 +12,33 @@ import TableBasic from "./TableBasic";
 
 // ** Custom Components
 import Card from "../common/card-snippet";
+// import Breadcrumbs from "../../../common/breadcrumbs";
+
+// ** API
+
+// import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
 
 // ** Source Code
-import { tableBasic } from "./TableSourceCode";
+// import { tableBasic } from "./TableSourceCode";
 
-import { getCategoryList } from "../../../src/core/services/api/Blogs";
-import AddCategory from "./AddCategory";
+import { getAssistance } from "../../core/services/api/AssistanceWork";
+import AddAssistance from "./AddAssistance";
+import EditAssistance from "./EditAssistance";
+// import AddCategory from "./AddCategory";
 
 const Table = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  
+ 
   const [data, setData] = useState([]);
 
   const getList = async () => {
     try {
-      const category = await getCategoryList();
-      console.log("category:", category);
-      setData(category);
+      const assistanc = await getAssistance();
+      console.log("assistanc:", assistanc);
+      setData(assistanc);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -44,13 +51,13 @@ const Table = () => {
     <Fragment>
       <Row>
         <Col sm="12">
-          <Card title="لیست دسته‌بندی‌ها   " noBody>
+          <Card title="لیست تسک‌ها   " noBody>
             <div className="invoice-list-table-header w-100 pb-2 px-1">
               <Row>
                 <Col lg="6" className="d-flex align-items-center px-0 px-lg-1">
                   <div className="d-flex align-items-center me-2">
                     {/* <label htmlFor="rows-per-page w-100">تعداد فیلد</label> */}
-                    <Input
+                    {/* <Input
                       type="select"
                       id="rows-per-page"
                       // value={rowsPerPage}
@@ -81,14 +88,14 @@ const Table = () => {
                       >
                         50
                       </option>
-                    </Input>
+                    </Input> */}
                   </div>
                   <Button
                     to="/apps/invoice/add"
                     color="primary"
                     onClick={toggleSidebar}
                   >
-                    اضافه کردن دسته‌بندی
+                    اضافه کردن تسک‌
                   </Button>
                 </Col>
                 <Col
@@ -109,16 +116,18 @@ const Table = () => {
                 </Col>
               </Row>
             </div>
-            <TableBasic data={data} />
+            <TableBasic data={data}/>
           </Card>
         </Col>
       </Row>
 
-      <AddCategory
-        open={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-        setSidebarOpen={setSidebarOpen}
+      <AddAssistance
+       open={sidebarOpen}
+       toggleSidebar={toggleSidebar}
+       setSidebarOpen={setSidebarOpen}
+      
       />
+    
     </Fragment>
   );
 };

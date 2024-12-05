@@ -125,9 +125,7 @@ const CustomHeader = ({
           className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
         >
           <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-            {/* <label className="mb-0" htmlFor="search-invoice">
-              جست و جو
-            </label> */}
+          
             <Input
             placeholder="جست و جوی کاربر"          
 
@@ -163,7 +161,8 @@ const UsersList = () => {
 
   const [searchText, setSearchText] = useState();
   const [PageNumber, setPageNumber] = useState(0);
-  const [perPage, setPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const [total, setTotal] = useState();
   const [userList, setUserList] = useState([]);
   const [sortType, setSortType] = useState();
@@ -205,6 +204,7 @@ const isActiveOptions = [
     const params = {
       
       roleId: roleId,
+      rowsPerPage,
       currentPage,
       PageNumber,
       RowsOfPage: sortLenght,
@@ -218,7 +218,6 @@ const isActiveOptions = [
 
     setUserList(user.data.listUser);
     setTotal(user.data.totalCount);
-    // setRoleId(user.data.roles);
 
   };
   useEffect(() => {
@@ -227,27 +226,11 @@ const isActiveOptions = [
 
   useEffect(() => {
     getList();
-  }, [sortLenght]);
+  }, [sortLenght,searchQuery,roleId,activeRole,rowsPerPage]);
 
-  useEffect(() => {
-    getList();
-  }, [searchQuery]);
+  
 
-  useEffect(() => {
-    getList();
-  }, [roleId]);
-
-  useEffect(() => {
-    getList();
-  }, [activeRole]);
-
-  // useEffect(() => {
-  //   getList();
-  // }, [roleId]);
-
-  // useEffect(() => {
-  //   getList(active);
-  // }, [active]);
+  
 
   const handleFilter = (val) => {
     textTimeOut(() => {
@@ -255,10 +238,39 @@ const isActiveOptions = [
     }, 800);
   };
 
+  
+
   const handlePerPage = (e) => {
-    setRowsOfPage(parseInt(e.target.value));
+    const value = parseInt(e.currentTarget.value);
+
+    setRowsPerPage(value);
+    console.log(value);
   };
 
+
+  const CustomPagination = () => {
+    const count = Math.ceil(userList?.totalCount / rowsPerPage);
+
+    return (
+      <ReactPaginate
+        previousLabel={""}
+        nextLabel={""}
+        pageCount={count || 1}
+        activeClassName="active"
+        forcePage={currentPage > 0 ? currentPage - 1 : 0} 
+        onPageChange={(page) => handlePagination(page)}
+        pageClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        nextClassName={"page-item next"}
+        previousClassName={"page-item prev"}
+        previousLinkClassName={"page-link"}
+        pageLinkClassName={"page-link"}
+        containerClassName={
+          "pagination react-paginate justify-content-center my-2 pe-1"
+        }
+      />
+    );
+  };
   // const handlePagination = (page) => {
   //   setCurrentPage(page.selected + 1);
   // };
@@ -343,36 +355,7 @@ const isActiveOptions = [
                 }}
               />
             </Col>
-            {/* <Col md="4" >
-              <Label for="status-select">مرتب سازی</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select "
-                classNamePrefix="select"
-                options={statusOptions}
-                value={sortCol}
-                onChange={(data) => {
-                  setSortCol(data);
-                  handleFilterUserList;
-                }}
-              />
-            </Col> */}
-            {/* <Col md="3">
-              <Label for="status-select">صعودی/نزولی</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={AscDescOptions}
-                value={sortAcsDesc}
-                onChange={(data) => {
-                  setSortAcsDesc(data);
-                  // handleFilterUserList;
-                }}
-              />
-            </Col> */}
+       
           </Row>
         </CardBody>
       </Card>
@@ -387,12 +370,12 @@ const isActiveOptions = [
               <div className="invoice-list-dataTable react-dataTable">
                 <DataTable
                   noHeader
-                  // pagination
+                  pagination
                   sortServer
                   paginationServer
                   subHeader={true}
                   columns={columns}
-                  
+                  paginationComponent={CustomPagination}
                   data={dataToRender()}
                   responsive={true}
                   sortIcon={<ChevronDown />}
@@ -402,6 +385,8 @@ const isActiveOptions = [
                   // paginationComponent={CustomPagination}
                   subHeaderComponent={
                     <CustomHeader
+                    rowsPerPage={rowsPerPage}
+
                       setSearchQuery={setSearchQuery}
                       searchQuery={searchQuery}
                       setSortLenght={setSortLenght}

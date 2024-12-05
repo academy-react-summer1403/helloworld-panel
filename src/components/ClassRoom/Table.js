@@ -12,26 +12,60 @@ import TableBasic from "./TableBasic";
 
 // ** Custom Components
 import Card from "../common/card-snippet";
+// import Breadcrumbs from "../../../common/breadcrumbs";
+
+// ** API
+
+// import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
 
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
 
-import { getCategoryList } from "../../../src/core/services/api/Blogs";
-import AddCategory from "./AddCategory";
+import { getClassRoom } from "../../core/services/api/ClassRoom";
+// import AddCategory from "./AddCategory";
 
 const Table = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  
+  // const [searchQuery, setSearchQuery] = useState();
+  // const [allCourses, setAllCourses] = useState([]);
+  // const [sortLenght, setSortLenght] = useState(10);
+
+  // const getAllCourseReport = async () => {
+  //   const params = {
+  //     RowsOfPage: sortLenght,
+  //     Query: searchQuery,
+  //   };
+  //   const report = await getAllCourses(params);
+  //   setAllCourses(report.data.courseDtos);
+  // };
+
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, []);
+
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, [sortLenght]);
+
+  // console.log(allCourses);
+
+  // useEffect(() => {
+  //   prism.highlightAll();
+  // });
+
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, [searchQuery]);
   const [data, setData] = useState([]);
 
   const getList = async () => {
     try {
-      const category = await getCategoryList();
-      console.log("category:", category);
-      setData(category);
+      const classroom = await getClassRoom();
+      console.log("classroom:", classroom);
+      setData(classroom);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -44,7 +78,7 @@ const Table = () => {
     <Fragment>
       <Row>
         <Col sm="12">
-          <Card title="لیست دسته‌بندی‌ها   " noBody>
+          <Card title="لیست کلاس‌ها   " noBody>
             <div className="invoice-list-table-header w-100 pb-2 px-1">
               <Row>
                 <Col lg="6" className="d-flex align-items-center px-0 px-lg-1">
@@ -86,9 +120,9 @@ const Table = () => {
                   <Button
                     to="/apps/invoice/add"
                     color="primary"
-                    onClick={toggleSidebar}
+                    // onClick={toggleSidebar}
                   >
-                    اضافه کردن دسته‌بندی
+                    اضافه کردن کلاس‌
                   </Button>
                 </Col>
                 <Col
@@ -114,11 +148,12 @@ const Table = () => {
         </Col>
       </Row>
 
-      <AddCategory
-        open={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-        setSidebarOpen={setSidebarOpen}
-      />
+      {/* <AddCategory
+       open={sidebarOpen}
+       toggleSidebar={toggleSidebar}
+       setSidebarOpen={setSidebarOpen}
+      
+      /> */}
     </Fragment>
   );
 };

@@ -14,9 +14,15 @@ import { addUser } from "../../../core/services/api/User/index";
 
 const AddUser = ({ open, toggleSidebar }) => {
   const checkIsValid = (data) => {
-    return Object.values(data).every((field) =>
-      typeof field === "object" ? field !== null : field.length > 0
-    );
+    return Object.values(data).every((field) => {
+      if (typeof field === "object") {
+        return field !== null;
+      }
+      if (typeof field === "boolean") {
+        return true;
+      }
+      return field.length > 0;
+    });
   };
 
   const defaultValues = {
@@ -27,6 +33,7 @@ const AddUser = ({ open, toggleSidebar }) => {
     phoneNumber: "",
     isStudent: false,
     isTeacher: false,
+    isAdmin: false,
   };
 
   // ** Vars
@@ -48,7 +55,8 @@ const AddUser = ({ open, toggleSidebar }) => {
 
   // ** Function to handle form submit
   const onSubmit = async (data) => {
-    console.log("onsubmit tst:");
+    console.log("onsubmit data:",data);
+    const obj = {...data, isAdmin: typeof data.isAdmin === "boolean" ? data.isAdmin : false }
     await creatUser(data);
     if (checkIsValid(data)) {
       toggleSidebar();
@@ -101,6 +109,8 @@ const AddUser = ({ open, toggleSidebar }) => {
             control={control}
             render={({ field }) => (
               <Input
+              type="firstName"
+
                 id="firstName"
                 placeholder="John"
                 invalid={errors.firstName && true}
@@ -118,6 +128,8 @@ const AddUser = ({ open, toggleSidebar }) => {
             control={control}
             render={({ field }) => (
               <Input
+              type="lastName"
+
                 id="lastName"
                 placeholder="Doe"
                 invalid={errors.lastName && true}

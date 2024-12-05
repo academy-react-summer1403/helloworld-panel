@@ -96,7 +96,7 @@ const Home = () => {
         <Col>
           <StatsCard />
         </Col>
-      </Row>
+      </Row> 
       <Row>
         <Col>
           <ChartjsRadarChart

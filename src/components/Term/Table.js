@@ -12,26 +12,60 @@ import TableBasic from "./TableBasic";
 
 // ** Custom Components
 import Card from "../common/card-snippet";
+// import Breadcrumbs from "../../../common/breadcrumbs";
+
+// ** API
+
+// import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
 
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
 
-import { getCategoryList } from "../../../src/core/services/api/Blogs";
-import AddCategory from "./AddCategory";
+import { getTerm } from "../../core/services/api/Term";
+// import AddCategory from "./AddCategory";
 
 const Table = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  
+  // const [searchQuery, setSearchQuery] = useState();
+  // const [allCourses, setAllCourses] = useState([]);
+  // const [sortLenght, setSortLenght] = useState(10);
+
+  // const getAllCourseReport = async () => {
+  //   const params = {
+  //     RowsOfPage: sortLenght,
+  //     Query: searchQuery,
+  //   };
+  //   const report = await getAllCourses(params);
+  //   setAllCourses(report.data.courseDtos);
+  // };
+
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, []);
+
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, [sortLenght]);
+
+  // console.log(allCourses);
+
+  // useEffect(() => {
+  //   prism.highlightAll();
+  // });
+
+  // useEffect(() => {
+  //   getAllCourseReport();
+  // }, [searchQuery]);
   const [data, setData] = useState([]);
 
   const getList = async () => {
     try {
-      const category = await getCategoryList();
-      console.log("category:", category);
-      setData(category);
+      const term = await getTerm();
+      console.log("term:", term);
+      setData(term);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -44,51 +78,20 @@ const Table = () => {
     <Fragment>
       <Row>
         <Col sm="12">
-          <Card title="لیست دسته‌بندی‌ها   " noBody>
+          <Card title="لیست ترم‌ها   " noBody>
             <div className="invoice-list-table-header w-100 pb-2 px-1">
               <Row>
                 <Col lg="6" className="d-flex align-items-center px-0 px-lg-1">
                   <div className="d-flex align-items-center me-2">
                     {/* <label htmlFor="rows-per-page w-100">تعداد فیلد</label> */}
-                    <Input
-                      type="select"
-                      id="rows-per-page"
-                      // value={rowsPerPage}
-                      // onChange={handlePerPage}
-                      className="form-control ms-50 pe-3"
-                    >
-                      <option
-                        onClick={() => {
-                          setSortLenght(10);
-                        }}
-                        value="10"
-                      >
-                        10
-                      </option>
-                      <option
-                        onClick={() => {
-                          setSortLenght(25);
-                        }}
-                        value="25"
-                      >
-                        25
-                      </option>
-                      <option
-                        onClick={() => {
-                          setSortLenght(50);
-                        }}
-                        value="50"
-                      >
-                        50
-                      </option>
-                    </Input>
+                  
                   </div>
                   <Button
                     to="/apps/invoice/add"
                     color="primary"
-                    onClick={toggleSidebar}
+                    // onClick={toggleSidebar}
                   >
-                    اضافه کردن دسته‌بندی
+                    اضافه کردن ترم
                   </Button>
                 </Col>
                 <Col
@@ -114,11 +117,12 @@ const Table = () => {
         </Col>
       </Row>
 
-      <AddCategory
-        open={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-        setSidebarOpen={setSidebarOpen}
-      />
+      {/* <AddCategory
+       open={sidebarOpen}
+       toggleSidebar={toggleSidebar}
+       setSidebarOpen={setSidebarOpen}
+      
+      /> */}
     </Fragment>
   );
 };
