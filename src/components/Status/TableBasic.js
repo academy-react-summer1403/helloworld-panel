@@ -118,10 +118,9 @@ const Courses = ({ data }) => {
               return (
                 <CourseMap
                   key={index}
-                  classRoomName={item.classRoomName}
-                  capacity={item.capacity}
-                  buildingName={item.buildingName}
-                  insertDate={item.insertDate}
+                  statusName={item.statusName}
+                  describe={item.describe}
+                  statusNumber={item.statusNumber}
                 />
               );
             })}

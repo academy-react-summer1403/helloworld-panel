@@ -43,6 +43,7 @@
     "jalali-moment": "^3.3.11",
     "jquery": "^3.6.0",
     "jsonwebtoken": "8.5.1",
+    "leaflet": "^1.9.4",
     "moment": "^2.29.3",
     "nouislider": "^15.5.0",
     "nouislider-react": "^3.4.1",

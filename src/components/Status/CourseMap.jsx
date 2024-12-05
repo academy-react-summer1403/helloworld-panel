@@ -16,27 +16,24 @@ import { convertDateToPersian } from "../../utility/date-helper.utils";
 import { faNumber } from "../../utility/FaNumber";
 
 function CourseMap({
-  classRoomName,
-  capacity,
-  buildingName,
-  insertDate,
+  statusName,
+  describe,
+  statusNumber,
 }) {
   return (
     <tr>
       <td>
-        <span className="align-middle fw-bold">{classRoomName}</span>
+        <span className="align-middle fw-bold">{statusName}</span>
       </td>
       <td>
-        <td>{capacity && faNumber(capacity)}</td>
+        <td>{describe}</td>
       </td>
      
       <td>
-        <td>{buildingName }</td>
+        <td>{statusNumber && faNumber(statusNumber) }</td>
       </td>
 
-      <td>
-        <td>{insertDate && convertDateToPersian(insertDate) }</td>
-      </td>
+      
 
     
 

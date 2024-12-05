@@ -2,7 +2,6 @@ import avatar1 from "../../assets/images/Courses/avatar-s-5.jpg";
 import avatar2 from "../../assets/images/Courses/avatar-s-6.jpg";
 import avatar3 from "../../assets/images/Courses/avatar-s-7.jpg";
 
-
 import CourseMap from "./CourseMap";
 
 // ** Reactstrap Imports
@@ -104,12 +103,10 @@ const Courses = ({ data }) => {
     <Table responsive>
       <thead>
         <tr>
-          <th>نام کلاس</th>
-          <th>   ظرفیت</th>
-          <th>  نام ساختمان</th>
-          <th>  تاریخ</th>
-          <th>  اقدام</th>
-
+          <th>نام </th>
+          <th> توضیحات</th>
+          <th> آدرس آیکون</th>
+          <th> اقدام</th>
         </tr>
       </thead>
       <tbody>
@@ -119,10 +116,9 @@ const Courses = ({ data }) => {
               return (
                 <CourseMap
                   key={index}
-                  classRoomName={item.classRoomName}
-                  capacity={item.capacity}
-                  buildingName={item.buildingName}
-                  insertDate={item.insertDate}
+                  techName={item.techName}
+                  describe={item.describe}
+                  iconAddress={item.iconAddress}
                 />
               );
             })}

@@ -15,30 +15,19 @@ import { Link } from "react-router-dom";
 import { convertDateToPersian } from "../../utility/date-helper.utils";
 import { faNumber } from "../../utility/FaNumber";
 
-function CourseMap({
-  classRoomName,
-  capacity,
-  buildingName,
-  insertDate,
-}) {
+function CourseMap({ techName, describe, iconAddress, insertDate }) {
   return (
     <tr>
       <td>
-        <span className="align-middle fw-bold">{classRoomName}</span>
+        <span className="align-middle fw-bold">{techName}</span>
       </td>
       <td>
-        <td>{capacity && faNumber(capacity)}</td>
-      </td>
-     
-      <td>
-        <td>{buildingName }</td>
+        <td>{describe}</td>
       </td>
 
       <td>
-        <td>{insertDate && convertDateToPersian(insertDate) }</td>
+        <td>{iconAddress}</td>
       </td>
-
-    
 
       <td>
         <UncontrolledDropdown>

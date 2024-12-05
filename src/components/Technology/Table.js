@@ -21,7 +21,7 @@ import Card from "../common/card-snippet";
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
 
-import { getTerm } from "../../core/services/api/Term";
+import { getTechnology } from "../../core/services/api/Technology";
 // import AddCategory from "./AddCategory";
 
 const Table = () => {
@@ -63,9 +63,9 @@ const Table = () => {
 
   const getList = async () => {
     try {
-      const term = await getTerm();
-      console.log("term:", term);
-      setData(term);
+      const technolo = await getTechnology();
+      console.log("technolo:", technolo);
+      setData(technolo);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -78,7 +78,7 @@ const Table = () => {
     <Fragment>
       <Row>
         <Col sm="12">
-          <Card title="لیست ترم‌ها   " noBody>
+          <Card title="لیست تکنولوژی‌ها   " noBody>
             <div className="invoice-list-table-header w-100 pb-2 px-1">
               <Row>
                 <Col lg="6" className="d-flex align-items-center px-0 px-lg-1">
@@ -91,7 +91,7 @@ const Table = () => {
                     color="primary"
                     // onClick={toggleSidebar}
                   >
-                    اضافه کردن ترم
+                    اضافه کردن تکنولوژی‌
                   </Button>
                 </Col>
                 <Col
@@ -112,7 +112,7 @@ const Table = () => {
                 </Col>
               </Row>
             </div>
-            {/* <TableBasic data={data} /> */}
+            <TableBasic data={data} />
           </Card>
         </Col>
       </Row>
