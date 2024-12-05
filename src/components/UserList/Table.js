@@ -125,9 +125,7 @@ const CustomHeader = ({
           className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
         >
           <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-            {/* <label className="mb-0" htmlFor="search-invoice">
-              جست و جو
-            </label> */}
+          
             <Input
             placeholder="جست و جوی کاربر"          
 
@@ -220,7 +218,6 @@ const isActiveOptions = [
 
     setUserList(user.data.listUser);
     setTotal(user.data.totalCount);
-    // setRoleId(user.data.roles);
 
   };
   useEffect(() => {
@@ -233,13 +230,7 @@ const isActiveOptions = [
 
   
 
-  // useEffect(() => {
-  //   getList();
-  // }, [roleId]);
-
-  // useEffect(() => {
-  //   getList(active);
-  // }, [active]);
+  
 
   const handleFilter = (val) => {
     textTimeOut(() => {
@@ -364,36 +355,7 @@ const isActiveOptions = [
                 }}
               />
             </Col>
-            {/* <Col md="4" >
-              <Label for="status-select">مرتب سازی</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select "
-                classNamePrefix="select"
-                options={statusOptions}
-                value={sortCol}
-                onChange={(data) => {
-                  setSortCol(data);
-                  handleFilterUserList;
-                }}
-              />
-            </Col> */}
-            {/* <Col md="3">
-              <Label for="status-select">صعودی/نزولی</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={AscDescOptions}
-                value={sortAcsDesc}
-                onChange={(data) => {
-                  setSortAcsDesc(data);
-                  // handleFilterUserList;
-                }}
-              />
-            </Col> */}
+       
           </Row>
         </CardBody>
       </Card>

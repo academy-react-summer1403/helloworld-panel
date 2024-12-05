@@ -12,11 +12,6 @@ import TableBasic from "./TableBasic";
 
 // ** Custom Components
 import Card from "../common/card-snippet";
-// import Breadcrumbs from "../../../common/breadcrumbs";
-
-// ** API
-
-// import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
 
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
@@ -29,36 +24,7 @@ const Table = () => {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  // const [searchQuery, setSearchQuery] = useState();
-  // const [allCourses, setAllCourses] = useState([]);
-  // const [sortLenght, setSortLenght] = useState(10);
-
-  // const getAllCourseReport = async () => {
-  //   const params = {
-  //     RowsOfPage: sortLenght,
-  //     Query: searchQuery,
-  //   };
-  //   const report = await getAllCourses(params);
-  //   setAllCourses(report.data.courseDtos);
-  // };
-
-  // useEffect(() => {
-  //   getAllCourseReport();
-  // }, []);
-
-  // useEffect(() => {
-  //   getAllCourseReport();
-  // }, [sortLenght]);
-
-  // console.log(allCourses);
-
-  // useEffect(() => {
-  //   prism.highlightAll();
-  // });
-
-  // useEffect(() => {
-  //   getAllCourseReport();
-  // }, [searchQuery]);
+  
   const [data, setData] = useState([]);
 
   const getList = async () => {
@@ -117,7 +83,10 @@ const Table = () => {
                       </option>
                     </Input>
                   </div>
-                  <Button to="/apps/invoice/add" color="primary"               onClick={toggleSidebar}
+                  <Button
+                    to="/apps/invoice/add"
+                    color="primary"
+                    onClick={toggleSidebar}
                   >
                     اضافه کردن دسته‌بندی
                   </Button>
@@ -137,7 +106,6 @@ const Table = () => {
                       placeholder="جست و جو   "
                     />
                   </div>
-                 
                 </Col>
               </Row>
             </div>
@@ -147,10 +115,9 @@ const Table = () => {
       </Row>
 
       <AddCategory
-       open={sidebarOpen}
-       toggleSidebar={toggleSidebar}
-       setSidebarOpen={setSidebarOpen}
-      
+        open={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+        setSidebarOpen={setSidebarOpen}
       />
     </Fragment>
   );
