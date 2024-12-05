@@ -61,6 +61,8 @@ export default [
     title: "مدیریت کامت ها",
     icon: <Command/>,
     navLink: "/comment",
+  },
+  {
     id: "assistancework",
     title: " تسک‌ها",
     icon: <Activity/>,
