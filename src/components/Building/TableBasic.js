@@ -108,7 +108,8 @@ const Courses = ({ data }) => {
           <th>  ساعت کاری</th>
           <th>  طبقه</th>
           <th>  وضعیت</th>
-          <th>توضیحات</th>
+          <th>  اقدام</th>
+
         </tr>
       </thead>
       <tbody>

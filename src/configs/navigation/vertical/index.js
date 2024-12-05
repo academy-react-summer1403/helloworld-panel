@@ -1,4 +1,4 @@
-import { BookOpen, Home,Mic,Calendar,Activity,Aperture,Command,Shuffle } from "react-feather";
+import { BookOpen, Home,Mic,Calendar,Activity,Aperture,Command,Shuffle,Star,Square,ThumbsUp } from "react-feather";
 import { Layers,Circle,Users } from "react-feather";
 
 export default [
@@ -79,6 +79,24 @@ export default [
     title: " بخش‌های پژوهشگاه",
     icon: <Shuffle/>,
     navLink: "/department",
+  },
+  {
+    id: "term",
+    title: "ترم",
+    icon: <Star/>,
+    navLink: "/term",
+  },
+  {
+    id: "status",
+    title: "وضعیت",
+    icon: <Square/>,
+    navLink: "/status",
+  },
+  {
+    id: "technology",
+    title: "تکنولوژی",
+    icon: <ThumbsUp/>,
+    navLink: "/technology",
   },
   // {
   //   id: "podcast",

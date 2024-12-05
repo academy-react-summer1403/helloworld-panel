@@ -163,7 +163,8 @@ const UsersList = () => {
 
   const [searchText, setSearchText] = useState();
   const [PageNumber, setPageNumber] = useState(0);
-  const [perPage, setPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const [total, setTotal] = useState();
   const [userList, setUserList] = useState([]);
   const [sortType, setSortType] = useState();
@@ -205,6 +206,7 @@ const isActiveOptions = [
     const params = {
       
       roleId: roleId,
+      rowsPerPage,
       currentPage,
       PageNumber,
       RowsOfPage: sortLenght,
@@ -227,19 +229,9 @@ const isActiveOptions = [
 
   useEffect(() => {
     getList();
-  }, [sortLenght]);
+  }, [sortLenght,searchQuery,roleId,activeRole,rowsPerPage]);
 
-  useEffect(() => {
-    getList();
-  }, [searchQuery]);
-
-  useEffect(() => {
-    getList();
-  }, [roleId]);
-
-  useEffect(() => {
-    getList();
-  }, [activeRole]);
+  
 
   // useEffect(() => {
   //   getList();
@@ -255,10 +247,39 @@ const isActiveOptions = [
     }, 800);
   };
 
+  
+
   const handlePerPage = (e) => {
-    setRowsOfPage(parseInt(e.target.value));
+    const value = parseInt(e.currentTarget.value);
+
+    setRowsPerPage(value);
+    console.log(value);
   };
 
+
+  const CustomPagination = () => {
+    const count = Math.ceil(userList?.totalCount / rowsPerPage);
+
+    return (
+      <ReactPaginate
+        previousLabel={""}
+        nextLabel={""}
+        pageCount={count || 1}
+        activeClassName="active"
+        forcePage={currentPage > 0 ? currentPage - 1 : 0} 
+        onPageChange={(page) => handlePagination(page)}
+        pageClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        nextClassName={"page-item next"}
+        previousClassName={"page-item prev"}
+        previousLinkClassName={"page-link"}
+        pageLinkClassName={"page-link"}
+        containerClassName={
+          "pagination react-paginate justify-content-center my-2 pe-1"
+        }
+      />
+    );
+  };
   // const handlePagination = (page) => {
   //   setCurrentPage(page.selected + 1);
   // };
@@ -387,12 +408,12 @@ const isActiveOptions = [
               <div className="invoice-list-dataTable react-dataTable">
                 <DataTable
                   noHeader
-                  // pagination
+                  pagination
                   sortServer
                   paginationServer
                   subHeader={true}
                   columns={columns}
-                  
+                  paginationComponent={CustomPagination}
                   data={dataToRender()}
                   responsive={true}
                   sortIcon={<ChevronDown />}
@@ -402,6 +423,8 @@ const isActiveOptions = [
                   // paginationComponent={CustomPagination}
                   subHeaderComponent={
                     <CustomHeader
+                    rowsPerPage={rowsPerPage}
+
                       setSearchQuery={setSearchQuery}
                       searchQuery={searchQuery}
                       setSortLenght={setSortLenght}

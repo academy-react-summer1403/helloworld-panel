@@ -21,7 +21,7 @@ import Card from "../common/card-snippet";
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
 
-import { getDepartment } from "../../core/services/api/Department";
+import { getTerm } from "../../core/services/api/Term";
 // import AddCategory from "./AddCategory";
 
 const Table = () => {
@@ -63,9 +63,9 @@ const Table = () => {
 
   const getList = async () => {
     try {
-      const department = await getDepartment();
-      console.log("department:", department);
-      setData(department);
+      const term = await getTerm();
+      console.log("term:", term);
+      setData(term);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -78,51 +78,20 @@ const Table = () => {
     <Fragment>
       <Row>
         <Col sm="12">
-          <Card title="لیست بخش‌های پژوهشگاه   " noBody>
+          <Card title="لیست ترم‌ها   " noBody>
             <div className="invoice-list-table-header w-100 pb-2 px-1">
               <Row>
                 <Col lg="6" className="d-flex align-items-center px-0 px-lg-1">
                   <div className="d-flex align-items-center me-2">
                     {/* <label htmlFor="rows-per-page w-100">تعداد فیلد</label> */}
-                    <Input
-                      type="select"
-                      id="rows-per-page"
-                      // value={rowsPerPage}
-                      // onChange={handlePerPage}
-                      className="form-control ms-50 pe-3"
-                    >
-                      <option
-                        onClick={() => {
-                          setSortLenght(10);
-                        }}
-                        value="10"
-                      >
-                        10
-                      </option>
-                      <option
-                        onClick={() => {
-                          setSortLenght(25);
-                        }}
-                        value="25"
-                      >
-                        25
-                      </option>
-                      <option
-                        onClick={() => {
-                          setSortLenght(50);
-                        }}
-                        value="50"
-                      >
-                        50
-                      </option>
-                    </Input>
+                  
                   </div>
                   <Button
                     to="/apps/invoice/add"
                     color="primary"
                     // onClick={toggleSidebar}
                   >
-                    اضافه کردن بخش‌
+                    اضافه کردن ترم
                   </Button>
                 </Col>
                 <Col

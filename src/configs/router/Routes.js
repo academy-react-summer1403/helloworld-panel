@@ -51,9 +51,15 @@ const Blogs = lazy(() => import("../../pages/Blogs/Blogs"));
 const BlogDetailPage = lazy(() => import("../../pages/BlogDetail/BlogDetail"));
 const BlogCategory = lazy(() => import("../../pages/BlogCategory/BlogCategory"));
 const AssistanceWorkPage = lazy(() => import("../../pages/AssistanceWork/AssistanceWork"));
+const EditAssistancePage = lazy(() => import("../../pages/EditAssistance/EditAssistance"));
 const BuildingPage = lazy(() => import("../../pages/Building/Building"));
 const ClassRoomPage = lazy(() => import("../../pages/ClassRoom/ClassRoom"));
 const DepartmentPage = lazy(() => import("../../pages/Department/Department"));
+const TermPage = lazy(() => import("../../pages/Term/Term"));
+const StatusPage = lazy(() => import("../../pages/Status/Status"));
+const TechnologyPage = lazy(() => import("../../pages/Technology/Technology"));
+
+
 
 
 
@@ -125,6 +131,10 @@ const Routes = [
     element: <AssistanceWorkPage/>
   },
   {
+    path: "/assistancework/edit/:id",
+    element: <EditAssistancePage/>
+  },
+  {
     path: "/Building",
     element: <BuildingPage/>
   },
@@ -135,6 +145,18 @@ const Routes = [
   {
     path: "/department",
     element: <DepartmentPage/>
+  },
+  {
+    path: "/term",
+    element: <TermPage/>
+  },
+  {
+    path: "/status",
+    element: <StatusPage/>
+  },
+  {
+    path: "/technology",
+    element: <TechnologyPage/>
   },
   // {
 

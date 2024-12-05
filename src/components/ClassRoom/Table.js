@@ -8,7 +8,7 @@ import { Row, Col, Input, Button } from "reactstrap";
 import prism from "prismjs";
 
 // ** Demo Components
-// import TableBasic from "./TableBasic";
+import TableBasic from "./TableBasic";
 
 // ** Custom Components
 import Card from "../common/card-snippet";
@@ -19,9 +19,9 @@ import Card from "../common/card-snippet";
 // import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCoursesAdmin";
 
 // ** Source Code
-// import { tableBasic } from "./TableSourceCode";
+import { tableBasic } from "./TableSourceCode";
 
-import { getAssistance } from "../../core/services/api/AssistanceWork";
+import { getClassRoom } from "../../core/services/api/ClassRoom";
 // import AddCategory from "./AddCategory";
 
 const Table = () => {
@@ -63,9 +63,9 @@ const Table = () => {
 
   const getList = async () => {
     try {
-      const assistanc = await getAssistance();
-      console.log("assistanc:", assistanc);
-      setData(assistanc);
+      const classroom = await getClassRoom();
+      console.log("classroom:", classroom);
+      setData(classroom);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -143,7 +143,7 @@ const Table = () => {
                 </Col>
               </Row>
             </div>
-            {/* <TableBasic data={data} /> */}
+            <TableBasic data={data} />
           </Card>
         </Col>
       </Row>

@@ -104,12 +104,11 @@ const Courses = ({ data }) => {
     <Table responsive>
       <thead>
         <tr>
-          <th>نام دوره</th>
-          <th> شروع تسک‌</th>
-          <th> پایان تسک‌</th>
-          <th> عنوان تسک‌</th>
-          <th>توضیحات</th>
-          <th>اقدام</th>
+          <th>نام بخش‌</th>
+          <th>  نام ساختمان</th>
+          <th>  تاریخ</th>
+          <th>  اقدام</th>
+
         </tr>
       </thead>
       <tbody>
@@ -119,12 +118,9 @@ const Courses = ({ data }) => {
               return (
                 <CourseMap
                   key={index}
-                  id={item.id}
-                  courseName={item.courseName}
-                  inserDate={item.inserDate}
-                  workDate={item.workDate}
-                  assistanceName={item.assistanceName}
-                  workDescribe={item.workDescribe}
+                  depName={item.depName}
+                  buildingName={item.buildingName}
+                  insertDate={item.insertDate}
                 />
               );
             })}
