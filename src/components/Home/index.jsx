@@ -29,6 +29,7 @@ import "chart.js/auto";
 // ** Styles
 import "@styles/react/libs/flatpickr/flatpickr.scss";
 import CardTransactions from "./DashboardReport";
+import CompanyTable from "./CompanyTable";
 
 const Home = () => {
   const [userManageData, setManageUserData] = useState("");
@@ -110,6 +111,11 @@ const Home = () => {
           <CardTransactions />
         </Col>
       </Row>
+      <Row className="match-height">
+        <Col >
+          <CompanyTable/>
+        </Col>
+      </Row> 
     </div>
   );
 };
