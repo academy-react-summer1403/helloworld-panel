@@ -22,6 +22,7 @@ import Card from "../common/card-snippet";
 import { tableBasic } from "./TableSourceCode";
 
 import { getTechnology } from "../../core/services/api/Technology";
+import AddTechnology from "./AddTechnology/AddTechnology";
 // import AddCategory from "./AddCategory";
 
 const Table = () => {
@@ -89,7 +90,7 @@ const Table = () => {
                   <Button
                     to="/apps/invoice/add"
                     color="primary"
-                    // onClick={toggleSidebar}
+                    onClick={toggleSidebar}
                   >
                     اضافه کردن تکنولوژی‌
                   </Button>
@@ -117,12 +118,12 @@ const Table = () => {
         </Col>
       </Row>
 
-      {/* <AddCategory
+      <AddTechnology
        open={sidebarOpen}
        toggleSidebar={toggleSidebar}
        setSidebarOpen={setSidebarOpen}
       
-      /> */}
+      />
     </Fragment>
   );
 };

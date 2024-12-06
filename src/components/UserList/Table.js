@@ -64,9 +64,6 @@ const CustomHeader = ({
   setSearchQuery,
   searchQuery,
 }) => {
-
-
- 
   return (
     <div className="invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75">
       <Row>
@@ -125,10 +122,8 @@ const CustomHeader = ({
           className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
         >
           <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-          
             <Input
-            placeholder="جست و جوی کاربر"          
-
+              placeholder="جست و جوی کاربر"
               id="search-invoice"
               className="ms-50 w-100"
               type="text"
@@ -171,18 +166,15 @@ const UsersList = () => {
   const [searchQuery, setSearchQuery] = useState();
   const [roleId, setRoleId] = useState(1);
   const [activeRole, setActiveRole] = useState();
-  console.log("roleId tst:", roleId)
-
-
+  console.log("roleId tst:", roleId);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
- 
   const [currentRole, setCurrentRole] = useState({
     value: null,
     label: "انتخاب کنید...",
   });
-  
+
   const [isActive, setIsActive] = useState({
     value: null,
     label: "انتخاب کنید...",
@@ -194,7 +186,7 @@ const UsersList = () => {
     { value: "2", label: "استاد" },
     { value: "5", label: "دانشجو" },
   ];
-const isActiveOptions = [
+  const isActiveOptions = [
     { value: null, label: "انتخاب کنید..." },
     { value: true, label: "فعال" },
     { value: false, label: "غیرفعال" },
@@ -202,7 +194,6 @@ const isActiveOptions = [
 
   const getList = async () => {
     const params = {
-      
       roleId: roleId,
       rowsPerPage,
       currentPage,
@@ -218,7 +209,6 @@ const isActiveOptions = [
 
     setUserList(user.data.listUser);
     setTotal(user.data.totalCount);
-
   };
   useEffect(() => {
     getList();
@@ -226,11 +216,7 @@ const isActiveOptions = [
 
   useEffect(() => {
     getList();
-  }, [sortLenght,searchQuery,roleId,activeRole,rowsPerPage]);
-
-  
-
-  
+  }, [sortLenght, searchQuery, roleId, activeRole, rowsPerPage]);
 
   const handleFilter = (val) => {
     textTimeOut(() => {
@@ -238,15 +224,12 @@ const isActiveOptions = [
     }, 800);
   };
 
-  
-
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
 
     setRowsPerPage(value);
     console.log(value);
   };
-
 
   const CustomPagination = () => {
     const count = Math.ceil(userList?.totalCount / rowsPerPage);
@@ -257,7 +240,7 @@ const isActiveOptions = [
         nextLabel={""}
         pageCount={count || 1}
         activeClassName="active"
-        forcePage={currentPage > 0 ? currentPage - 1 : 0} 
+        forcePage={currentPage > 0 ? currentPage - 1 : 0}
         onPageChange={(page) => handlePagination(page)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
@@ -301,8 +284,6 @@ const isActiveOptions = [
   // };
 
   const dataToRender = () => {
-
-  
     if (userList.length > 0) {
       return userList;
     } else if (total === 0) {
@@ -315,53 +296,49 @@ const isActiveOptions = [
   return (
     <div className="invoice-list-wrapper">
       <Fragment>
-      <Card>
-        <CardHeader>
-          <CardTitle tag="h4">فیلتر</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Row>
-            <Col md="4">
-              <Label for="role-select">نقش</Label>
-              <Select
-                isClearable={false}
-                value={currentRole}
-                options={roleOptions}
-                className="react-select"
-                classNamePrefix="select"
-                theme={selectThemeColors}
-                onChange={(data) => {
-                  setCurrentRole(data);
-                  setRoleId(data.value)
-                  // handleFilterUserList;
-                }}
-              />
-            </Col>
-            <Col md="4">
-              <Label for="role-select">وضعیت</Label>
-              <Select
-                isClearable={false}
-                value={isActive}
-                options={isActiveOptions}
-                className="react-select"
-                classNamePrefix="select"
-                theme={selectThemeColors}
-                onChange={(data) => {
-                  setIsActive(data);
-                  setActiveRole(data.value)
-                  // setActiveRole()
+        <Card>
+          <CardHeader>
+            <CardTitle tag="h4">فیلتر</CardTitle>
+          </CardHeader>
+          <CardBody>
+            <Row>
+              <Col md="4">
+                <Label for="role-select">نقش</Label>
+                <Select
+                  isClearable={false}
+                  value={currentRole}
+                  options={roleOptions}
+                  className="react-select"
+                  classNamePrefix="select"
+                  theme={selectThemeColors}
+                  onChange={(data) => {
+                    setCurrentRole(data);
+                    setRoleId(data.value);
+                    // handleFilterUserList;
+                  }}
+                />
+              </Col>
+              <Col md="4">
+                <Label for="role-select">وضعیت</Label>
+                <Select
+                  isClearable={false}
+                  value={isActive}
+                  options={isActiveOptions}
+                  className="react-select"
+                  classNamePrefix="select"
+                  theme={selectThemeColors}
+                  onChange={(data) => {
+                    setIsActive(data);
+                    setActiveRole(data.value);
+                    // setActiveRole()
 
-                  // handleFilterUserList;
-                }}
-              />
-            </Col>
-       
-          </Row>
-        </CardBody>
-      </Card>
-
-
-
+                    // handleFilterUserList;
+                  }}
+                />
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
       </Fragment>
       <Card>
         <Fragment>
@@ -385,8 +362,7 @@ const isActiveOptions = [
                   // paginationComponent={CustomPagination}
                   subHeaderComponent={
                     <CustomHeader
-                    rowsPerPage={rowsPerPage}
-
+                      rowsPerPage={rowsPerPage}
                       setSearchQuery={setSearchQuery}
                       searchQuery={searchQuery}
                       setSortLenght={setSortLenght}

@@ -119,6 +119,7 @@ const Courses = ({ data }) => {
                   techName={item.techName}
                   describe={item.describe}
                   iconAddress={item.iconAddress}
+                  id={item.id}
                 />
               );
             })}

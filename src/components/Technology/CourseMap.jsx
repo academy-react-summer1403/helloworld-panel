@@ -14,15 +14,16 @@ import {
 import { Link } from "react-router-dom";
 import { convertDateToPersian } from "../../utility/date-helper.utils";
 import { faNumber } from "../../utility/FaNumber";
+import EditTechnology from "./EditTechnology/EditTechnology";
 
-function CourseMap({ techName, describe, iconAddress, insertDate }) {
+function CourseMap({ techName, describe, iconAddress, insertDate , id }) {
   return (
     <tr>
       <td>
         <span className="align-middle fw-bold">{techName}</span>
       </td>
-      <td>
-        <td>{describe}</td>
+      <td >
+        <td >{describe}</td>
       </td>
 
       <td>
@@ -31,7 +32,8 @@ function CourseMap({ techName, describe, iconAddress, insertDate }) {
 
       <td>
         <UncontrolledDropdown>
-          <Button>ویرایش</Button>
+  
+        <EditTechnology id={id}/>
         </UncontrolledDropdown>
       </td>
     </tr>

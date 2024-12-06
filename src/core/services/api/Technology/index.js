@@ -9,3 +9,25 @@ export const getTechnology = async () => {
       return false;
     }
   };
+
+  export const addTech = async (user) => {
+    try {
+      const result = await http.post("/Technology", user);
+  
+      return result;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  export const updateTech = async (user) => {
+    try {
+      const result = await http.put("/Technology", user);
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+  
