@@ -13,9 +13,9 @@ import { selectThemeColors } from "@utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
-import { Col, Row } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 
-const PersonalInfo = ({ stepper, type }) => {
+const PersonalInfo = ({ stepper, type, formData, setFormData }) => {
   const validationSchema = Yup.object().shape({
     Cost: Yup.number()
       .typeError("هزینه دوره باید یک عدد باشد")
@@ -30,6 +30,13 @@ const PersonalInfo = ({ stepper, type }) => {
       ),
   });
 
+  const handleFormChange = (values) => {
+    setFormData((prev) => ({
+      ...prev,
+      personalInfo: values,
+    }));
+  };
+
   return (
     <Fragment>
       <div className="content-header">
@@ -37,19 +44,11 @@ const PersonalInfo = ({ stepper, type }) => {
         <small className="text-muted">لطفا اطلاعات را با دقت وارد کنید</small>
       </div>
       <Formik
-        initialValues={{
-          Cost: "",
-          UniqeUrlString: "",
-          StartTime: "",
-          EndTime: "",
-        }}
+        initialValues={formData.personalInfo}
+        onSubmit={(values) => handleFormChange(values)}
         validationSchema={validationSchema}
-        onSubmit={(value) => {
-          // setThirdLv(value);
-          stepper.next();
-        }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, handleSubmit }) => (
           <Form className="d-flex flex-column ">
             <Row>
               <Col md="6" className="mb-1">
@@ -94,8 +93,8 @@ const PersonalInfo = ({ stepper, type }) => {
               </Col>
 
               <Col md="6" className="mb-1">
-              <div className="form-group gap-1 mb-1">
-              <label htmlFor="StartTime">زمان شروع دوره</label>
+                <div className="form-group gap-1 mb-1">
+                  <label htmlFor="StartTime">زمان شروع دوره</label>
                   <hr />
 
                   <Field
@@ -134,11 +133,34 @@ const PersonalInfo = ({ stepper, type }) => {
                   />
                 </div>
               </Col>
-
-              <button type="submit" className="btn btn-info mt-1">
-                ثبت
-              </button>
             </Row>
+            <div className="d-flex justify-content-between">
+              <Button color="secondary" className="btn-prev" outline disabled>
+                <ArrowLeft
+                  size={14}
+                  className="align-middle me-sm-25 me-0"
+                ></ArrowLeft>
+                <span className="align-middle d-sm-inline-block d-none">
+                  قبل
+                </span>
+              </Button>
+              <Button
+                color="primary"
+                className="btn-next"
+                onClick={() => {
+                  handleSubmit();
+                  stepper.next();
+                }}
+              >
+                <span className="align-middle d-sm-inline-block d-none">
+                  بعد
+                </span>
+                <ArrowRight
+                  size={14}
+                  className="align-middle ms-sm-25 ms-0"
+                ></ArrowRight>
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>
