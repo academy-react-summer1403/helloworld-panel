@@ -17,6 +17,19 @@ const getBlogList = async (params) => {
   export default getBlogList;
 
 
+
+  export const getBlogWithId = async (id) => {
+    try {
+      const result = await http.get(`/News/${id}`);
+      //console.log(result);
+      return result;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+
+
   export const addBlog = async (formData) => {
     try {
       const result = await http.post("/News/CreateNews", formData);

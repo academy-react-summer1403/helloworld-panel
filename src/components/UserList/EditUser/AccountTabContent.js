@@ -1,6 +1,6 @@
 // ** React Imports
 import { Fragment, useState } from "react";
-import { Field , Formik } from "formik";
+import { Field, Formik } from "formik";
 
 // ** Third Party Components
 import Select from "react-select";
@@ -16,7 +16,7 @@ import {
   Card,
   Input,
   Label,
-  Button, 
+  Button,
   CardBody,
   CardTitle,
   CardHeader,
@@ -120,11 +120,16 @@ const AccountTabs = ({ data }) => {
   // console.log("AccountTabs:" , data)
 
   const checkIsValid = (data) => {
-    return Object.values(data).every((field) =>
-      typeof field === "object" ? field !== null : field.length > 0
-    );
+    return Object.values(data).every((field) => {
+      if (typeof field === "object") {
+        return field !== null;
+      }
+      if (typeof field === "boolean") {
+        return true;
+      }
+      return field.length > 0;
+    });
   };
-
   const defaultValues = {
     lName: "",
     fName: "",
@@ -212,264 +217,289 @@ const AccountTabs = ({ data }) => {
           <CardTitle tag="h4">ویرایش پروفایل کاربر </CardTitle>
         </CardHeader>
         <CardBody className="py-2 my-25">
-          <div className='d-flex'>
-            <div className='me-25'>
-              <img className='rounded me-50' src={avatar} alt='Generic placeholder image' height='100' width='100' />
+          <div className="d-flex">
+            <div className="me-25">
+              <img
+                className="rounded me-50"
+                src={avatar}
+                alt="Generic placeholder image"
+                height="100"
+                width="100"
+              />
             </div>
-            <div className='d-flex align-items-end mt-75 ms-1'>
+            <div className="d-flex align-items-end mt-75 ms-1">
               <div>
-                <Button tag={Label} className='mb-75 me-75' size='sm' color='primary'>
-                بارگذاری
-                  <Input type='file' onChange={onChange} hidden accept='image/*' />
+                <Button
+                  tag={Label}
+                  className="mb-75 me-75"
+                  size="sm"
+                  color="primary"
+                >
+                  بارگذاری
+                  <Input
+                    type="file"
+                    onChange={onChange}
+                    hidden
+                    accept="image/*"
+                  />
                 </Button>
-                <Button className='mb-75' color='secondary' size='sm' outline onClick={handleImgReset}>
+                <Button
+                  className="mb-75"
+                  color="secondary"
+                  size="sm"
+                  outline
+                  onClick={handleImgReset}
+                >
                   لغو
-                </Button> 
-                 <p className='mb-0'>عکس را در قالب JPG یا PNG بارگذاری کنید.</p> 
+                </Button>
+                <p className="mb-0">عکس را در قالب JPG یا PNG بارگذاری کنید.</p>
               </div>
             </div>
           </div>
           <Formik>
-          <Form className="mt-2 pt-50" onSubmit={handleSubmit(onSubmit)}>
-            <Row>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="firstName">
-                  نام
-                </Label>
-                <Controller
-                  name="firstName"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      id="firstName"
-                      type="firstName"
-                      name="firstName"
-                      placeholder="firstName"
-                      defaultValue={data?.data?.fName}
-                    />
+            <Form className="mt-2 pt-50" onSubmit={handleSubmit(onSubmit)}>
+              <Row>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="firstName">
+                    نام
+                  </Label>
+                  <Controller
+                    name="firstName"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        id="firstName"
+                        type="firstName"
+                        name="firstName"
+                        placeholder="firstName"
+                        defaultValue={data?.data?.fName}
+                      />
+                    )}
+                  />
+                  {errors && errors.firstName && (
+                    <FormFeedback>Please enter a valid First Name</FormFeedback>
                   )}
-                />
-                {errors && errors.firstName && (
-                  <FormFeedback>Please enter a valid First Name</FormFeedback>
-                )}
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="lastName">
-                  نام خانوادگی
-                </Label>
-                <Controller
-                  name="lastName"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      id="lastName"
-                      type="lastname"
-                      name="lastname"
-                      placeholder="lastname"
-                      defaultValue={data?.data?.lName}
-                    />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="lastName">
+                    نام خانوادگی
+                  </Label>
+                  <Controller
+                    name="lastName"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        id="lastName"
+                        type="lastname"
+                        name="lastname"
+                        placeholder="lastname"
+                        defaultValue={data?.data?.lName}
+                      />
+                    )}
+                  />
+                  {errors.lastName && (
+                    <FormFeedback>Please enter a valid Last Name</FormFeedback>
                   )}
-                />
-                {errors.lastName && (
-                  <FormFeedback>Please enter a valid Last Name</FormFeedback>
-                )}
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="emailInput">
-                  ایمیل
-                </Label>
-                <Input
-                  id="emailInput"
-                  type="email"
-                  name="email"
-                  defaultValue={data?.data?.gmail}
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  نام کاربری
-                </Label>
-                <Input
-                  defaultValue={data?.data?.userName}
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="status">
-                  وضعیت:
-                </Label>
-                <Field
-                  className="form-control react-select"
-                  name="status"
-                  as="select"
-                >
-                  <option value={true}>فعال</option>
-                  <option value={false}>غیرفعال</option>
-                </Field>
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  کد ملی
-                </Label>
-                <Input
-                  defaultValue={data?.data?.nationalCode}
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  شماره همراه
-                </Label>
-                <Input
-                  defaultValue={data?.data?.phoneNumber}
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  لینک تلگرام
-                </Label>
-                <Input
-                  defaultValue={data?.data?.telegramLink}
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  آدرس منزل
-                </Label>
-                <Input
-                  defaultValue={data?.data?.homeAdderess}
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  درباره کاربر
-                </Label>
-                <Input
-                  defaultValue={data?.data?.userAbout}
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
-              <Col sm="6" className="mb-1">
-                <Label className="form-label" for="company">
-                  تاریخ تولد
-                </Label>
-                <Input
-                  defaultValue={
-                    data?.data?.birthDay &&
-                    convertDateToPersian(data?.data?.birthDay)
-                  }
-                  id="company"
-                  name="company"
-                  placeholder="Company Name"
-                />
-              </Col>
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="emailInput">
+                    ایمیل
+                  </Label>
+                  <Input
+                    id="emailInput"
+                    type="email"
+                    name="email"
+                    defaultValue={data?.data?.gmail}
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    نام کاربری
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.userName}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="status">
+                    وضعیت:
+                  </Label>
+                  <Field
+                    className="form-control react-select"
+                    name="status"
+                    as="select"
+                  >
+                    <option value={true}>فعال</option>
+                    <option value={false}>غیرفعال</option>
+                  </Field>
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="role">
+                    نقش
+                  </Label>
+                  <Input
+                    id="role"
+                    type="select"
+                    name="role"
+                    defaultValue={data?.data?.roles}
+                  >
+                    <option
+                      onClick={() => setRows(StudentEmployee.Writer)}
+                      value="StudentEmployee.Writer"
+                    >
+                      StudentEmployee.Writer
+                    </option>
+                    <option
+                      onClick={() => setRows(Employee.Writer)}
+                      value="Employee.Writer"
+                    >
+                      Employee.Writer
+                    </option>
+                    <option
+                      onClick={() => setRows(TournamentMentor)}
+                      value="TournamentMentor"
+                    >
+                      TournamentMentor
+                    </option>
+                    <option
+                      onClick={() => setRows(TournamentAdmin)}
+                      value="TournamentAdmin"
+                    >
+                      TournamentAdmin
+                    </option>
+                    <option
+                      onClick={() => setRows(Employee.AdminTeacher)}
+                      value="Employee.AdminTeacher"
+                    >
+                      Employee.AdminTeacher
+                    </option>
+                    <option onClick={() => setRows(Teacher)} value="Teacher">
+                      Teacher
+                    </option>
+                    <option onClick={() => setRows(Support)} value="Support">
+                      Support
+                    </option>
+                    <option
+                      onClick={() => setRows(Administrator)}
+                      value="Administrator"
+                    >
+                      Administrator
+                    </option>
+                    <option onClick={() => setRows(Referee)} value="Referee">
+                      Referee
+                    </option>
+                  </Input>
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    کد ملی
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.nationalCode}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    شماره همراه
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.phoneNumber}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    لینک تلگرام
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.telegramLink}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    لینک پروفایل لینکدین
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.linkdinProfile}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    آدرس منزل
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.homeAdderess}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    درباره کاربر
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.userAbout}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    جنسیت
+                  </Label>
+                  <Input
+                    defaultValue={data?.data?.gender}
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
+                <Col sm="6" className="mb-1">
+                  <Label className="form-label" for="company">
+                    تاریخ تولد
+                  </Label>
+                  <Input
+                    defaultValue={
+                      data?.data?.birthDay &&
+                      convertDateToPersian(data?.data?.birthDay)
+                    }
+                    id="company"
+                    name="company"
+                    placeholder="Company Name"
+                  />
+                </Col>
 
-
-
-              {/* <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='address'>
-                  Address
-                </Label>
-                <Input id='address' name='address' placeholder='12, Business Park' />
-              </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='accountState'>
-                  State
-                </Label>
-                <Input id='accountState' name='state' placeholder='California' />
-              </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='zipCode'>
-                  Zip Code
-                </Label>
-                <Input id='zipCode' name='zipCode' placeholder='123456' maxLength='6' />
-              </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='country'>
-                  Country
-                </Label>
-                <Select
-                  id='country'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={countryOptions}
-                  theme={selectThemeColors}
-                  defaultValue={countryOptions[0]}
-                />
-              </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='language'>
-                  Language
-                </Label>
-                <Select
-                  id='language'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={languageOptions}
-                  theme={selectThemeColors}
-                  defaultValue={languageOptions[0]}
-                />
-              </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='timeZone'>
-                  Timezone
-                </Label>
-                <Select
-                  id='timeZone'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={timeZoneOptions}
-                  theme={selectThemeColors}
-                  defaultValue={timeZoneOptions[0]}
-                />
-              </Col>
-              <Col sm='6' className='mb-1'>
-                <Label className='form-label' for='currency'>
-                  Currency
-                </Label>
-                <Select
-                  id='currency'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={currencyOptions}
-                  theme={selectThemeColors}
-                  defaultValue={currencyOptions[0]}
-                />
-              </Col> */}
-              <Col className="mt-2" sm="12">
-                <Button
-                  type="submit"
-                  className="me-1"
-                  color="primary"
-                  // onSubmit={handleSubmit(onSubmit)}
-                >
-                  ذخیره
-                </Button>
-                <Button color="secondary" outline>
-                  لغو
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+                <Col className="mt-2" sm="12">
+                  <Button
+                    type="submit"
+                    className="me-1"
+                    color="primary"
+                    // onSubmit={handleSubmit(onSubmit)}
+                  >
+                    ذخیره
+                  </Button>
+                  <Button color="secondary" outline>
+                    لغو
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
           </Formik>
         </CardBody>
       </Card>
