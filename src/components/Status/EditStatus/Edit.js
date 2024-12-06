@@ -26,7 +26,7 @@ import noImage from "../../../assets/images/Courses/avatar.png";
 // ** Utils
 import { selectThemeColors } from "@utils";
 import { convertDateToPersian } from "../../../utility/date-helper.utils";
-import { updateTech } from "../../../core/services/api/Technology";
+import { updateStatus } from "../../../core/services/api/Status";
 
 // ** Demo Components
 
@@ -116,7 +116,7 @@ const timeZoneOptions = [
   { value: "(GMT-03:30) Newfoundland", label: "(GMT-03:30) Newfoundland" },
 ];
 
-const EditTechnology = ({ data }) => {
+const Edit = ({ data }) => {
   const checkIsValid = (data) => {
     return Object.values(data).every((field) => {
       if (typeof field === "object") {
@@ -130,10 +130,9 @@ const EditTechnology = ({ data }) => {
   };
 
   const defaultValues = {
-    techName: "",
-    parentId: "",
+    statusName: "",
+    statusNumber: "",
     describe: "",
-    iconAddress: "",
     id: "",
   };
   const {
@@ -143,9 +142,9 @@ const EditTechnology = ({ data }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const editTechno = async (user) => {
+  const editStat = async (user) => {
     try {
-      const editTech = await updateTech(user);
+      const editstat = await updateStatus(user);
     } catch (error) {
       throw new Error("ERROR: ", error);
     }
@@ -153,12 +152,12 @@ const EditTechnology = ({ data }) => {
 
   const onSubmit = async (data) => {
     console.log("onSubmitedit:");
-    await editTechno(data);
+    await editStat(data);
     if (checkIsValid(data)) {
       toast(
         <div className="d-flex">
           <div className="d-flex flex-column">
-            <h6>تکنولوژی‌ با موفقیت ویرایش شد!</h6>
+            <h6>وضعیت با موفقیت ویرایش شد!</h6>
           </div>
         </div>
       );
@@ -182,32 +181,32 @@ const EditTechnology = ({ data }) => {
     <Fragment>
       <Card>
         <CardHeader className="border-bottom">
-          <CardTitle tag="h4">ویرایش تکنولوژی‌ </CardTitle>
+          <CardTitle tag="h4">ویرایش وضعیت </CardTitle>
         </CardHeader>
         <CardBody className="py-2 my-25">
           <Formik>
             <Form className="mt-2 pt-50" onSubmit={handleSubmit(onSubmit)}>
               <Row>
                 <Col sm="6" className="mb-1">
-                  <Label className="form-label" for="techName">
+                  <Label className="form-label" for="statusName">
                     نام
                   </Label>
                   <Input
-                    id="techName"
-                    type="techName"
+                    id="statusName"
+                    type="statusName"
                     name="..."
-                    defaultValue={data?.data?.techName}
+                    defaultValue={data?.data?.statusName}
                   />
                 </Col>
                 <Col sm="6" className="mb-1">
-                  <Label className="form-label" for="parentId">
+                  <Label className="form-label" for="statusNumber">
                     آدرس
                   </Label>
                   <Input
-                    id="parentId"
-                    type="parentId"
+                    id="statusNumber"
+                    type="statusNumber"
                     name="..."
-                    defaultValue={data?.data?.parentId}
+                    defaultValue={data?.data?.statusNumber}
                   />
                 </Col>
 
@@ -222,17 +221,7 @@ const EditTechnology = ({ data }) => {
                     defaultValue={data?.data?.describe}
                   />
                 </Col>
-                <Col sm="6" className="mb-1">
-                  <Label className="form-label" for="iconAddress">
-                    آدرس آیکون
-                  </Label>
-                  <Input
-                    id="iconAddress"
-                    type="iconAddress"
-                    name="..."
-                    defaultValue={data?.data?.iconAddress}
-                  />
-                </Col>
+
                 <Col sm="6" className="mb-1">
                   <Label className="form-label" for="id">
                     آیدی
@@ -268,4 +257,4 @@ const EditTechnology = ({ data }) => {
   );
 };
 
-export default EditTechnology;
+export default Edit;

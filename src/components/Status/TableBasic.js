@@ -2,7 +2,6 @@ import avatar1 from "../../assets/images/Courses/avatar-s-5.jpg";
 import avatar2 from "../../assets/images/Courses/avatar-s-6.jpg";
 import avatar3 from "../../assets/images/Courses/avatar-s-7.jpg";
 
-
 import CourseMap from "./CourseMap";
 
 // ** Reactstrap Imports
@@ -105,10 +104,9 @@ const Courses = ({ data }) => {
       <thead>
         <tr>
           <th>نام </th>
-          <th>   توضیحات</th>
-          <th>  شماره وضعیت </th>
-          <th>  اقدام</th>
-
+          <th> توضیحات</th>
+          <th> شماره وضعیت </th>
+          <th> اقدام</th>
         </tr>
       </thead>
       <tbody>
@@ -121,6 +119,7 @@ const Courses = ({ data }) => {
                   statusName={item.statusName}
                   describe={item.describe}
                   statusNumber={item.statusNumber}
+                  id={item.id}
                 />
               );
             })}

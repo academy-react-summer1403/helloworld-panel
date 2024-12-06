@@ -22,6 +22,7 @@ import Card from "../common/card-snippet";
 import { tableBasic } from "./TableSourceCode";
 
 import { getStatus } from "../../core/services/api/Status";
+import AddStatus from "./AddStatus/AddStatus";
 // import AddCategory from "./AddCategory";
 
 const Table = () => {
@@ -84,14 +85,13 @@ const Table = () => {
                 <Col lg="6" className="d-flex align-items-center px-0 px-lg-1">
                   <div className="d-flex align-items-center me-2">
                     {/* <label htmlFor="rows-per-page w-100">تعداد فیلد</label> */}
-                  
                   </div>
                   <Button
                     to="/apps/invoice/add"
                     color="primary"
-                    // onClick={toggleSidebar}
+                    onClick={toggleSidebar}
                   >
-                    اضافه کردن 
+                    اضافه کردن
                   </Button>
                 </Col>
                 <Col
@@ -117,12 +117,11 @@ const Table = () => {
         </Col>
       </Row>
 
-      {/* <AddCategory
-       open={sidebarOpen}
-       toggleSidebar={toggleSidebar}
-       setSidebarOpen={setSidebarOpen}
-      
-      /> */}
+      <AddStatus
+        open={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+        setSidebarOpen={setSidebarOpen}
+      />
     </Fragment>
   );
 };

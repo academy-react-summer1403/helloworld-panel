@@ -15,11 +15,7 @@ import { Link } from "react-router-dom";
 import { convertDateToPersian } from "../../utility/date-helper.utils";
 import { faNumber } from "../../utility/FaNumber";
 
-function CourseMap({
-  statusName,
-  describe,
-  statusNumber,
-}) {
+function CourseMap({ statusName, describe, statusNumber, id }) {
   return (
     <tr>
       <td>
@@ -28,18 +24,16 @@ function CourseMap({
       <td>
         <td>{describe}</td>
       </td>
-     
+
       <td>
-        <td>{statusNumber && faNumber(statusNumber) }</td>
+        <td>{statusNumber && faNumber(statusNumber)}</td>
       </td>
-
-      
-
-    
 
       <td>
         <UncontrolledDropdown>
-          <Button>ویرایش</Button>
+          <Button tag={Link} to={`/status/edit/${id}`}>
+            ویرایش
+          </Button>
         </UncontrolledDropdown>
       </td>
     </tr>

@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 // import angular from "../../../../assets/images/Courses/angular.svg";
 import noImage from "../../assets/images/Courses/noImage.png";
@@ -11,10 +13,8 @@ import {
   DropdownToggle,
   Button,
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import { convertDateToPersian } from "../../utility/date-helper.utils";
 import { faNumber } from "../../utility/FaNumber";
-import EditTechnology from "./EditTechnology/EditTechnology";
 
 function CourseMap({ techName, describe, iconAddress, insertDate , id }) {
   return (
@@ -32,8 +32,7 @@ function CourseMap({ techName, describe, iconAddress, insertDate , id }) {
 
       <td>
         <UncontrolledDropdown>
-  
-        <EditTechnology id={id}/>
+       <Button  tag={Link} to={`/technology/edit/${id}`} >ویرایش</Button>
         </UncontrolledDropdown>
       </td>
     </tr>

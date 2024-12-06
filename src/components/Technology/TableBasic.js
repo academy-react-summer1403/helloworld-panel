@@ -1,6 +1,7 @@
 import avatar1 from "../../assets/images/Courses/avatar-s-5.jpg";
 import avatar2 from "../../assets/images/Courses/avatar-s-6.jpg";
 import avatar3 from "../../assets/images/Courses/avatar-s-7.jpg";
+import { Link } from "react-router-dom";
 
 import CourseMap from "./CourseMap";
 
@@ -12,6 +13,7 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
+  Button,
 } from "reactstrap";
 
 const avatarGroupData1 = [
@@ -123,6 +125,7 @@ const Courses = ({ data }) => {
                 />
               );
             })}
+          
         </>
       </tbody>
     </Table>

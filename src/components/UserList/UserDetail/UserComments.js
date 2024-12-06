@@ -7,7 +7,7 @@
 import avatar1 from "../../../assets/images/Courses/avatar-s-5.jpg";
 import avatar2 from "../../../assets/images/Courses/avatar-s-6.jpg";
 import avatar3 from "../../../assets/images/Courses/avatar-s-7.jpg";
-import noImage from "../../../assets/images/Courses/noImage.png"
+import noImage from "../../../assets/images/Courses/noImage.png";
 // ** Icons Imports
 import { MoreVertical, Edit, Trash } from "react-feather";
 
@@ -114,10 +114,9 @@ const UserComments = ({ dataComment }) => {
         <tr>
           <th>نام دوره</th>
           <th> عنوان </th>
-          <th>  متن کامنت</th>
-          <th>   وضعیت</th>
-          <th>   اقدام</th>
-
+          <th> متن کامنت</th>
+          <th> وضعیت</th>
+          <th> اقدام</th>
         </tr>
       </thead>
       <tbody>
@@ -134,46 +133,65 @@ const UserComments = ({ dataComment }) => {
                       height="26"
                       width="26"
                     /> */}
-                    <span className="align-middle fw-bold">{item?.courseTitle}</span>
+                    <span className="align-middle fw-bold">
+                      {item?.courseTitle}
+                    </span>
                   </td>
                   <td>
-                    <span className="align-middle fw-bold">{item?.commentTitle}</span>
+                    <span className="align-middle fw-bold">
+                      {item?.commentTitle}
+                    </span>
                   </td>
                   <td>
                     <span className="align-middle fw-bold">
                       {item?.describe}
                     </span>
                   </td>
-                  <td className=" p-0" 
-                      onClick={item.accept === true ? () => rejCmnt(item.id? item.id:item.commentId): () => accptCmnt(item.id? item.id:item.commentId)}
-                      >
-                        <Badge pill color={item.accept  ?"light-primary" : "light-danger"} className="me-1">
-                          {item.accept === true ? "تایید شده" : " تایید نشده"}
-                        </Badge>
-                      </td>
+                  <td
+                    className=" p-0"
+                    onClick={
+                      item.accept === true
+                        ? () => rejCmnt(item.id ? item.id : item.commentId)
+                        : () => accptCmnt(item.id ? item.id : item.commentId)
+                    }
+                  >
+                    <Badge
+                      pill
+                      color={item.accept ? "light-primary" : "light-danger"}
+                      className="me-1"
+                    >
+                      {item.accept === true ? "تایید شده" : " تایید نشده"}
+                    </Badge>
+                  </td>
 
-                      <td>
-            <UncontrolledDropdown>
-              <DropdownToggle
-                className="icon-btn hide-arrow"
-                color="transparent"
-                size="sm"
-                caret
-              >
-                <MoreVertical size={15} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
-                  <Edit className="me-50" size={15} />{" "}
-                  <span className="align-middle">Edit</span>
-                </DropdownItem>
-                <DropdownItem href="/" onClick={(e) => e.preventDefault()}>
-                  <Trash className="me-50" size={15} />{" "}
-                  <span className="align-middle">Delete</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </td>
+                  <td>
+                    <UncontrolledDropdown>
+                      <DropdownToggle
+                        className="icon-btn hide-arrow"
+                        color="transparent"
+                        size="sm"
+                        caret
+                      >
+                        <MoreVertical size={15} />
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem
+                          href="/"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <Edit className="me-50" size={15} />{" "}
+                          <span className="align-middle">Edit</span>
+                        </DropdownItem>
+                        <DropdownItem
+                          href="/"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <Trash className="me-50" size={15} />{" "}
+                          <span className="align-middle">Delete</span>
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  </td>
                 </tr>
 
                 //   <CourseMap
@@ -195,8 +213,6 @@ const UserComments = ({ dataComment }) => {
               );
             })}
         </>
-  
-     
       </tbody>
     </Table>
   );

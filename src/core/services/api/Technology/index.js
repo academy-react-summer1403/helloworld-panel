@@ -30,4 +30,15 @@ export const getTechnology = async () => {
       return [];
     }
   };
+
+  export const getTechWithId = async (id) => {
+    try {
+      const result = await http.get(`/Technology/${id}`);
+  
+      return result;
+    } catch (error) {
+      return false;
+    }
+  };
+  
   

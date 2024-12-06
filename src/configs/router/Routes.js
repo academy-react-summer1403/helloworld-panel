@@ -58,7 +58,10 @@ const ClassRoomPage = lazy(() => import("../../pages/ClassRoom/ClassRoom"));
 const DepartmentPage = lazy(() => import("../../pages/Department/Department"));
 const TermPage = lazy(() => import("../../pages/Term/Term"));
 const StatusPage = lazy(() => import("../../pages/Status/Status"));
+const EditStatusPage = lazy(() => import("../../pages/EditStatus/EditStatus"));
 const TechnologyPage = lazy(() => import("../../pages/Technology/Technology"));
+const EditTechnologyPage = lazy(() => import("../../pages/EditTechnology/EditTechnology"));
+
 
 
 
@@ -160,8 +163,16 @@ const Routes = [
     element: <StatusPage/>
   },
   {
+    path: "/status/edit/:id",
+    element: <EditStatusPage/>
+  },
+  {
     path: "/technology",
     element: <TechnologyPage/>
+  },
+  {
+    path: "/technology/edit/:id",
+    element: <EditTechnologyPage/>
   },
   // {
 
