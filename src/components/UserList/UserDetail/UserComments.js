@@ -174,7 +174,7 @@ const UserComments = ({ id }) => {
     if (crsid && cmntid) {
       handleReplyComment(crsid, cmntid);
     }
-  }, [crsid, cmntid]);
+  }, [crsid, cmntid,repCom]);
 
   const handleReplyComment = async (crsid, cmntid) => {
     try {

@@ -75,7 +75,7 @@ const Courses = ({ acceptB, Rows, searchQuery, page,setTotalCount }) => {
     if (crsid && cmntid) {
       handleReplyComment(crsid, cmntid);
     }
-  }, [crsid, cmntid]);
+  }, [crsid, cmntid,repCom]);
 
   const handleReplyComment = async (crsid, cmntid) => {
     try {

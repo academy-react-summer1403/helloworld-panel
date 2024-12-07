@@ -22,12 +22,12 @@ const UserTabs = ({ active, toggleTab }) => {
             <span className="fw-bold">دوره ها</span>
           </NavLink>
         </NavItem>
-        <NavItem>
+        {/* <NavItem>
           <NavLink active={active === "2"} onClick={() => toggleTab("2")}>
             <User className="font-medium-3 me-50" />
             <span className="fw-bold">دوره های رزرو شده</span>
           </NavLink>
-        </NavItem>
+        </NavItem> */}
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId="1">
