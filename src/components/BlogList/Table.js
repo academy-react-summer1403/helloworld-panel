@@ -204,10 +204,15 @@ const UsersList = () => {
   const [query, setQuery] = useState();
   const [newsList, setNewsList] = useState([]);
   const [searchQuery, setSearchQuery] = useState();
+  const [page, setPage] = useState(1);
 
   const [sortLenght, setSortLenght] = useState(10);
   const [activeRole, setActiveRole] = useState();
 
+  const handlePageChange = (value) => {
+    console.log("value", value);
+    setPage(value + 1);
+  };
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -225,7 +230,7 @@ const isActiveOptions = [
   const getList = async () => {
     const params = {
       currentPage,
-      PageNumber,
+      PageNumber: page,
       RowsOfPage,
       SortingCol,
       RowsOfPage: sortLenght,
@@ -245,7 +250,7 @@ const isActiveOptions = [
 
   useEffect(() => {
     getList();
-  }, [sortLenght]);
+  }, [sortLenght,page]);
 
   useEffect(() => {
     getList();
@@ -377,6 +382,42 @@ const isActiveOptions = [
                 />
               </div>
             </Col>
+            <div
+              style={{
+                maxWidth: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+                marginBottom: "5px",
+              }}
+            >
+              <ReactPaginate
+                previousLabel={""}
+                nextLabel={""}
+                breakLabel="..."
+                pageCount={Math.ceil(total / sortLenght)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                activeClassName="active"
+                // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+                forcePage={page !== 0 ? page - 1 : 0}
+                onPageChange={(value) => {
+                  console.log("selected", value);
+                  handlePageChange(value.selected);
+                }}
+                pageClassName="page-item"
+                breakClassName="page-item"
+                nextLinkClassName="page-link"
+                pageLinkClassName="page-link"
+                breakLinkClassName="page-link"
+                previousLinkClassName="page-link"
+                nextClassName="page-item next-item"
+                previousClassName="page-item prev-item"
+                containerClassName={
+                  "pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1"
+                }
+              />
+            </div>
           </Row>
           <AddBlog
             open={sidebarOpen}

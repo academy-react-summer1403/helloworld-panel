@@ -23,7 +23,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Fragment } from "react";
 
-const Courses = ({ acceptB,Rows,searchQuery }) => {
+const Courses = ({ acceptB, Rows, searchQuery, page,setTotalCount }) => {
   const [allComment, setAllComment] = useState([]);
   const [comModal, setComModal] = useState(false);
   const [repCom, setRepCom] = useState([]);
@@ -39,10 +39,12 @@ const Courses = ({ acceptB,Rows,searchQuery }) => {
     const params = {
       RowsOfPage: Rows,
       Accept: acceptB,
-      Query: searchQuery
+      Query: searchQuery,
+      PageNumber: page,
     };
     const report = await getCommentList(params);
     setAllComment(report.data.comments);
+    setTotalCount(report.data.totalCount);
   };
 
   const handleDeclineComment = async (e) => {
@@ -86,7 +88,7 @@ const Courses = ({ acceptB,Rows,searchQuery }) => {
 
   useEffect(() => {
     getAllCommentReport();
-  }, [accept, allComment,Rows]);
+  }, [accept, allComment, Rows,page]);
 
   useEffect(() => {
     handleAcceptComment();
@@ -101,7 +103,6 @@ const Courses = ({ acceptB,Rows,searchQuery }) => {
   }, []);
 
   // console.log("object", allComment);
-
 
   return (
     <Fragment>
@@ -162,15 +163,15 @@ const Courses = ({ acceptB,Rows,searchQuery }) => {
                 >
                   {item.replyCount > 0 ? (
                     <Eye
-                    style={{ width: "18px", height: "16px" }}
-                    onClick={() => {
-                      setComModal(!comModal);
-                      setCrsid(item.courseId);
-                      setCmntid(item.commentId);
-                      // handleReplyComment(item.courseId, item.commentId);
-                      setDescribe(item.describe);
-                    }}
-                  />
+                      style={{ width: "18px", height: "16px" }}
+                      onClick={() => {
+                        setComModal(!comModal);
+                        setCrsid(item.courseId);
+                        setCmntid(item.commentId);
+                        // handleReplyComment(item.courseId, item.commentId);
+                        setDescribe(item.describe);
+                      }}
+                    />
                   ) : (
                     "-"
                   )}

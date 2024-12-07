@@ -158,6 +158,8 @@ const UsersList = () => {
   const [PageNumber, setPageNumber] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const [totalCount, setTotalCount] = useState(0);
+
   const [total, setTotal] = useState();
   const [userList, setUserList] = useState([]);
   const [sortType, setSortType] = useState();
@@ -166,6 +168,13 @@ const UsersList = () => {
   const [searchQuery, setSearchQuery] = useState();
   const [roleId, setRoleId] = useState(1);
   const [activeRole, setActiveRole] = useState();
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (value) => {
+    // console.log("value", value);
+    setPage(value + 1);
+  };
+
   console.log("roleId tst:", roleId);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -197,7 +206,7 @@ const UsersList = () => {
       roleId: roleId,
       rowsPerPage,
       currentPage,
-      PageNumber,
+      PageNumber:page,
       RowsOfPage: sortLenght,
       SortingCol,
       sortType,
@@ -209,6 +218,7 @@ const UsersList = () => {
 
     setUserList(user.data.listUser);
     setTotal(user.data.totalCount);
+    setTotalCount(user.data.totalCount);
   };
   useEffect(() => {
     getList();
@@ -216,7 +226,7 @@ const UsersList = () => {
 
   useEffect(() => {
     getList();
-  }, [sortLenght, searchQuery, roleId, activeRole, rowsPerPage]);
+  }, [sortLenght, searchQuery, roleId, activeRole, rowsPerPage,page]);
 
   const handleFilter = (val) => {
     textTimeOut(() => {
@@ -347,12 +357,10 @@ const UsersList = () => {
               <div className="invoice-list-dataTable react-dataTable">
                 <DataTable
                   noHeader
-                  pagination
+                  
                   sortServer
-                  paginationServer
                   subHeader={true}
                   columns={columns}
-                  paginationComponent={CustomPagination}
                   data={dataToRender()}
                   responsive={true}
                   sortIcon={<ChevronDown />}
@@ -374,7 +382,44 @@ const UsersList = () => {
                 />
               </div>
             </Col>
+
           </Row>
+          <div
+              style={{
+                maxWidth: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+                marginBottom: "5px",
+              }}
+            >
+              <ReactPaginate
+                previousLabel={""}
+                nextLabel={""}
+                breakLabel="..."
+                pageCount={Math.ceil(totalCount / sortLenght)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                activeClassName="active"
+                // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+                forcePage={page !== 0 ? page - 1 : 0}
+                onPageChange={(value) => {
+                  // console.log("selected", value);
+                  handlePageChange(value.selected);
+                }}
+                pageClassName="page-item"
+                breakClassName="page-item"
+                nextLinkClassName="page-link"
+                pageLinkClassName="page-link"
+                breakLinkClassName="page-link"
+                previousLinkClassName="page-link"
+                nextClassName="page-item next-item"
+                previousClassName="page-item prev-item"
+                containerClassName={
+                  "pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1"
+                }
+              />
+            </div>
           <AddUser
             open={sidebarOpen}
             toggleSidebar={toggleSidebar}

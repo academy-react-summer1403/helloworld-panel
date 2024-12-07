@@ -21,19 +21,29 @@ import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCours
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 const Tables = () => {
   const [searchQuery, setSearchQuery] = useState();
   const [allCourses, setAllCourses] = useState([]);
   const [sortLenght, setSortLenght] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   const getAllCourseReport = async () => {
     const params = {
       RowsOfPage: sortLenght,
       Query: searchQuery,
+      PageNumber: page,
     };
     const report = await getAllCourses(params);
     setAllCourses(report.data.courseDtos);
+    setTotalCount(report.data.totalCount);
+  };
+
+  const handlePageChange = (value) => {
+    console.log("value", value);
+    setPage(value + 1);
   };
 
   useEffect(() => {
@@ -42,7 +52,7 @@ const Tables = () => {
 
   useEffect(() => {
     getAllCourseReport();
-  }, [sortLenght]);
+  }, [sortLenght, page, searchQuery]);
 
   console.log(allCourses);
 
@@ -53,6 +63,10 @@ const Tables = () => {
   useEffect(() => {
     getAllCourseReport();
   }, [searchQuery]);
+
+  useEffect(() => {
+    console.log("page", page);
+  }, [page]);
 
   return (
     <Fragment>
@@ -129,6 +143,42 @@ const Tables = () => {
               </Row>
             </div>
             <TableBasic allCourses={allCourses} />
+            <div
+              style={{
+                maxWidth: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+                marginBottom: "5px",
+              }}
+            >
+              <ReactPaginate
+                previousLabel={""}
+                nextLabel={""}
+                breakLabel="..."
+                pageCount={Math.ceil(totalCount / sortLenght)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                activeClassName="active"
+                // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+                // forcePage={page !== 0 ? page - 1 : 0}
+                onPageChange={(value) => {
+                  console.log("selected", value);
+                  handlePageChange(value.selected);
+                }}
+                pageClassName="page-item"
+                breakClassName="page-item"
+                nextLinkClassName="page-link"
+                pageLinkClassName="page-link"
+                breakLinkClassName="page-link"
+                previousLinkClassName="page-link"
+                nextClassName="page-item next-item"
+                previousClassName="page-item prev-item"
+                containerClassName={
+                  "pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1"
+                }
+              />
+            </div>
           </Card>
         </Col>
       </Row>

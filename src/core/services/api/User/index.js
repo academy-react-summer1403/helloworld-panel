@@ -3,7 +3,7 @@ import http from "../../interceptor/interceptor";
 const getUserList = async (params) => {
   try {
     const result = await http.get(
-      "/User/UserMannage?PageNumber=1&SortingCol=DESC",
+      "/User/UserMannage?SortingCol=DESC",
       { params: params }
     );
 

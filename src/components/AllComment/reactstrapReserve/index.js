@@ -12,6 +12,7 @@ import {
   Label,
   CardBody,
 } from "reactstrap";
+import ReactPaginate from "react-paginate";
 
 // ** Third Party Components
 import prism from "prismjs";
@@ -27,6 +28,14 @@ import Select from "react-select";
 
 const Tables = () => {
   const [searchQuery, setSearchQuery] = useState();
+  const [sortLenght, setSortLenght] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (value) => {
+    console.log("value", value);
+    setPage(value + 1);
+  };
 
   const [accepted, setAccepted] = useState({
     value: true,
@@ -112,8 +121,44 @@ const Tables = () => {
                 </Col>
               </Row>
             </div>
-            <TableBasic acceptB={acceptB} Rows={Rows} searchQuery={searchQuery}/>
+            <TableBasic setTotalCount={setTotalCount} page={page} acceptB={acceptB} Rows={Rows} searchQuery={searchQuery}/>
           </Card>
+          <div
+              style={{
+                maxWidth: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+                marginBottom: "5px",
+              }}
+            >
+              <ReactPaginate
+                previousLabel={""}
+                nextLabel={""}
+                breakLabel="..."
+                pageCount={Math.ceil(totalCount / Rows)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                activeClassName="active"
+                // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+                forcePage={page !== 0 ? page - 1 : 0}
+                onPageChange={(value) => {
+                  console.log("selected", value);
+                  handlePageChange(value.selected);
+                }}
+                pageClassName="page-item"
+                breakClassName="page-item"
+                nextLinkClassName="page-link"
+                pageLinkClassName="page-link"
+                breakLinkClassName="page-link"
+                previousLinkClassName="page-link"
+                nextClassName="page-item next-item"
+                previousClassName="page-item prev-item"
+                containerClassName={
+                  "pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1"
+                }
+              />
+            </div>
         </Col>
       </Row>
     </Fragment>
