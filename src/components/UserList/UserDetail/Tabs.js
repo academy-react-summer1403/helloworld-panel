@@ -47,22 +47,10 @@ const UserTabs = ({ active, toggleTab  }) => {
   }, [id]);
 
 
-  const [dataComment, setdataComment] = useState();
 
   
 
-  const getComeent = async (id) => {
-    try {
-      const userComent = await getComments(id);
-      console.log("comenttttttt:", userComent);
-      setdataComment(userComent);
-    } catch (error) {
-      throw new Error("ERROR: ", error);
-    }
-  };
-  useEffect(() => {
-    getComeent(id);
-  }, []);
+ 
 
   const [refetchUserCom, setRefetchUserCom] = useState(1);
 
@@ -128,7 +116,7 @@ const UserTabs = ({ active, toggleTab  }) => {
           <UserReserveCourse data={data}/>
         </TabPane>
         <TabPane tabId='3'>
-         <UserComments dataComment={dataComment}/>
+         <UserComments id={id} />
         </TabPane>
         <TabPane tabId='4'>
         <Connections   data={data}/>

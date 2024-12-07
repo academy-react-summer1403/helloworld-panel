@@ -69,7 +69,7 @@ const EditTechnologyPage = lazy(() => import("../../pages/EditTechnology/EditTec
 
 
 // const Podcast = lazy(() => import("../../pages/Podcast/Podcast"));
-// const Calendar = lazy(() => import("../../pages/Calendar/Calendar"));
+const Calendar = lazy(() => import("../../pages/Calendar/Calendar"));
 
 
 
@@ -185,10 +185,10 @@ const Routes = [
   //   element: <Podcast/>
 
   // },
-  // {
-  //   path: "/calendar",
-  //   element: <Calendar/>
-  // },
+  {
+    path: "/calendar",
+    element: <Calendar/>
+  },
   {
     path: "/second-page",
     element: <SecondPage />,
