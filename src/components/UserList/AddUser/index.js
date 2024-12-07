@@ -33,7 +33,6 @@ const AddUser = ({ open, toggleSidebar }) => {
     phoneNumber: "",
     isStudent: false,
     isTeacher: false,
-    isAdmin: false,
   };
 
   // ** Vars
@@ -56,7 +55,7 @@ const AddUser = ({ open, toggleSidebar }) => {
   // ** Function to handle form submit
   const onSubmit = async (data) => {
     console.log("onsubmit data:",data);
-    const obj = {...data, isAdmin: typeof data.isAdmin === "boolean" ? data.isAdmin : false }
+    // const obj = {...data, isAdmin: typeof data.isAdmin === "boolean" ? data.isAdmin : false }
     await creatUser(data);
     if (checkIsValid(data)) {
       toggleSidebar();
@@ -222,19 +221,7 @@ const AddUser = ({ open, toggleSidebar }) => {
             <Label for="isTeacher" className="form-check-label">
               استاد
             </Label>
-            <div className="form-check form-check-inline">
-              <Controller
-                name="isAdmin"
-                control={control}
-                render={({ field }) => (
-                  <Input type="checkbox" id="isAdmin" {...field} />
-                )}
-              />
-
-              <Label for="isAdmin" className="form-check-label">
-                ادمین
-              </Label>
-            </div>
+          
           </div>
         </div>
 

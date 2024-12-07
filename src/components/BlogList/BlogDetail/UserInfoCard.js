@@ -1,6 +1,7 @@
 // ** React Imports
 import { useState, Fragment } from "react";
 import { faNumber } from "../../../utility/FaNumber";
+import noImage from "../../../assets/images/blogs/news.png"
 
 
 
@@ -272,13 +273,13 @@ const UserInfoCard = ({ data, setdata }) => {
   const [show, setShow] = useState(false);
 
   const renderUserImage = () => {
-    if (data !== null && data?.data?.currentPictureAddress !== "Not-set") {
+    if (data !== null && data?.data?.detailsNewsDto.pictureAddress !== "Not-set") {
       return (
         <img
           height="110"
           width="110"
           alt="user-avatar"
-          src={data?.data?.currentPictureAddress}
+          src={data?.data?.detailsNewsDto.pictureAddress ? data?.data?.detailsNewsDto.pictureAddress : noImage}
           className="img-fluid rounded mt-3 mb-2"
         />
       );
@@ -288,7 +289,7 @@ const UserInfoCard = ({ data, setdata }) => {
           initials
           color="light-success"
           className="rounded mt-3 mb-2"
-          content={`${data?.fName || "کاربر"} ${data?.lName || ""}`}
+          content={`${data?.data?.detailsNewsDto.autor || "کاربر"}`}
           contentStyles={{
             borderRadius: 0,
             fontSize: "calc(48px)",
@@ -304,17 +305,7 @@ const UserInfoCard = ({ data, setdata }) => {
     }
   };
 
-  const renderRoleName = (roleName) => {
-    if (roleName === " Teacher  ") {
-      return "استاد";
-    } else if (roleName === "Student") {
-      return "دانشجو";
-    } else if (roleName === "Admin") {
-      return "ادمین";
-    } else if (roleName === "Administrator") {
-      return "مدیر";
-    }
-  };
+  
 
   const onSubmit = (data) => {
     if (Object.values(data).every((field) => field.length > 0)) {
@@ -375,99 +366,93 @@ const UserInfoCard = ({ data, setdata }) => {
               {renderUserImage()}
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info">
-                  <h4>{`${data?.data?.fName || "کاربر"} ${
-                    data?.data?.lName || ""
-                  }`}</h4>
-                  <div class="d-flex flex-wrap justify-content-center gap-1 mt-1 ">
-                    <Button
-                      type="submit"
-                      className="me-1"
-                      color="primary"
-                      onClick={() => setShowModal(true)}
-                    >
-                      دسترسی
-                    </Button>
-                    {showModal && (
-                      <UserAddRole
-                        // modal={modal}
-                        setShowModal={setShowModal}
-                        showModal={showModal}
-                        id={data?.data?.id}
-                        userName={data?.data?.fname + " " + data?.data?.lname}
-                        // toggleModal={toggleModal}
-                        userRoles={data?.data?.roleName}
-                        setdata={setdata}
-                      />
-                    )}
-
-                    {/* {data?.roles.map((role) => (
-                      <Badge
-                        key={role.id}
-                        color="light-secondary"
-                        className="text-capitalize"
-                      >
-                        {renderRoleName(role.roleName)}
-                      </Badge>
-                    ))} */}
-                  </div>
+                  <h4>{`${data?.data?.commentDtos.autor || "کاربر"} `}</h4>
+                
                 </div>
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-around my-2 pt-75">
-            <div className="d-flex align-items-start">
-              {/* <Badge color="light-primary" className="rounded p-75">
-                <Briefcase className="font-medium-2" />
-              </Badge> */}
-              <div className="ms-75">
-                <h4 className="mb-2">چند درصد از پروفایل شما کامل شد؟</h4>
-                {/* <Label
-                          className="position-absolute top-50 start-10 translate-middle"
-                          for="chart"
-                        >
-                          {data?.data?.profileCompletionPercentage}%
-                        </Label> */}
-                <small className="d-flex justify-content-center  ">{`${
-                  data?.data?.profileCompletionPercentage &&
-                  faNumber(
-                    data?.data?.profileCompletionPercentage.toString(),
-                    ","
-                  )
-                }%`}</small>
-                <Progress
-                  value={data?.data?.profileCompletionPercentage}
-                  style={{ height: "6px" }}
-                  className={` w-100 progress-bar-${data?.data?.progressColor}`}
-                />
-                {/* <Chart
-        id="chart"
-        options={options.options}
-        series={[data?.data?.profileCompletionPercentage]}
-        type={options.type}
-        height={options.height}
-        width={options.width}
-      />                */}
-                {/* <small>{data?.data?.profileCompletionPercentage}%</small> */}
-              </div>
-            </div>
-          </div>
-          <h4 className="fw-bolder border-bottom pb-50 mb-1">جزئیات کاربر</h4>
+         
+          <h4 className="fw-bolder border-bottom pb-50 mb-1">جزئیات خبر</h4>
           <div className="info-container">
             {data !== null ? (
               <ul className="list-unstyled">
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">نام کاربر:</span>
-                  <span>{data?.data?.userName}</span>
+                  <span className="fw-bolder me-25">نام نویسنده:</span>
+                  <span>{data?.data?.detailsNewsDto.addUserFullName}</span>
                 </li>
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">ایمیل:</span>
-                  <span>{data?.data?.gmail}</span>
+                  <span className="fw-bolder me-25">عنوان:</span>
+                  <span>{data?.data?.detailsNewsDto.title}</span>
                 </li>
                 <li className="mb-75">
-                  <span className="fw-bolder me-25">تاریخ تولد:</span>
+                  <span className="fw-bolder me-25"> توضیحات:</span>
                   <span>
-                    {data?.data?.birthDay &&
-                      convertDateToPersian(data?.data?.birthDay)}
+                    {data?.data?.detailsNewsDto.describe
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">  عنوان گوگل :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.googleTitle
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">  توضیحات گوگل :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.googleDescribe
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">   کلمات کلیدی :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.keyword
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">    تاریخ ایجاد :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.insertDate && convertDateToPersian(data?.data?.detailsNewsDto.insertDate)
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">    تاریخ آپدیت :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.updateDate && convertDateToPersian(data?.data?.detailsNewsDto.updateDate)
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">    امتیاز :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.currentRate
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">    بازدید :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.currentView
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">    تعداد لایک :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.currentLikeCount
+                      }
+                  </span>
+                </li>
+                <li className="mb-75">
+                  <span className="fw-bolder me-25">    تعداد دیس‌لایک :</span>
+                  <span>
+                    {data?.data?.detailsNewsDto.currentDissLikeCount
+                      }
                   </span>
                 </li>
                 <li className="mb-75">
@@ -479,7 +464,7 @@ const UserInfoCard = ({ data, setdata }) => {
                     {data?.data?.active ? "فعال" : "غیر فعال"}
                   </Badge>
                 </li>
-                <li className="mb-75">
+                {/* <li className="mb-75">
                   <span className="fw-bolder me-25">تایید دو مرحله‌ایی :</span>
                   <Badge
                     className="text-capitalize"
@@ -501,26 +486,16 @@ const UserInfoCard = ({ data, setdata }) => {
                       </Badge>
                     ))}
                   </div>
-                </li>
-                <li className="mb-75">
+                </li> */}
+                {/* <li className="mb-75">
                   <span className="fw-bolder me-25">شماره همراه:</span>
                   <span>
                     {data?.data?.phoneNumber &&
                       faNumber(data?.data?.phoneNumber.toString())}
                   </span>
-                </li>
-                <li className="mb-75">
-                  {/* <span className='fw-bolder me-25'>Contact:</span> */}
-                  {/* <span>{selectedUser.contact}</span> */}
-                </li>
-                <li className="mb-75">
-                  <span className="fw-bolder me-25">زبان:</span>
-                  <span>فارسی</span>
-                </li>
-                {/* <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Country:</span>
-                  <span>England</span>
                 </li> */}
+              
+               
               </ul>
             ) : null}
           </div>

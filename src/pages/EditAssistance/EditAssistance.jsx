@@ -1,10 +1,8 @@
-import EditAssistance from '../../components/AssistanceWork/EditAssistance'
-import React from 'react'
+import EditAssis from "../../components/AssistanceWork/EditAssistance/index";
+import React from "react";
 
 const EditAssistancePage = () => {
-  return (
-    <EditAssistance/>
-  )
-}
+  return <EditAssis />;
+};
 
-export default EditAssistancePage
+export default EditAssistancePage;

@@ -10,7 +10,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Button, Label, Form, Input } from "reactstrap";
 import React, { useEffect, useState } from "react";
 
-import { Formik, Field, Form } from "formik";
 
 // ** Store & Actions
 import toast from "react-hot-toast";
@@ -20,7 +19,7 @@ import { convertDateToPersian } from "../../utility/date-helper.utils";
 import Flatpickr from "react-flatpickr";
 import "@styles/react/libs/flatpickr/flatpickr.scss";
 
-const AddAssistance = ({ open, toggleSidebar }) => {
+const AccountTabs = ({ open, toggleSidebar }) => {
   const checkIsValid = (data) => {
     return Object.values(data).every((field) => {
       if (typeof field === "object") {
@@ -125,7 +124,7 @@ const AddAssistance = ({ open, toggleSidebar }) => {
       onClosed={handleSidebarClosed}
       title="ایجاد تسک جدید"
     >
-      <Formik>
+   
       <Form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-1">
           <Label className="form-label" for="worktitle">
@@ -198,7 +197,7 @@ const AddAssistance = ({ open, toggleSidebar }) => {
             تاریخ <span className="text-danger">*</span>
           </Label>
 
-          <Field
+          {/* <Field
             type="date"
             name="workDate"
             id="workDate"
@@ -207,13 +206,13 @@ const AddAssistance = ({ open, toggleSidebar }) => {
             className={`form-control ${
               errors.workDate && touched.workDate ? "is-invalid" : ""
             }`}
-          />
-          {/* <Flatpickr
+          /> */}
+          <Flatpickr
             type="date"
             name="workDate"
             id="workDate"
             style={{ width: "300px" }}
-            placeholder="ساعت کاری را انتخاب کنید"
+            placeholder="بازه زمانی را انتخاب کنید"
             className="form-control"
             value={getValues("workDate")}
             onChange={(date) => {
@@ -223,7 +222,7 @@ const AddAssistance = ({ open, toggleSidebar }) => {
               mode: "range",
               dateFormat: "Y-m-d",
             }}
-          /> */}
+          />
         </div>
 
         <Button type="submit" className="me-1" color="primary">
@@ -233,9 +232,9 @@ const AddAssistance = ({ open, toggleSidebar }) => {
           انصراف
         </Button>
       </Form>
-      </Formik>
+     
     </Sidebar>
   );
 };
 
-export default AddAssistance;
+export default AccountTabs;
