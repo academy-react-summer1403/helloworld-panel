@@ -110,12 +110,12 @@ export default [
   //   icon: <Mic/>,
   //   navLink: "/podcast",
   // },
-  // {
-  //   id: "calendar",
-  //   title: " تقویم آموزشی",
-  //   icon: <Calendar/>,
-  //   navLink: "/calendar",
-  // },
+  {
+    id: "calendar",
+    title: " تقویم آموزشی",
+    icon: <Calendar/>,
+    navLink: "/calendar",
+  },
   // {
   //   id: "secondPage",
   //   title: "صفحه نمونه",
