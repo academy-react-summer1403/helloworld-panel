@@ -13,6 +13,7 @@ import { getCreatCourse } from "../../../../core/services/api/Coueses/getCreatFi
 import { useState } from "react";
 import { useEffect } from "react";
 import { sendCourses } from "@src/core/services/api/Coueses/CreatCourse";
+import { Link } from "react-router-dom";
 
 const SocialLinks = ({
   stepper,
@@ -43,7 +44,6 @@ const SocialLinks = ({
   const onSubmit = async (values) => {
     setFormData((prev) => ({ ...prev, socialLinks: values }));
     try {
-      
       const obj = {
         ...formData.accountDetails,
         ...formData.address,
@@ -118,11 +118,13 @@ const SocialLinks = ({
                 </span>
               </Button>
               <Button
+                tag={Link}
+                to={`/course`}
                 color="success"
                 className="btn-submit"
                 onClick={() => {
                   handleSubmit();
-                  alert("submitted");
+                  // alert("submitted");
                   // handleCreatCourse(obj);
                 }}
               >
