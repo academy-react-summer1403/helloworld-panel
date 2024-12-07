@@ -38,6 +38,7 @@ const EditUser = lazy(() => import("../../components/UserList/EditUser/index"));
 
 
 const CourseDeatil = lazy(() => import("../../pages/CourseDeatil/CourseDeatil"));
+const CourseEdit = lazy(() => import("../../components/Courses/CourseEdit"));
 const DeleteUserPage = lazy(() => import("../../pages/DeleteUser/DeleteUser"));
 
 const Wizard = lazy(() => import("../../components/Courses/CreatCourse/index"));
@@ -117,6 +118,10 @@ const Routes = [
   {
     path: "/course/:id",
     element: <CourseDeatil/>
+  },
+  {
+    path: "/course/edit/:id",
+    element: <CourseEdit/>
   },
   {
     path: "/sample",

@@ -27,40 +27,40 @@ const WizardVertical = () => {
     socialLinks: {},
   });
 
-  console.log("formData", formData);
+  // console.log("formData", formData);
 
-  const obj = {
-    Title: formData.accountDetails.Title,
-    Describe: formData.accountDetails.Describe,
-    MiniDescribe: formData.accountDetails.MiniDescribe,
-    Capacity: formData.accountDetails.Capacity,
-    CourseTypeId: formData.address.CourseTypeId,
-    CourseLvlId: formData.address.CourseLvlId,
-    ClassId: formData.address.ClassId,
-    SessionNumber: formData.address.SessionNumber,
-    TeacherId: formData.address.TeacherId,
-    TremId: formData.address.TremId,
-    Cost: formData.personalInfo.Cost,
-    StartTime: formData.personalInfo.StartTime,
-    EndTime: formData.personalInfo.EndTime,
-    UniqeUrlString: formData.personalInfo.UniqeUrlString,
-    // CourseTypeId: formData.accountDetails.CourseTypeId,
-  };
+  // const obj = {
+  //   Title: formData.accountDetails.Title,
+  //   Describe: formData.accountDetails.Describe,
+  //   MiniDescribe: formData.accountDetails.MiniDescribe,
+  //   Capacity: formData.accountDetails.Capacity,
+  //   CourseTypeId: formData.address.CourseTypeId,
+  //   CourseLvlId: formData.address.CourseLvlId,
+  //   ClassId: formData.address.ClassId,
+  //   SessionNumber: formData.address.SessionNumber,
+  //   TeacherId: formData.address.TeacherId,
+  //   TremId: formData.address.TremId,
+  //   Cost: formData.personalInfo.Cost,
+  //   StartTime: formData.personalInfo.StartTime,
+  //   EndTime: formData.personalInfo.EndTime,
+  //   UniqeUrlString: formData.personalInfo.UniqeUrlString,
+  //   // CourseTypeId: formData.accountDetails.CourseTypeId,
+  // };
 
-  console.log("title", obj);
+  // console.log("title", obj);
 
-  const handleCreatCourse = async (e) => {
-    try {
-      const res = await sendCourses(e);
-      console.log("res", res);
-    } catch (error) {
-      console.error("ERROR: ", error);
-    }
-  };
+  // const handleCreatCourse = async (e) => {
+  //   try {
+  //     const res = await sendCourses(e);
+  //     console.log("res", res);
+  //   } catch (error) {
+  //     console.error("ERROR: ", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleCreatCourse();
-  }, []);
+  // useEffect(() => {
+  //   handleCreatCourse();
+  // }, []);
 
   const steps = [
     {
@@ -108,9 +108,9 @@ const WizardVertical = () => {
       subtitle: "اطلاعات را وارد کنید",
       content: (
         <SocialLinks
-          handleCreatCourse={handleCreatCourse}
+          // handleCreatCourse={handleCreatCourse}
           stepper={stepper}
-          obj={obj}
+          // obj={obj}
           setFormData={setFormData}
           formData={formData}
           type="wizard-vertical"

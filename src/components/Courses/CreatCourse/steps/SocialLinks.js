@@ -12,14 +12,15 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import { getCreatCourse } from "../../../../core/services/api/Coueses/getCreatFill";
 import { useState } from "react";
 import { useEffect } from "react";
+import { sendCourses } from "@src/core/services/api/Coueses/CreatCourse";
 
 const SocialLinks = ({
   stepper,
   type,
   formData,
   setFormData,
-  handleCreatCourse,
-  obj
+  // handleCreatCourse,
+  // obj
 }) => {
   const [stepFillTek, setStepFillTek] = useState();
 
@@ -32,11 +33,35 @@ const SocialLinks = ({
     getAllFill();
   }, []);
 
-  const handleFormChange = (values) => {
-    setFormData((prev) => ({
-      ...prev,
-      socialLinks: values,
-    }));
+  // const handleFormChange = (values) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     socialLinks: values,
+  //   }));
+  // };
+
+  const onSubmit = async (values) => {
+    setFormData((prev) => ({ ...prev, socialLinks: values }));
+    try {
+      
+      const obj = {
+        ...formData.accountDetails,
+        ...formData.address,
+        ...formData.personalInfo,
+        ...formData.socialLinks,
+      };
+
+      console.log("obj onSubmit", obj);
+
+      const newFormData = new FormData();
+
+      Object.entries(obj).forEach(([key, value]) => {
+        newFormData.append(key, value);
+      });
+      await sendCourses(newFormData);
+    } catch (error) {
+      console.error("خطا", error.response.data.ErrorMessage);
+    }
   };
 
   return (
@@ -47,7 +72,7 @@ const SocialLinks = ({
       </div>
       <Formik
         initialValues={formData.socialLinks}
-        onSubmit={(values) => handleFormChange(values)}
+        onSubmit={(values) => onSubmit(values)}
       >
         {({ handleSubmit }) => (
           <Form onSubmit={(e) => e.preventDefault()}>
@@ -98,7 +123,7 @@ const SocialLinks = ({
                 onClick={() => {
                   handleSubmit();
                   alert("submitted");
-                  handleCreatCourse(obj);
+                  // handleCreatCourse(obj);
                 }}
               >
                 ثبت دوره

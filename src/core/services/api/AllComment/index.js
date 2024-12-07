@@ -3,7 +3,7 @@ import http from "../../interceptor/interceptor";
 export const getCommentList = async (params) => {
   try {
     const result = await http.get(
-      `/Course/CommentManagment?PageNumber=1&SortingCol=DESC&SortType=InsertDate&Query=&Accept=false`,
+      `/Course/CommentManagment?PageNumber=1&SortingCol=DESC&SortType=InsertDate`,
       { params: params }
 
     );

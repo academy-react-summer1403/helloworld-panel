@@ -26,6 +26,8 @@ import { selectThemeColors } from "@utils";
 import Select from "react-select";
 
 const Tables = () => {
+  const [searchQuery, setSearchQuery] = useState();
+
   const [accepted, setAccepted] = useState({
     value: true,
     label: "انتخاب کنید...",
@@ -96,21 +98,21 @@ const Tables = () => {
                   lg="6"
                   className="actions-right d-flex align-items-center justify-content-lg-end flex-lg-nowrap flex-wrap mt-lg-0 mt-1 pe-lg-1 p-0"
                 >
-                  <div className="d-flex align-items-center">
-                    <label htmlFor="search-invoice">Search</label>
+                  <div className="d-flex w-75 align-items-center">
+                    <label htmlFor="search-invoice" className="w-25">جست و جو</label>
                     <Input
                       id="search-invoice"
                       className="ms-50 me-2 w-100"
                       type="text"
-                      // value={value}
-                      // onChange={e => handleFilter(e.target.value)}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search Invoice"
                     />
                   </div>
                 </Col>
               </Row>
             </div>
-            <TableBasic acceptB={acceptB} Rows={Rows}/>
+            <TableBasic acceptB={acceptB} Rows={Rows} searchQuery={searchQuery}/>
           </Card>
         </Col>
       </Row>

@@ -2,7 +2,7 @@ import React from "react";
 
 import angular from "../../../../assets/images/Courses/angular.svg";
 import noImage from "../../../../assets/images/Courses/noImage.png";
-import { MoreVertical, Edit, Trash, CheckCircle } from "react-feather";
+import { MoreVertical, Edit, Trash, CheckCircle, Info } from "react-feather";
 import {
   Badge,
   UncontrolledDropdown,
@@ -149,7 +149,10 @@ function CourseMap({
               </span>
             </DropdownItem>
             <DropdownItem tag={Link} to={`/course/${courseId}`}>
-              <Edit className="me-50" size={15} /> <span>جزئیات</span>
+              <Info className="me-50" size={15} /> <span>جزئیات</span>
+            </DropdownItem>
+            <DropdownItem tag={Link} to={`/course/edit/${courseId}`}>
+              <Edit className="me-50" size={15} /> <span>ویرایش</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

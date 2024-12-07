@@ -20,6 +20,7 @@ import { getAllCourses } from "../../../../core/services/api/Coueses/getAllCours
 
 // ** Source Code
 import { tableBasic } from "./TableSourceCode";
+import { Link } from "react-router-dom";
 
 const Tables = () => {
   const [searchQuery, setSearchQuery] = useState();
@@ -96,7 +97,7 @@ const Tables = () => {
                       </option>
                     </Input>
                   </div>
-                  <Button to="/apps/invoice/add" color="primary">
+                  <Button tag={Link} to={`/creatcourse`} color="primary">
                     اضافه کردن دوره
                   </Button>
                 </Col>

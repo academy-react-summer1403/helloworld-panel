@@ -23,7 +23,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Fragment } from "react";
 
-const Courses = ({ acceptB,Rows }) => {
+const Courses = ({ acceptB,Rows,searchQuery }) => {
   const [allComment, setAllComment] = useState([]);
   const [comModal, setComModal] = useState(false);
   const [repCom, setRepCom] = useState([]);
@@ -31,13 +31,15 @@ const Courses = ({ acceptB,Rows }) => {
   const [cmntid, setCmntid] = useState(null);
   const [describe, setDescribe] = useState("");
 
-  console.log("repCom",repCom)
+  // console.log("repCom",repCom)
 
   const accept = acceptB;
 
   const getAllCommentReport = async () => {
     const params = {
       RowsOfPage: Rows,
+      Accept: acceptB,
+      Query: searchQuery
     };
     const report = await getCommentList(params);
     setAllComment(report.data.comments);
@@ -83,8 +85,8 @@ const Courses = ({ acceptB,Rows }) => {
   };
 
   useEffect(() => {
-    getAllCommentReport(accept, allComment,Rows);
-  }, []);
+    getAllCommentReport();
+  }, [accept, allComment,Rows]);
 
   useEffect(() => {
     handleAcceptComment();
@@ -98,7 +100,7 @@ const Courses = ({ acceptB,Rows }) => {
     handleDeclineComment();
   }, []);
 
-  console.log("object", allComment);
+  // console.log("object", allComment);
 
 
   return (

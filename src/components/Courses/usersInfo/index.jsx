@@ -19,7 +19,7 @@ const UsersList = () => {
             color="primary"
             statTitle="مجموع دوره ها"
             icon={<User size={20} />}
-            renderStats={<h3 className="fw-bolder mb-75">21,459</h3>}
+            renderStats={<h3 className="fw-bolder mb-75">1242</h3>}
           />
         </Col>
         <Col lg="3" sm="6">
@@ -27,7 +27,7 @@ const UsersList = () => {
             color="success"
             statTitle="دوره های فعال"
             icon={<UserCheck size={20} />}
-            renderStats={<h3 className="fw-bolder mb-75">19,860</h3>}
+            renderStats={<h3 className="fw-bolder mb-75">893</h3>}
           />
         </Col>
         <Col lg="3" sm="6">
@@ -44,7 +44,7 @@ const UsersList = () => {
             color="danger"
             statTitle="دوره های حذف شده"
             icon={<UserPlus size={20} />}
-            renderStats={<h3 className="fw-bolder mb-75">4,567</h3>}
+            renderStats={<h3 className="fw-bolder mb-75">214</h3>}
           />
         </Col>
       </Row>
