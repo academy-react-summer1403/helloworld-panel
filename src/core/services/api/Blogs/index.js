@@ -29,6 +29,17 @@ const getBlogList = async (params) => {
     }
   };
 
+  export const getBlogRep = async (id) => {
+    try {
+      const result = await http.get(`/News/GetRepliesComments?Id=${id}`);
+      //console.log(result);
+      return result;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+
 
   export const addBlog = async (formData) => {
     try {
